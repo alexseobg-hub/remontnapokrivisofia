@@ -40,6 +40,10 @@ export interface ContentPage {
   toc: { id: string; text: string }[];
   faq: FaqItem[];
   wordCount: number;
+  /** Собствена снимка от Notion. Изважда тематичната от употреба. */
+  heroImage: MediaImage | null;
+  /** Ключ към тематична снимка, докато няма собствена. */
+  heroStock: string;
 }
 
 export interface PriceRow {

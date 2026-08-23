@@ -2,12 +2,24 @@ import { escapeHtml, slugify } from './notion-api.js';
 import { processImage } from './media.js';
 
 const SITE_HOSTS = ['remontnapokrivisofia.bg', 'www.remontnapokrivisofia.bg'];
+const NOTION_HOSTS = ['app.notion.com', 'www.notion.so', 'notion.so'];
 
-/** Вътрешните линкове остават относителни и се отварят в същия таб. */
+/** Истинска препратка към страница в Notion: пътят е 32 шестнайсетични знака. */
+const NOTION_PAGE_PATH = /^\/(p\/)?[0-9a-f]{32}/i;
+
+/**
+ * Вътрешните линкове остават относителни и се отварят в същия таб.
+ *
+ * Notion записва относителния markdown линк (/uslugi) като абсолютен към своя
+ * домейн. Без тази обработка всяка вътрешна връзка сочи към app.notion.com.
+ */
 function normalizeHref(href = '') {
   try {
     const url = new URL(href);
     if (SITE_HOSTS.includes(url.hostname)) return { href: url.pathname + url.search + url.hash, internal: true };
+    if (NOTION_HOSTS.includes(url.hostname) && !NOTION_PAGE_PATH.test(url.pathname)) {
+      return { href: url.pathname + url.search + url.hash, internal: true };
+    }
     return { href, internal: false };
   } catch {
     return { href, internal: href.startsWith('/') || href.startsWith('#') };

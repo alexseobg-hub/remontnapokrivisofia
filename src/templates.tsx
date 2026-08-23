@@ -7,13 +7,14 @@ import {
 import { site, has, telHref, valueOr, absoluteUrl } from '@/config/site';
 import { Breadcrumbs, type Crumb } from '@/components/Breadcrumbs';
 import { FaqAccordion } from '@/components/FaqAccordion';
-import { BandedBody, PlainBody } from '@/components/PageBody';
+import { BandedBody, PlainBody, nextToneAfter, flipTone } from '@/components/PageBody';
 import { CtaBlock } from '@/components/CtaBlock';
 import { AuthorBox, PageCard, ProjectCard } from '@/components/cards';
-import { CtaLink, ImagePlaceholder, Picture, Section, SectionHead } from '@/components/ui';
+import { CtaLink, ImagePlaceholder, Picture, Section, SectionHead, type Tone } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
+import { heroFor } from '@/lib/stock';
 
 /* ================= Общи части ================= */
 
@@ -44,6 +45,36 @@ function PhoneCta({ placement, onDark = false }: { placement: string; onDark?: b
 }
 
 function PageHeader({ page, tone = 'sand' }: { page: ContentPage; tone?: 'sand' | 'white' }) {
+  const image = heroFor(page);
+
+  // Със снимка заглавната част става тъмна лента; без снимка остава на пясъчен фон.
+  if (image) {
+    return (
+      <header className="relative overflow-hidden bg-graphite-900">
+        <div className="absolute inset-0" aria-hidden="true">
+          <Picture image={image} sizes="100vw" eager className="opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-graphite-950 via-graphite-950/90 to-graphite-950/50" />
+        </div>
+        <div className="shell relative py-12 md:py-16">
+          <Breadcrumbs trail={trailFor(page)} onDark />
+          <h1 className="text-display-lg text-white">{page.h1}</h1>
+          {page.description ? <p className="mt-4 max-w-prose text-lg leading-[1.6] text-graphite-200">{page.description}</p> : null}
+          {page.shortAnswer ? (
+            <p className="mt-6 max-w-prose border-l-[3px] border-brick-500 py-1 pl-5 text-[1.0625rem] leading-relaxed text-graphite-300">
+              {page.shortAnswer}
+            </p>
+          ) : null}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <CtaLink to="/besplaten-ogled" large>
+              Безплатен оглед
+            </CtaLink>
+            <PhoneCta placement={page.slug} onDark />
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className={cn('border-b border-graphite-200 py-10 md:py-14', tone === 'sand' ? 'bg-sand-100' : 'bg-white')}>
       <div className="shell">
@@ -62,10 +93,10 @@ function PageHeader({ page, tone = 'sand' }: { page: ContentPage; tone?: 'sand' 
   );
 }
 
-function FaqSection({ page }: { page: ContentPage }) {
+function FaqSection({ page, tone = 'white' }: { page: ContentPage; tone?: Tone }) {
   if (page.faq.length === 0) return null;
   return (
-    <Section tone="white" id="chesto-zadavani-vaprosi">
+    <Section tone={tone} id="chesto-zadavani-vaprosi">
       <SectionHead eyebrow="Въпроси" title="Често задавани въпроси" />
       <div className="max-w-3xl">
         <FaqAccordion items={page.faq} />
@@ -74,10 +105,10 @@ function FaqSection({ page }: { page: ContentPage }) {
   );
 }
 
-function RelatedLinks({ title, pages }: { title: string; pages: ContentPage[] }) {
+function RelatedLinks({ title, pages, tone = 'sand' }: { title: string; pages: ContentPage[]; tone?: Tone }) {
   if (pages.length === 0) return null;
   return (
-    <Section tone="sand" tight>
+    <Section tone={tone} tight>
       <h2 className="mb-6 font-display text-xl font-extrabold text-graphite-900">{title}</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => (
@@ -91,11 +122,17 @@ function RelatedLinks({ title, pages }: { title: string; pages: ContentPage[] })
 /* ================= Начална ================= */
 
 export function HomePage({ page }: { page: ContentPage }) {
+  const heroImage = heroFor(page);
+
   return (
     <>
       <section className="relative overflow-hidden bg-graphite-900">
         <div className="absolute inset-0" aria-hidden="true">
-          <ImagePlaceholder className="h-full w-full opacity-45" />
+          {heroImage ? (
+            <Picture image={heroImage} sizes="100vw" eager className="opacity-45" />
+          ) : (
+            <ImagePlaceholder className="h-full w-full opacity-45" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-graphite-950 via-graphite-950/90 to-graphite-950/40" />
         </div>
 
@@ -140,13 +177,18 @@ export function ServicePage({ page }: { page: ContentPage }) {
   const children = childrenOf(page.slug);
   const siblings = siblingServices(page, 3);
 
+  // Тоновете продължават оттам, докъдето е стигнало тялото.
+  const toneA = nextToneAfter(page, 'white');
+  const toneB = children.length > 0 ? flipTone(toneA) : toneA;
+  const toneC = page.faq.length > 0 ? flipTone(toneB) : toneB;
+
   return (
     <>
       <PageHeader page={page} />
       <BandedBody page={page} startTone="white" />
-      {children.length > 0 ? <RelatedLinks title="Подробно по дейности" pages={children} /> : null}
-      <FaqSection page={page} />
-      {siblings.length > 0 ? <RelatedLinks title="Свързани услуги" pages={siblings} /> : null}
+      {children.length > 0 ? <RelatedLinks title="Подробно по дейности" pages={children} tone={toneA} /> : null}
+      <FaqSection page={page} tone={toneB} />
+      {siblings.length > 0 ? <RelatedLinks title="Свързани услуги" pages={siblings} tone={toneC} /> : null}
       <CtaBlock title={`Нуждаете се от ${page.name.toLowerCase()}?`} formName={page.slug} />
     </>
   );
@@ -159,13 +201,16 @@ export function DistrictPage({ page }: { page: ContentPage }) {
   const nearby = neighbourDistricts(page.slug, 3);
   const built = projectsInDistrict(districtName);
 
+  const toneA = nextToneAfter(page, 'white');
+  const toneB = built.length > 0 ? flipTone(toneA) : toneA;
+
   return (
     <>
       <PageHeader page={page} />
       <BandedBody page={page} startTone="white" />
 
       {built.length > 0 ? (
-        <Section tone="sand">
+        <Section tone={toneA}>
           <SectionHead eyebrow="От практиката" title={`Наши обекти в ${districtName}`} />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {built.slice(0, 3).map((project) => (
@@ -175,9 +220,9 @@ export function DistrictPage({ page }: { page: ContentPage }) {
         </Section>
       ) : null}
 
-      <FaqSection page={page} />
+      <FaqSection page={page} tone={toneB} />
 
-      <Section tone="sand" tight>
+      <Section tone={page.faq.length > 0 ? flipTone(toneB) : toneB} tight>
         <h2 className="mb-6 font-display text-xl font-extrabold text-graphite-900">Работим и в съседните райони</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {nearby.map((item) => (
@@ -425,7 +470,7 @@ export function StandardPage({ page }: { page: ContentPage }) {
     <>
       <PageHeader page={page} />
       <BandedBody page={page} startTone="white" />
-      <FaqSection page={page} />
+      <FaqSection page={page} tone={nextToneAfter(page, 'white')} />
       <CtaBlock formName={page.slug} />
     </>
   );
@@ -484,7 +529,7 @@ export function LeadPage({ page }: { page: ContentPage }) {
         </div>
       </div>
       <BandedBody page={page} startTone="white" />
-      <FaqSection page={page} />
+      <FaqSection page={page} tone={nextToneAfter(page, 'white')} />
     </>
   );
 }

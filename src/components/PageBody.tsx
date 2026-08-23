@@ -9,7 +9,8 @@ import { PricingTable, PriceDisclaimer } from './PricingTable';
 import { ProjectCard, TestimonialCard, PageCard } from './cards';
 import { RoofCalculator } from './RoofCalculator';
 import { LeadForm } from './LeadForm';
-import { CtaLink, type Tone } from './ui';
+import { CtaLink, Picture, type Tone } from './ui';
+import { stockImage } from '@/lib/stock';
 import { trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
@@ -365,6 +366,18 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
     case 'karta':
       return <MapEmbed />;
 
+    case 'snimka': {
+      const image = stockImage(arg);
+      if (!image) return null;
+      return (
+        <figure className="my-8">
+          <div className="aspect-[16/9] overflow-hidden border border-graphite-200 bg-graphite-800">
+            <Picture image={image} sizes="(min-width: 1024px) 900px, 100vw" />
+          </div>
+        </figure>
+      );
+    }
+
     case 'garanciya':
       return has('warrantyScope') ? (
         <div className="my-8 border-l-[3px] border-brick-500 bg-sand-100 px-6 py-5">
@@ -395,6 +408,21 @@ function ChunkList({ chunks, page }: { chunks: Chunk[]; page: ContentPage }) {
     </>
   );
 }
+
+/**
+ * Тонът на секцията веднага след тялото. Без него шаблонът може да сложи
+ * втора бяла лента до последната бяла и ритъмът се къса.
+ */
+export function nextToneAfter(page: ContentPage, startTone: Tone = 'white'): Tone {
+  if (!page.html) return startTone;
+  const bands = toBands(page.html, startTone);
+  const last = bands[bands.length - 1];
+  if (!last) return startTone;
+  return last.tone === 'sand' ? 'white' : 'sand';
+}
+
+/** Обратният тон, за да се редуват и следващите секции. */
+export const flipTone = (tone: Tone): Tone => (tone === 'sand' ? 'white' : 'sand');
 
 /** Тяло без ленти — за къси страници като правните. */
 export function PlainBody({ page }: { page: ContentPage }) {

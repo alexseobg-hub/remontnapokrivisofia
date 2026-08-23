@@ -126,6 +126,10 @@ async function fetchPages(api, databaseId) {
     const blocks = await api.blockChildren(row.id);
     const { html, toc, faq, wordCount } = await renderPageBody(blocks, api.blockChildren);
 
+    // Качената снимка бие тематичната. Тематичната е само за начало.
+    const [hero] = files(properties, 'Hero image');
+    const heroImage = hero ? await processImage(hero.url, name) : null;
+
     pages.push({
       id: row.id,
       name,
@@ -149,6 +153,8 @@ async function fetchPages(api, databaseId) {
       toc,
       faq,
       wordCount,
+      heroImage,
+      heroStock: text(properties, 'Hero stock'),
     });
   }
 

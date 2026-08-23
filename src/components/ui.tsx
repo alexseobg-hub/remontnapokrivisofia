@@ -188,8 +188,8 @@ export function Picture({
         width={image.width ?? undefined}
         height={image.height ?? undefined}
         loading={eager ? 'eager' : 'lazy'}
-        // Hero снимката трябва да тръгне първа, останалите изчакват.
-        fetchPriority={eager ? 'high' : undefined}
+        // React 18 не разпознава camelCase варианта, затова се подава като обикновен атрибут.
+        {...(eager ? { fetchpriority: 'high' } : {})}
         decoding="async"
         className={cn('h-full w-full object-cover', className)}
       />

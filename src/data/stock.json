@@ -1,0 +1,255 @@
+{
+  "keremidi-pokriv": {
+    "src": "/stock/keremidi-pokriv-1600.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Керемиден покрив на фона на синьо небе",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/keremidi-pokriv-640.avif 640w, /stock/keremidi-pokriv-1024.avif 1024w, /stock/keremidi-pokriv-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/keremidi-pokriv-640.webp 640w, /stock/keremidi-pokriv-1024.webp 1024w, /stock/keremidi-pokriv-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "29114658",
+      "url": "https://www.pexels.com/photo/29114658/",
+      "license": "Pexels License"
+    },
+    "use": "Начална страница, основна снимка"
+  },
+  "narezhdane-keremidi": {
+    "src": "/stock/narezhdane-keremidi-1600.jpg",
+    "width": 1600,
+    "height": 2400,
+    "alt": "Нареждане на керамични керемиди по скат",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/narezhdane-keremidi-640.avif 640w, /stock/narezhdane-keremidi-1024.avif 1024w, /stock/narezhdane-keremidi-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/narezhdane-keremidi-640.webp 640w, /stock/narezhdane-keremidi-1024.webp 1024w, /stock/narezhdane-keremidi-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "31763541",
+      "url": "https://www.pexels.com/photo/31763541/",
+      "license": "Pexels License"
+    },
+    "use": "Ремонт на покриви, пренареждане"
+  },
+  "bitumni-keremidi": {
+    "src": "/stock/bitumni-keremidi-1600.jpg",
+    "width": 1600,
+    "height": 1200,
+    "alt": "Покрив от битумни керемиди отблизо",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/bitumni-keremidi-640.avif 640w, /stock/bitumni-keremidi-1024.avif 1024w, /stock/bitumni-keremidi-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/bitumni-keremidi-640.webp 640w, /stock/bitumni-keremidi-1024.webp 1024w, /stock/bitumni-keremidi-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "12001528",
+      "url": "https://www.pexels.com/photo/12001528/",
+      "license": "Pexels License"
+    },
+    "use": "Покривни покрития"
+  },
+  "nov-pokriv": {
+    "src": "/stock/nov-pokriv-1600.jpg",
+    "width": 1600,
+    "height": 961,
+    "alt": "Новопостроени къщи с готови покриви",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/nov-pokriv-640.avif 640w, /stock/nov-pokriv-1024.avif 1024w, /stock/nov-pokriv-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/nov-pokriv-640.webp 640w, /stock/nov-pokriv-1024.webp 1024w, /stock/nov-pokriv-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "30580640",
+      "url": "https://www.pexels.com/photo/30580640/",
+      "license": "Pexels License"
+    },
+    "use": "Изграждане на покриви"
+  },
+  "toploizolaciya": {
+    "src": "/stock/toploizolaciya-1600.jpg",
+    "width": 1600,
+    "height": 1068,
+    "alt": "Полагане на минерална вата в подпокривно пространство",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/toploizolaciya-640.avif 640w, /stock/toploizolaciya-1024.avif 1024w, /stock/toploizolaciya-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/toploizolaciya-640.webp 640w, /stock/toploizolaciya-1024.webp 1024w, /stock/toploizolaciya-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "6124239",
+      "url": "https://www.pexels.com/photo/6124239/",
+      "license": "Pexels License"
+    },
+    "use": "Топлоизолация"
+  },
+  "instrumenti": {
+    "src": "/stock/instrumenti-1600.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Ръчни инструменти върху дървена повърхност",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/instrumenti-640.avif 640w, /stock/instrumenti-1024.avif 1024w, /stock/instrumenti-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/instrumenti-640.webp 640w, /stock/instrumenti-1024.webp 1024w, /stock/instrumenti-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "37663438",
+      "url": "https://www.pexels.com/photo/37663438/",
+      "license": "Pexels License"
+    },
+    "use": "Процес, за нас"
+  },
+  "kashta-keremidi": {
+    "src": "/stock/kashta-keremidi-1600.jpg",
+    "width": 1600,
+    "height": 2130,
+    "alt": "Тухлена къща с керемиден покрив",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/kashta-keremidi-640.avif 640w, /stock/kashta-keremidi-1024.avif 1024w, /stock/kashta-keremidi-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/kashta-keremidi-640.webp 640w, /stock/kashta-keremidi-1024.webp 1024w, /stock/kashta-keremidi-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "8336130",
+      "url": "https://www.pexels.com/photo/8336130/",
+      "license": "Pexels License"
+    },
+    "use": "Градове и райони"
+  },
+  "tenekedzhiyski": {
+    "src": "/stock/tenekedzhiyski-1600.jpg",
+    "width": 1600,
+    "height": 1068,
+    "alt": "Захващане на метален профил с винтоверт",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/tenekedzhiyski-640.avif 640w, /stock/tenekedzhiyski-1024.avif 1024w, /stock/tenekedzhiyski-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/tenekedzhiyski-640.webp 640w, /stock/tenekedzhiyski-1024.webp 1024w, /stock/tenekedzhiyski-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "5691518",
+      "url": "https://www.pexels.com/photo/5691518/",
+      "license": "Pexels License"
+    },
+    "use": "Тенекеджийски услуги"
+  },
+  "komini": {
+    "src": "/stock/komini-1600.jpg",
+    "width": 1600,
+    "height": 2400,
+    "alt": "Тухлени комини над покрив",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/komini-640.avif 640w, /stock/komini-1024.avif 1024w, /stock/komini-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/komini-640.webp 640w, /stock/komini-1024.webp 1024w, /stock/komini-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "13543563",
+      "url": "https://www.pexels.com/photo/13543563/",
+      "license": "Pexels License"
+    },
+    "use": "Обшивка на комин"
+  },
+  "star-pokriv": {
+    "src": "/stock/star-pokriv-1600.jpg",
+    "width": 1600,
+    "height": 2844,
+    "alt": "Стара сграда с износена фасада и покрив",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/star-pokriv-640.avif 640w, /stock/star-pokriv-1024.avif 1024w, /stock/star-pokriv-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/star-pokriv-640.webp 640w, /stock/star-pokriv-1024.webp 1024w, /stock/star-pokriv-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "17587644",
+      "url": "https://www.pexels.com/photo/17587644/",
+      "license": "Pexels License"
+    },
+    "use": "Признаци за ремонт"
+  },
+  "shindli": {
+    "src": "/stock/shindli-1600.jpg",
+    "width": 1600,
+    "height": 1983,
+    "alt": "Къща с покрив от шиндли",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/shindli-640.avif 640w, /stock/shindli-1024.avif 1024w, /stock/shindli-1600.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/shindli-640.webp 640w, /stock/shindli-1024.webp 1024w, /stock/shindli-1600.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Pexels",
+      "id": "20296321",
+      "url": "https://www.pexels.com/photo/20296321/",
+      "license": "Pexels License"
+    },
+    "use": "Навеси, покривни покрития"
+  }
+}
