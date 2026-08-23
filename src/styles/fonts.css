@@ -1,0 +1,3 @@
+/* Самостоятелно хоствани шрифтове. Никакви заявки към трети страни, никакъв render-blocking CSS. */
+@import '@fontsource-variable/manrope/index.css';
+@import '@fontsource-variable/inter/index.css';

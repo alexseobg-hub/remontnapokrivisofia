@@ -1,0 +1,152 @@
+@import './styles/fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-graphite-700 antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-extrabold text-graphite-900;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* Видим фокус навсякъде. Клавиатурата трябва да работи като мишката. */
+  :focus-visible {
+    outline: 3px solid theme('colors.brick.500');
+    outline-offset: 2px;
+  }
+
+  /* Котва под sticky хедъра, за да не се крие заглавието при скок от съдържанието. */
+  [id] { scroll-margin-top: 6rem; }
+}
+
+@layer components {
+  /* --- Ленти --- */
+  /* Фоновете се редуват по цялата ширина: бяло, пясък, графит. Никога две еднакви една до друга. */
+  .band { @apply py-14 md:py-20; }
+  .band-tight { @apply py-10 md:py-14; }
+  .band-white { @apply bg-white; }
+  .band-sand { @apply bg-sand-100; }
+  .band-dark { @apply bg-graphite-900 text-graphite-200; }
+  .band-dark h1, .band-dark h2, .band-dark h3, .band-dark h4 { @apply text-white; }
+
+  .shell { @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8; }
+  .shell-narrow { @apply mx-auto w-full max-w-3xl px-5 sm:px-6; }
+
+  /* --- Бутони --- */
+  /* Акцентът никога не изчезва: базата е brick-600, hover е brick-500 (по-светло, но пак AA). */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border border-transparent px-5 py-3
+           font-display text-[0.9375rem] font-bold leading-none tracking-tight
+           transition-colors duration-150;
+  }
+  .btn-primary { @apply btn bg-brick-600 text-white hover:bg-brick-500; }
+  .btn-ghost   { @apply btn border-graphite-300 bg-transparent text-graphite-900 hover:border-graphite-900 hover:bg-graphite-900 hover:text-white; }
+  .btn-on-dark { @apply btn border-graphite-600 bg-transparent text-white hover:border-white hover:bg-white hover:text-graphite-900; }
+  .btn-lg      { @apply px-6 py-4 text-base; }
+
+  /* --- Надзаглавие --- */
+  .eyebrow {
+    @apply mb-3 flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.18em] text-brick-600;
+  }
+  .band-dark .eyebrow { @apply text-brick-300; }
+  .eyebrow::before { @apply block h-px w-6 bg-current content-[''] ; }
+
+  /* --- Карти --- */
+  .card {
+    @apply relative border border-graphite-200 bg-white p-6 transition-colors duration-150;
+  }
+  .card-link { @apply card hover:border-graphite-900; }
+  /* Тънка тухлена черта горе: единственият декоративен елемент в дизайна. */
+  .card-topline::before {
+    @apply absolute inset-x-0 top-0 h-[3px] bg-brick-600 content-[''];
+  }
+  .band-dark .card { @apply border-graphite-700 bg-graphite-800; }
+  .band-dark .card-link:hover { @apply border-graphite-400; }
+
+  /* --- Проза от Notion --- */
+  .prose-roof { @apply max-w-prose text-[1.0625rem] leading-[1.7] text-graphite-700; }
+  .prose-roof > * + * { @apply mt-5; }
+  .prose-roof h2 { @apply mt-12 text-display-md; }
+  .prose-roof h3 { @apply mt-9 text-xl font-bold; }
+  .prose-roof h4 { @apply mt-7 text-lg font-bold; }
+  .prose-roof ul { @apply list-disc space-y-2 pl-5 marker:text-brick-500; }
+  .prose-roof ol { @apply list-decimal space-y-2 pl-5 marker:font-bold marker:text-brick-600; }
+  .prose-roof a  { @apply font-medium text-brick-700 underline decoration-brick-200 underline-offset-4 hover:decoration-brick-600; }
+  .prose-roof strong { @apply font-semibold text-graphite-900; }
+  .prose-roof blockquote {
+    @apply border-l-[3px] border-brick-500 bg-sand-100 py-3 pl-5 pr-4 text-graphite-800;
+  }
+  .prose-roof figure img { @apply w-full border border-graphite-200; }
+  .prose-roof figcaption { @apply mt-2 text-sm text-graphite-500; }
+  .prose-roof hr { @apply border-graphite-200; }
+
+  /* Таблиците са най-извличаемият формат за AI отговори. Трябва да оцелеят и на телефон. */
+  .table-wrap { @apply -mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0; }
+  .table-roof { @apply w-full min-w-[34rem] border-collapse text-left text-[0.9375rem]; }
+  .table-roof th {
+    @apply border-b-2 border-graphite-900 py-3 pr-4 font-display text-xs font-bold uppercase tracking-[0.12em] text-graphite-900;
+  }
+  .table-roof td { @apply border-b border-graphite-200 py-3 pr-4 align-top; }
+  .table-roof tbody tr:hover { @apply bg-sand-50; }
+  .table-roof .num { @apply whitespace-nowrap font-display font-bold text-graphite-900; }
+
+
+  /* --- Навигация --- */
+  .nav-link {
+    @apply font-display text-[0.9375rem] font-bold tracking-tight text-graphite-700
+           transition-colors hover:text-brick-600;
+  }
+  .nav-link.active { @apply text-brick-600; }
+
+  /* --- Блокове от Notion --- */
+  .prose-roof .callout {
+    @apply border-l-[3px] border-brick-500 bg-brick-50 px-5 py-4 text-graphite-800;
+  }
+  .prose-roof .checklist { @apply list-none space-y-2 pl-0; }
+  .prose-roof .checklist li { @apply relative pl-7; }
+  .prose-roof .checklist li::before {
+    @apply absolute left-0 top-[0.45em] h-2.5 w-2.5 bg-brick-500 content-[''];
+  }
+  .prose-roof details {
+    @apply border border-graphite-200 px-5 py-4;
+  }
+  .prose-roof summary {
+    @apply cursor-pointer font-display font-bold text-graphite-900 marker:text-brick-500;
+  }
+  .prose-roof details[open] summary { @apply mb-3; }
+
+  /* --- Дребни --- */
+  .lede { @apply max-w-prose text-lg leading-[1.65] text-graphite-600 md:text-xl; }
+  .band-dark .lede { @apply text-graphite-300; }
+  .hairline { @apply border-t border-graphite-200; }
+  .band-dark .hairline { @apply border-graphite-700; }
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]
+           focus:bg-graphite-900 focus:px-4 focus:py-3 focus:font-display focus:font-bold focus:text-white;
+  }
+}

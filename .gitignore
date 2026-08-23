@@ -1,0 +1,9 @@
+node_modules
+dist
+.ssr
+.env
+.env.local
+*.tsbuildinfo
+.DS_Store
+public/media
+src/data/*.generated.json
