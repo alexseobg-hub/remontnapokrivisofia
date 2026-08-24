@@ -5,7 +5,7 @@ import { serviceHubs, districts } from '@/lib/content';
 import { trackFormSubmit, trackLead, trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
-type Status = 'idle' | 'sending' | 'done' | 'error';
+type Status = 'idle' | 'sending' | 'done' | 'error' | 'unsent';
 
 interface Errors {
   name?: string;
@@ -52,9 +52,9 @@ export function LeadForm({
     trackFormSubmit(formName);
 
     if (!endpoint) {
-      // Без настроен адрес за приемане пращаме по пощата, вместо да губим запитването.
-      setStatus('done');
-      trackLead(formName);
+      // Няма къде да се прати. Казваме го честно, вместо да рисуваме „изпратено“
+      // и да изгубим запитването мълчаливо.
+      setStatus('unsent');
       return;
     }
 
@@ -81,6 +81,22 @@ export function LeadForm({
         </p>
         {has('phonePrimary') ? (
           <a href={telHref()} onClick={() => trackPhoneClick('thank-you')} className="btn-primary mt-5">
+            {site.phonePrimary}
+          </a>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (status === 'unsent') {
+    return (
+      <div className={cn('border p-6', onDark ? 'border-graphite-700 bg-graphite-800' : 'border-graphite-200 bg-sand-50')}>
+        <p className="font-display text-xl font-extrabold text-brick-600">Формата още не е свързана.</p>
+        <p className={cn('mt-3 leading-relaxed', onDark ? 'text-graphite-300' : 'text-graphite-700')}>
+          Запитването не е изпратено. {has('phonePrimary') ? 'Обадете се и ще уговорим оглед.' : 'Адресът за приемане се попълва в настройките на проекта.'}
+        </p>
+        {has('phonePrimary') ? (
+          <a href={telHref()} onClick={() => trackPhoneClick('form-unsent')} className="btn-primary mt-5">
             {site.phonePrimary}
           </a>
         ) : null}
