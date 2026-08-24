@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { site, has, telHref, meta } from '@/config/site';
-import { serviceHubs, districts } from '@/lib/content';
+import { serviceHubs, districts, navPages, getPage } from '@/lib/content';
 import { trackPhoneClick } from '@/lib/analytics';
 
-const LEGAL = [
-  { to: '/politika-za-poveritelnost', label: 'Политика за поверителност' },
-  { to: '/politika-za-biskvitki', label: 'Политика за бисквитки' },
-  { to: '/obshti-usloviya', label: 'Общи условия' },
-];
+const LEGAL_SLUGS = ['/politika-za-poveritelnost', '/politika-za-biskvitki', '/obshti-usloviya'];
+
+/** Показват се само правните страници, които наистина съществуват. */
+const legalPages = () =>
+  LEGAL_SLUGS.map((slug) => getPage(slug)).filter((page): page is NonNullable<typeof page> => Boolean(page));
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -95,6 +95,7 @@ export function Footer() {
             </ul>
           </nav>
 
+          {areas.length > 0 ? (
           <nav aria-labelledby="footer-areas">
             <ColumnTitle>
               <span id="footer-areas">Райони</span>
@@ -114,6 +115,22 @@ export function Footer() {
               </li>
             </ul>
           </nav>
+          ) : (
+            <nav aria-labelledby="footer-nav">
+              <ColumnTitle>
+                <span id="footer-nav">Сайтът</span>
+              </ColumnTitle>
+              <ul className="space-y-2 text-sm">
+                {navPages().map((item) => (
+                  <li key={item.slug}>
+                    <Link to={item.slug} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
 
           <div>
             <ColumnTitle>Контакти</ColumnTitle>
@@ -157,10 +174,10 @@ export function Footer() {
             © {year} {company}. Всички права запазени.
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            {LEGAL.map((item) => (
-              <li key={item.to}>
-                <Link to={item.to} className="hover:text-graphite-300">
-                  {item.label}
+            {legalPages().map((item) => (
+              <li key={item.slug}>
+                <Link to={item.slug} className="hover:text-graphite-300">
+                  {item.name}
                 </Link>
               </li>
             ))}

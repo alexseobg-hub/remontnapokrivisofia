@@ -1,18 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { site, has, telHref } from '@/config/site';
-import { serviceHubs, childrenOf } from '@/lib/content';
+import { serviceHubs, childrenOf, navPages } from '@/lib/content';
 import { cn } from '@/lib/utils';
 import { trackPhoneClick } from '@/lib/analytics';
 
-const PRIMARY = [
-  { to: '/ceni', label: 'Цени' },
-  { to: '/proekti', label: 'Проекти' },
-  { to: '/rayoni', label: 'Райони' },
-  { to: '/za-nas', label: 'За нас' },
-  { to: '/blog', label: 'Блог' },
-  { to: '/kontakti', label: 'Контакти' },
-];
+/** Всичко с отметнато Nav в Notion, без хъба на услугите — той е падащото меню. */
+const primaryLinks = () => navPages().filter((page) => page.slug !== '/uslugi');
 
 function Logo() {
   return (
@@ -171,10 +165,10 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </ul>
         <hr className="hairline" />
         <ul className="mt-6 space-y-3">
-          {PRIMARY.map((item) => (
-            <li key={item.to}>
-              <Link to={item.to} onClick={onClose} className="font-display text-lg font-bold text-graphite-900">
-                {item.label}
+          {primaryLinks().map((item) => (
+            <li key={item.slug}>
+              <Link to={item.slug} onClick={onClose} className="font-display text-lg font-bold text-graphite-900">
+                {item.name}
               </Link>
             </li>
           ))}
@@ -217,9 +211,9 @@ export function Header() {
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Основна навигация">
           <ServicesMenu />
-          {PRIMARY.map((item) => (
-            <NavLink key={item.to} to={item.to} className="nav-link">
-              {item.label}
+          {primaryLinks().map((item) => (
+            <NavLink key={item.slug} to={item.slug} className="nav-link">
+              {item.name}
             </NavLink>
           ))}
         </nav>

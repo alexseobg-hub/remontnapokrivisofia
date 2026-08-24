@@ -137,6 +137,13 @@ export function ancestorsOf(slug: string): ContentPage[] {
   return chain;
 }
 
+/**
+ * Главното меню. Строи се от Notion, а не от твърд списък в кода,
+ * за да няма линкове към страници, които още не съществуват.
+ */
+export const navPages = () =>
+  pages.filter((page) => page.nav && page.slug !== '/').sort((a, b) => a.order - b.order);
+
 export const districts = () => pagesOfType('District').sort((a, b) => a.order - b.order);
 
 export const serviceHubs = () => pagesOfType('Service hub').sort((a, b) => a.order - b.order);
