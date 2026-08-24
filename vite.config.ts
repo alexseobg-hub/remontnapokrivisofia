@@ -1,24 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
+import { resolveSiteUrl, isIndexable } from './scripts/site-url.js';
 
 /**
- * Адресът на сайта захранва canonical, og:url, sitemap и JSON-LD.
+ * Адресът на сайта захранва canonical, og:url, sitemap и JSON-LD. Сметката живее
+ * в scripts/site-url.js, за да е една и съща тук и в prerender-а.
  * Демо адресите и локалните билдове излизат с noindex, за да не се индексират по погрешка.
  */
-function resolveSiteUrl(mode: string) {
-  const explicit = process.env.VITE_SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, '');
-  if (process.env.VERCEL_ENV === 'production' && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return mode === 'production' ? 'https://remontnapokrivisofia.bg' : 'http://localhost:5173';
-}
-
 export default defineConfig(({ mode }) => {
   const siteUrl = resolveSiteUrl(mode);
-  const indexable = siteUrl === 'https://remontnapokrivisofia.bg';
+  const indexable = isIndexable(siteUrl);
 
   return {
     plugins: [react()],

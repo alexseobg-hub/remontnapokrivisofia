@@ -3,13 +3,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { projectRoot, ensureDir } from './notion-api.js';
+import { resolveSiteUrl, isIndexable } from './site-url.js';
 
 const distDir = path.join(projectRoot, 'dist');
 const ssrEntry = path.join(projectRoot, '.ssr', 'entry-server.js');
 const templatePath = path.join(distDir, 'index.html');
 
-const SITE_URL = (process.env.VITE_SITE_URL || 'https://remontnapokrivisofia.bg').replace(/\/$/, '');
-const INDEXABLE = SITE_URL === 'https://remontnapokrivisofia.bg';
+const SITE_URL = resolveSiteUrl('production');
+const INDEXABLE = isIndexable(SITE_URL);
 
 function readTemplate() {
   if (!fs.existsSync(templatePath)) {
