@@ -12,6 +12,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Лентата и менюто се лепят горе. Без този отстъп котвите спират под тях. */
+    scroll-padding-top: calc(var(--header-h, 7rem) + 1rem);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -67,6 +69,10 @@
   .btn-primary { @apply btn bg-brick-600 text-white hover:bg-brick-500; }
   .btn-ghost   { @apply btn border-graphite-300 bg-transparent text-graphite-900 hover:border-graphite-900 hover:bg-graphite-900 hover:text-white; }
   .btn-on-dark { @apply btn border-graphite-600 bg-transparent text-white hover:border-white hover:bg-white hover:text-graphite-900; }
+  /* Телефонът върви с втори цвят, за да не се бие с оранжевия бутон на формата. */
+  .btn-phone   { @apply btn bg-graphite-900 text-white hover:bg-graphite-800; }
+  /* Същият бутон, докато номерът още не е попълнен в Notion. */
+  .btn-phone-empty { @apply btn cursor-default border-dashed border-graphite-400 bg-graphite-100 text-graphite-500; }
   .btn-lg      { @apply px-6 py-4 text-base; }
 
   /* --- Надзаглавие --- */

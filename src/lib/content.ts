@@ -151,6 +151,9 @@ export const serviceHubs = () => pagesOfType('Service hub').sort((a, b) => a.ord
 export const blogPosts = () =>
   pagesOfType('Blog post').sort((a, b) => (b.publishDate || '').localeCompare(a.publishDate || ''));
 
+/** Авторската страница, ако е създадена. Оттам идват адресът и името в подписа. */
+export const authorPage = () => pagesOfType('Author')[0];
+
 /** Съседните квартали за вътрешно свързване: следващите в реда, с превъртане. */
 export function neighbourDistricts(slug: string, count = 3): ContentPage[] {
   const all = districts();

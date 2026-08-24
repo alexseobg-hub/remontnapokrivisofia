@@ -205,7 +205,7 @@ export function Header() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-graphite-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+    <header className="border-b border-graphite-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <div className="shell flex h-[4.5rem] items-center justify-between gap-4">
         <Logo />
 

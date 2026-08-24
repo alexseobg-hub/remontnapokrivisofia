@@ -1,7 +1,7 @@
-import { site, has, telHref, valueOr } from '@/config/site';
+import { site, has, telHref, value, valueOr } from '@/config/site';
 import { trackPhoneClick, trackViberClick } from '@/lib/analytics';
 import { LeadForm } from './LeadForm';
-import { CtaLink } from './ui';
+import { CtaLink, PhoneButton } from './ui';
 
 /** Тъмната лента с формата, която затваря почти всяка страница. */
 export function CtaBlock({
@@ -77,6 +77,10 @@ export function CtaBlock({
         <div className="border border-graphite-700 bg-graphite-800 p-6 sm:p-8">
           <h3 className="mb-5 font-display text-xl font-extrabold text-white">Заявете оглед</h3>
           <LeadForm onDark compact formName={formName} prefill={prefill} />
+          <div className="mt-5 border-t border-graphite-700 pt-5">
+            <p className="mb-3 text-center text-[0.8125rem] text-graphite-400">Или се обадете направо</p>
+            <PhoneButton phone={value('phonePrimary')} href={telHref()} onClick={() => trackPhoneClick(formName)} />
+          </div>
         </div>
       </div>
     </section>

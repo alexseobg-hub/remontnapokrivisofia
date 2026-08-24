@@ -60,12 +60,17 @@ const defaults = {
   callTrackingScript: '{{CALL_TRACKING_SCRIPT}}',
 
   // Автор на блога
-  authorName: 'Александър Иванов',
+  authorName: '{{AUTHOR_NAME}}',
   authorRole: '{{AUTHOR_ROLE}}',
   authorBio: '{{AUTHOR_BIO}}',
   authorBioLong: '{{AUTHOR_BIO_LONG}}',
   authorPhoto: '{{AUTHOR_PHOTO_PATH}}',
   authorLinkedin: '{{AUTHOR_LINKEDIN}}',
+
+  // Горна лента
+  topBarText: '{{TOP_BAR_TEXT}}',
+  topBarLinkLabel: '{{TOP_BAR_LINK_LABEL}}',
+  topBarLinkUrl: '{{TOP_BAR_LINK_URL}}',
 
   // Форма
   formEndpoint: '{{FORM_ENDPOINT}}',

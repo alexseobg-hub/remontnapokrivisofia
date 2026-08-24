@@ -161,6 +161,44 @@ async function fetchPages(api, databaseId) {
   return pages.sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
 }
 
+/* ---------- Плейсхолдъри в текста ---------- */
+
+/**
+ * Правните страници пишат фирмените данни като {{EIK}}, {{EMAIL}} и така нататък.
+ * Тук ги заменяме със стойностите от „Настройки“. Непопълнените остават видими,
+ * за да си личи какво още чака собственика, вместо да изчезнат в празно място.
+ */
+function fillPlaceholders(html, settings) {
+  if (!html) return html;
+  return html.replace(/\{\{([A-Z0-9_]+)\}\}/g, (marker, token) => {
+    const key = SETTING_BY_TOKEN[token];
+    const value = key && settings[key];
+    return value ? escapeHtml(value) : marker;
+  });
+}
+
+const escapeHtml = (input) =>
+  String(input).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+
+/** {{TOKEN}} в текста → Key в базата „Настройки“. */
+const SETTING_BY_TOKEN = {
+  COMPANY_NAME: 'companyName',
+  LEGAL_NAME: 'legalName',
+  EIK: 'eik',
+  VAT_NUMBER: 'vatNumber',
+  PHONE_PRIMARY: 'phonePrimary',
+  EMAIL: 'email',
+  STREET_ADDRESS: 'streetAddress',
+  POSTAL_CODE: 'postalCode',
+  WARRANTY_YEARS: 'warrantyYears',
+  WARRANTY_SCOPE: 'warrantyScope',
+  RETENTION_ENQUIRIES: 'retentionEnquiries',
+  PROCESSORS: 'processors',
+  COOKIE_CONSENT_TTL: 'cookieConsentTtl',
+  ANALYTICS_COOKIES: 'analyticsCookies',
+  COMPLAINT_RESPONSE: 'complaintResponse',
+};
+
 /* ---------- Главна ---------- */
 
 async function main() {
@@ -183,6 +221,11 @@ async function main() {
 
   const pages = await fetchPages(api, requireEnv('NOTION_PAGES_DB'));
   console.log(`  страници:   ${pages.length}`);
+
+  for (const page of pages) {
+    page.html = fillPlaceholders(page.html, settings);
+    page.faq = page.faq.map((item) => ({ q: item.q, a: fillPlaceholders(item.a, settings) }));
+  }
 
   saveManifest();
   ensureDir(path.dirname(outputPath));

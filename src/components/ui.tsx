@@ -98,6 +98,58 @@ export function CtaLink({
   );
 }
 
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4 shrink-0" aria-hidden="true">
+      <path
+        d="M5.2 2.3 6.6 5 5.3 6.4c.8 1.6 2 2.8 3.6 3.6L10.3 8.7 13 10.1v2.6c0 .6-.5 1-1.1.9C6.2 13 3 9.8 2.4 4.1 2.3 3.5 2.7 3 3.3 3h1.9Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Бутонът за обаждане под формата. За разлика от останалите контакти този не
+ * изчезва, докато номерът е празен — стои като видим плейсхолдър, за да си личи
+ * мястото му в оформлението. Плейсхолдърът не е връзка и не показва номер.
+ */
+export function PhoneButton({
+  phone,
+  href,
+  large = false,
+  className,
+  onClick,
+}: {
+  phone: string;
+  href: string;
+  large?: boolean;
+  className?: string;
+  onClick?: () => void;
+}) {
+  if (!phone || !href) {
+    return (
+      <span
+        className={cn('btn-phone-empty w-full', large && 'btn-lg', className)}
+        aria-hidden="true"
+        title="Попълнете „Телефон“ в базата Настройки в Notion"
+      >
+        <PhoneIcon />
+        Телефон — попълнете в Notion
+      </span>
+    );
+  }
+  return (
+    <a href={href} onClick={onClick} className={cn('btn-phone w-full', large && 'btn-lg', className)}>
+      <PhoneIcon />
+      {phone}
+    </a>
+  );
+}
+
 /* ---------- Карти ---------- */
 
 export function Card({

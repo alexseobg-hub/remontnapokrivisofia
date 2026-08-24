@@ -1,6 +1,6 @@
-import { site, meta, has, absoluteUrl } from '@/config/site';
+import { site, meta, has, valueOr, absoluteUrl } from '@/config/site';
 import type { ContentPage, FaqItem, Project } from './content';
-import { districts, pricing, formatPrice } from './content';
+import { districts, pricing, formatPrice, authorPage } from './content';
 
 /*
  * JSON-LD за целия сайт, генериран от базата „Настройки“.
@@ -138,21 +138,38 @@ export function service(page: ContentPage, areaName = 'София'): Json {
   });
 }
 
-export function person(): Json {
+/** Адресът на авторската страница, докато има такава в Notion. */
+const authorUrl = () => {
+  const page = authorPage();
+  return page ? absoluteUrl(page.slug) : '';
+};
+
+/** Името на автора: първо от Настройки, после от заглавието на авторската страница. */
+const authorFullName = () => valueOr('authorName', authorPage()?.name ?? '');
+
+export function person(): Json | undefined {
+  const url = authorUrl();
+  const name = authorFullName();
+  // Без авторска страница и без име няма кого да опишем. По-добре нищо, отколкото празен Person.
+  if (!url || !name) return undefined;
+
   return clean({
     '@type': 'Person',
-    '@id': `${meta.url}/avtori/aleksandar-ivanov#person`,
-    name: site.authorName,
+    '@id': `${url}#person`,
+    name,
     jobTitle: has('authorRole') ? site.authorRole : undefined,
     description: has('authorBio') ? site.authorBio : undefined,
     image: has('authorPhoto') ? absoluteUrl(site.authorPhoto) : undefined,
-    url: `${meta.url}/avtori/aleksandar-ivanov`,
+    url,
     worksFor: { '@id': ORG_ID },
     sameAs: has('authorLinkedin') ? [site.authorLinkedin] : undefined,
   });
 }
 
 export function article(page: ContentPage): Json {
+  const url = authorUrl();
+  const name = authorFullName();
+
   return clean({
     '@type': 'Article',
     headline: page.h1,
@@ -161,7 +178,7 @@ export function article(page: ContentPage): Json {
     datePublished: page.publishDate || undefined,
     dateModified: page.updated || page.publishDate || undefined,
     inLanguage: 'bg-BG',
-    author: { '@id': `${meta.url}/avtori/aleksandar-ivanov#person` },
+    author: url && name ? { '@id': `${url}#person` } : undefined,
     publisher: { '@id': ORG_ID },
     mainEntityOfPage: { '@type': 'WebPage', '@id': absoluteUrl(page.slug) },
   });
@@ -191,11 +208,13 @@ export function contactPage(): Json {
   };
 }
 
-export function profilePage(): Json {
+export function profilePage(): Json | undefined {
+  const url = authorUrl();
+  if (!url || !authorFullName()) return undefined;
   return {
     '@type': 'ProfilePage',
-    url: `${meta.url}/avtori/aleksandar-ivanov`,
-    mainEntity: { '@id': `${meta.url}/avtori/aleksandar-ivanov#person` },
+    url,
+    mainEntity: { '@id': `${url}#person` },
   };
 }
 

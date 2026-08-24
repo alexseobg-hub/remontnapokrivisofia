@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { Project, Testimonial, ContentPage } from '@/lib/content';
-import { formatDate } from '@/lib/content';
+import { formatDate, authorPage, readingMinutes } from '@/lib/content';
+import { heroFor } from '@/lib/stock';
 import { site, has, valueOr } from '@/config/site';
 import { Picture, ImagePlaceholder } from './ui';
 import { cn } from '@/lib/utils';
@@ -91,30 +92,72 @@ export function PageCard({ page, topline = false }: { page: ContentPage; topline
   );
 }
 
+/* ---------- Статия ---------- */
+
+/** Карта за блога: снимка отгоре, заглавие и кратък текст отдолу. */
+export function PostCard({ page }: { page: ContentPage }) {
+  const cover = heroFor(page);
+
+  return (
+    <Link
+      to={page.slug}
+      className="group flex h-full flex-col border border-graphite-200 bg-white transition-colors hover:border-graphite-900"
+    >
+      <div className="aspect-[16/10] w-full overflow-hidden border-b border-graphite-200">
+        {cover ? (
+          <Picture image={cover} sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 90vw" className="h-full w-full" />
+        ) : (
+          <ImagePlaceholder className="h-full w-full" />
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="font-display text-lg font-extrabold leading-snug text-graphite-900 group-hover:text-brick-700">
+          {page.name}
+        </h3>
+        {page.description ? (
+          <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-graphite-600">{page.description}</p>
+        ) : null}
+        <p className="mt-4 flex flex-wrap items-center gap-x-2 text-[0.8125rem] text-graphite-500">
+          {page.publishDate ? <span>{formatDate(page.publishDate)}</span> : null}
+          {page.publishDate ? <span aria-hidden="true">·</span> : null}
+          <span>{readingMinutes(page.wordCount)} мин. четене</span>
+        </p>
+      </div>
+    </Link>
+  );
+}
+
 /* ---------- Автор ---------- */
 
 export function AuthorBox({ compact = false }: { compact?: boolean }) {
+  const author = authorPage();
+  // Името идва от Настройки, а докато е празно — от заглавието на авторската страница.
+  const name = valueOr('authorName', author?.name ?? '');
+  if (!name) return null;
+
   return (
     <aside className={cn('border border-graphite-200 bg-sand-50 p-6', compact ? 'flex gap-4' : 'sm:flex sm:gap-6')}>
       <div className={cn('shrink-0 overflow-hidden bg-graphite-800', compact ? 'h-14 w-14' : 'h-20 w-20')}>
         {has('authorPhoto') ? (
-          <img src={site.authorPhoto} alt={site.authorName} width={80} height={80} className="h-full w-full object-cover" loading="lazy" />
+          <img src={site.authorPhoto} alt={name} width={80} height={80} className="h-full w-full object-cover" loading="lazy" />
         ) : (
           <ImagePlaceholder className="h-full w-full" />
         )}
       </div>
       <div className={compact ? '' : 'mt-4 sm:mt-0'}>
-        <p className="font-display text-base font-extrabold text-graphite-900">{site.authorName}</p>
+        <p className="font-display text-base font-extrabold text-graphite-900">{name}</p>
         <p className="text-[0.8125rem] text-brick-700">{valueOr('authorRole', 'Автор')}</p>
         {has('authorBio') ? (
           <p className="mt-2 text-[0.9375rem] leading-relaxed text-graphite-600">{site.authorBio}</p>
         ) : null}
-        <Link
-          to="/avtori/aleksandar-ivanov"
-          className="mt-3 inline-block font-display text-sm font-bold text-brick-600 hover:text-brick-700"
-        >
-          Повече за автора →
-        </Link>
+        {author ? (
+          <Link
+            to={author.slug}
+            className="mt-3 inline-block font-display text-sm font-bold text-brick-600 hover:text-brick-700"
+          >
+            Повече за автора →
+          </Link>
+        ) : null}
       </div>
     </aside>
   );

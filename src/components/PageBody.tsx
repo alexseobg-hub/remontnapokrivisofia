@@ -6,7 +6,8 @@ import {
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
-import { ProjectCard, TestimonialCard, PageCard } from './cards';
+import { ProjectCard, PageCard, PostCard } from './cards';
+import { TestimonialCarousel } from './TestimonialCarousel';
 import { RoofCalculator } from './RoofCalculator';
 import { LeadForm } from './LeadForm';
 import { CtaLink, Picture, type Tone } from './ui';
@@ -122,10 +123,11 @@ function EmptyNote({ children }: { children: ReactNode }) {
 
 /** Номерирани стъпки. Числото е едро и тухлено — то носи ритъма на блока. */
 function Steps({ items }: { items: string[] }) {
+  if (items.length === 0) return null;
   return (
-    <ol className="my-8 grid gap-px bg-graphite-200 sm:grid-cols-2 lg:grid-cols-5">
+    <ol className={cn('my-8 grid', CELL_GRID, cellColumns(items.length, 5))}>
       {items.map((item, index) => (
-        <li key={index} className="bg-white p-5">
+        <li key={index} className={cn(CELL, 'p-5')}>
           <span className="font-display text-3xl font-extrabold leading-none text-brick-500">
             {String(index + 1).padStart(2, '0')}
           </span>
@@ -155,33 +157,31 @@ function ListCards({ items }: { items: string[] }) {
   );
 }
 
-function TrustBar() {
-  const items = [
-    has('yearsExperience') ? `${site.yearsExperience} години на покриви` : '',
-    has('warrantyYears') ? `Гаранция до ${site.warrantyYears} години` : '',
-    'Безплатен оглед',
-    has('responseTime') ? `Отговор ${site.responseTime}` : 'Писмена оферта',
-  ].filter(Boolean);
+/**
+ * Решетката се рисува с рамки по самите клетки, а не с фон под тях. Фонът
+ * оцветяваше и празните места на последния ред — оттам идваха сивите блокове.
+ * Горният и левият ръб стоят на контейнера, останалите — на всяка клетка.
+ */
+const CELL_GRID = 'border-t border-l border-graphite-200';
+const CELL = 'border-b border-r border-graphite-200 bg-white';
 
-  return (
-    <ul className="my-8 grid gap-px border border-graphite-200 bg-graphite-200 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((item) => (
-        <li key={item} className="flex items-center gap-3 bg-white px-5 py-4">
-          <svg viewBox="0 0 16 16" className="h-4 w-4 shrink-0 text-brick-600" aria-hidden="true">
-            <path d="M2 8.5l4 4 8-9" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="square" />
-          </svg>
-          <span className="font-display text-[0.9375rem] font-bold text-graphite-900">{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+const cellColumns = (count: number, max = 4) => {
+  const cols = Math.min(count, max);
+  if (cols <= 1) return '';
+  if (cols === 2) return 'sm:grid-cols-2';
+  if (cols === 3) return 'sm:grid-cols-2 lg:grid-cols-3';
+  if (cols === 4) return 'sm:grid-cols-2 lg:grid-cols-4';
+  return 'sm:grid-cols-2 lg:grid-cols-5';
+};
 
 function ContactFacts() {
+  const filled = (['phonePrimary', 'email', 'workingHours', 'streetAddress'] as const).filter((key) => has(key)).length;
+  if (filled === 0) return null;
+
   return (
-    <dl className="my-8 grid gap-px border border-graphite-200 bg-graphite-200 sm:grid-cols-2">
+    <dl className={cn('my-8 grid', CELL_GRID, cellColumns(filled))}>
       {has('phonePrimary') ? (
-        <div className="bg-white p-5">
+        <div className={cn(CELL, 'p-5')}>
           <dt className="font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">Телефон</dt>
           <dd className="mt-1">
             <a
@@ -195,7 +195,7 @@ function ContactFacts() {
         </div>
       ) : null}
       {has('email') ? (
-        <div className="bg-white p-5">
+        <div className={cn(CELL, 'p-5')}>
           <dt className="font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">Имейл</dt>
           <dd className="mt-1">
             <a href={`mailto:${site.email}`} className="text-graphite-800 hover:text-brick-600">
@@ -205,13 +205,13 @@ function ContactFacts() {
         </div>
       ) : null}
       {has('workingHours') ? (
-        <div className="bg-white p-5">
+        <div className={cn(CELL, 'p-5')}>
           <dt className="font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">Работно време</dt>
           <dd className="mt-1 text-graphite-800">{site.workingHours}</dd>
         </div>
       ) : null}
       {has('streetAddress') ? (
-        <div className="bg-white p-5">
+        <div className={cn(CELL, 'p-5')}>
           <dt className="font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">Адрес</dt>
           <dd className="mt-1 text-graphite-800">
             {site.streetAddress}, {has('postalCode') ? `${site.postalCode} ` : ''}София
@@ -294,15 +294,16 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
     }
 
     case 'rayoni': {
-      const items = districts();
-      if (items.length === 0) return null;
+      // София води списъка и сочи към началната страница — тя носи столицата.
+      const items = [{ slug: '/', name: 'София' }, ...districts()];
+      if (items.length === 1) return null;
       return (
-        <ul className="my-8 grid gap-px border border-graphite-200 bg-graphite-200 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className={cn('my-8 grid', CELL_GRID, cellColumns(items.length))}>
           {items.map((item) => (
-            <li key={item.slug}>
+            <li key={item.slug} className={CELL}>
               <Link
                 to={item.slug}
-                className="block bg-white px-5 py-4 font-display text-[0.9375rem] font-bold text-graphite-900 hover:bg-sand-100 hover:text-brick-700"
+                className="block px-5 py-4 font-display text-[0.9375rem] font-bold text-graphite-900 hover:bg-sand-100 hover:text-brick-700"
               >
                 {item.name}
               </Link>
@@ -315,13 +316,7 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
     case 'otzivi': {
       // Празна база значи скрита секция. Измислени отзиви не се пишат.
       if (testimonials.length === 0) return null;
-      return (
-        <Grid>
-          {testimonials.slice(0, 6).map((item) => (
-            <TestimonialCard key={`${item.name}-${item.date}`} testimonial={item} />
-          ))}
-        </Grid>
-      );
+      return <TestimonialCarousel items={testimonials} />;
     }
 
     case 'blog': {
@@ -330,7 +325,7 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
       return (
         <Grid>
           {posts.map((post) => (
-            <PageCard key={post.slug} page={post} topline />
+            <PostCard key={post.slug} page={post} />
           ))}
         </Grid>
       );
@@ -344,7 +339,9 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
       return chunk.list?.length ? <ListCards items={chunk.list} /> : null;
 
     case 'trust':
-      return <TrustBar />;
+      // Ползите вече стоят на всяка страница над футъра, затова маркерът не
+      // рисува втори път същото.
+      return null;
 
     case 'kalkulator':
       return (
