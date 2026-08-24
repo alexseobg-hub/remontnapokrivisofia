@@ -60,7 +60,21 @@ export function LeadForm({
 
     setStatus('sending');
     try {
-      const response = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      // Собственият приемник иска JSON; чуждите услуги очакват полетата на формата.
+      const own = endpoint.startsWith('/');
+      const request: RequestInit = own
+        ? {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              ...Object.fromEntries(data.entries()),
+              consent: Boolean(data.get('consent')),
+              page: typeof window === 'undefined' ? '' : window.location.pathname,
+            }),
+          }
+        : { method: 'POST', body: data, headers: { Accept: 'application/json' } };
+
+      const response = await fetch(endpoint, request);
       if (!response.ok) throw new Error(String(response.status));
       setStatus('done');
       trackLead(formName);
