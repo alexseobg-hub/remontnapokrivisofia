@@ -1,0 +1,5 @@
+# Пренасочвания за Cloudflare Pages. Същите, които vercel.json налага.
+# Редът има значение: първото съвпадение печели.
+
+/remont-na-pokrivi-sofia  /  301
+/index.html               /  301

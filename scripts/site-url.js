@@ -31,6 +31,11 @@ export function resolveSiteUrl(mode = process.env.NODE_ENV) {
   }
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
 
+  // Cloudflare не подава собствения домейн на билда — само адреса в pages.dev.
+  // Затова продукцията иска изрично зададен VITE_SITE_URL, а всичко останало
+  // остава на pages.dev и се маркира с noindex.
+  if (process.env.CF_PAGES_URL) return strip(process.env.CF_PAGES_URL);
+
   return mode === 'production' ? PRODUCTION_URL : 'http://localhost:5173';
 }
 
