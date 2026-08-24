@@ -27,9 +27,17 @@ function compose(template, rendered) {
     .replace('<div id="root"></div>', `<div id="root">${rendered.html}</div>`);
 }
 
+/**
+ * Плосък файл, а не папка с index.html.
+ *
+ * `uslugi/index.html` се сервира на адрес с наклонена черта накрая и хостингът
+ * пренасочва `/uslugi` към `/uslugi/`. Тогава всеки canonical и всяка вътрешна
+ * връзка минават през излишен скок. `uslugi.html` се сервира направо на
+ * `/uslugi` — точно адреса, който сайтът обявява за свой.
+ */
 function outputFor(slug) {
   if (slug === '/') return path.join(distDir, 'index.html');
-  return path.join(distDir, slug.replace(/^\//, ''), 'index.html');
+  return path.join(distDir, `${slug.replace(/^\//, '')}.html`);
 }
 
 function sitemap(entries) {
@@ -95,9 +103,11 @@ async function main() {
     written += 1;
   }
 
-  // Vercel и повечето статични хостинги търсят 404.html в корена.
-  const notFound = path.join(distDir, '404', 'index.html');
-  if (fs.existsSync(notFound)) fs.copyFileSync(notFound, path.join(distDir, '404.html'));
+  // Статичните хостинги търсят 404.html в корена. При плоския изход страницата
+  // вече се пише точно там, затова копие не трябва — само проверяваме, че я има.
+  if (!fs.existsSync(path.join(distDir, '404.html'))) {
+    console.warn('  ВНИМАНИЕ: липсва 404.html — грешните адреси ще падат на хостинга.');
+  }
 
   const indexable = content.pages
     .filter((page) => !page.noindex)
