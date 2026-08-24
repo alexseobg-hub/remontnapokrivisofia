@@ -30,6 +30,8 @@ export function LeadForm({
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Errors>({});
   const endpoint = __FORM_ENDPOINT__ || (has('formEndpoint') ? site.formEndpoint : '');
+  /** Нашата функция във Vercel, за разлика от чужда услуга като Formspree. */
+  const ownEndpoint = endpoint.startsWith('/');
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -61,8 +63,7 @@ export function LeadForm({
     setStatus('sending');
     try {
       // Собственият приемник иска JSON; чуждите услуги очакват полетата на формата.
-      const own = endpoint.startsWith('/');
-      const request: RequestInit = own
+      const request: RequestInit = ownEndpoint
         ? {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -241,7 +242,10 @@ export function LeadForm({
         />
       </div>
 
-      {endpoint && !compact ? (
+      {/* Файл минава само към чужда услуга. Собственият приемник праща JSON и
+          не може да носи снимка, затова полето не се показва — по-добре липсва,
+          отколкото да се качи и да се изгуби. */}
+      {endpoint && !ownEndpoint && !compact ? (
         <div>
           <label htmlFor={`${id}-photo`} className={labelClass}>
             Снимка на проблема (по желание)

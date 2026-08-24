@@ -37,6 +37,7 @@ async function saveToNotion(lead) {
       properties: {
         'Име': { title: text(lead.name) },
         'Телефон': { phone_number: lead.phone },
+        'Имейл': { email: lead.email || null },
         'Услуга': { rich_text: text(lead.service) },
         'Съобщение': { rich_text: text(lead.message) },
         'Страница': { rich_text: text(lead.page) },
@@ -63,6 +64,7 @@ async function sendEmail(lead) {
   const lines = [
     `Име: ${lead.name}`,
     `Телефон: ${lead.phone}`,
+    lead.email ? `Имейл: ${lead.email}` : '',
     lead.service ? `Услуга: ${lead.service}` : '',
     lead.district ? `Квартал: ${lead.district}` : '',
     lead.page ? `Страница: ${lead.page}` : '',
@@ -109,6 +111,7 @@ export default async function handler(req, res) {
   const lead = {
     name,
     phone,
+    email: String(body.email ?? '').trim(),
     service: String(body.service ?? '').trim(),
     message: String(body.message ?? '').trim(),
     page: String(body.page ?? '').trim(),
