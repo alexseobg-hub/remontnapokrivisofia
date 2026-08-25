@@ -101,10 +101,16 @@ export function Footer() {
               <span id="footer-areas">Райони</span>
             </ColumnTitle>
             <ul className="space-y-2 text-sm">
+              {/* Столицата води списъка и сочи към началната страница. */}
+              <li>
+                <Link to="/" className="hover:text-white">
+                  Ремонт на покриви в София
+                </Link>
+              </li>
               {areas.map((area) => (
                 <li key={area.slug}>
                   <Link to={area.slug} className="hover:text-white">
-                    {area.name}
+                    Ремонт на покриви в {area.district || area.name}
                   </Link>
                 </li>
               ))}
@@ -163,29 +169,32 @@ export function Footer() {
               {has('workingHours') && <li className="text-graphite-400">{site.workingHours}</li>}
               <li className="text-graphite-400">{meta.areaServed}</li>
             </ul>
-            <Link to="/besplaten-ogled" className="btn-primary mt-6 w-full">
+            <Link to="/bezplaten-ogled" className="btn-primary mt-6 w-full">
               Получи оферта
             </Link>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-graphite-800 py-6 text-xs text-graphite-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
+        {/* Правните страници стояха с дребен сив шрифт и не се забелязваха. */}
+        <div className="mt-12 flex flex-col gap-4 border-t border-graphite-800 py-6 text-sm text-graphite-400 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-graphite-500">
             © {year} {company}. Всички права запазени.
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {legalPages().map((item) => (
               <li key={item.slug}>
-                <Link to={item.slug} className="hover:text-graphite-300">
+                <Link to={item.slug} className="underline underline-offset-4 hover:text-white">
                   {item.name}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link to="/sitemap.xml" reloadDocument className="hover:text-graphite-300">
-                Карта на сайта
-              </Link>
-            </li>
+            {getPage('/karta-na-sayta') ? (
+              <li>
+                <Link to="/karta-na-sayta" className="underline underline-offset-4 hover:text-white">
+                  Карта на сайта
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>

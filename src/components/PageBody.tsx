@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   serviceHubs, childrenOf, districts, projects, projectsInDistrict, projectsForService,
-  testimonials, pagesOfType, type ContentPage,
+  testimonials, pagesOfType, pages, type ContentPage,
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
@@ -310,6 +310,39 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
             </li>
           ))}
         </ul>
+      );
+    }
+
+    case 'karta-na-sayta': {
+      // Карта за хора, не за машини. XML картата остава само за търсачките и
+      // никъде в сайта не се сочи към нея.
+      const groups: { title: string; items: { slug: string; name: string }[] }[] = [
+        { title: 'Основни', items: pages.filter((p) => ['Home', 'Page', 'Pricing'].includes(p.type) && !p.noindex) },
+        { title: 'Услуги', items: pages.filter((p) => p.type === 'Service hub' || p.type === 'Service') },
+        { title: 'Райони', items: pages.filter((p) => p.type === 'District') },
+        { title: 'Блог', items: pages.filter((p) => p.type === 'Blog post' || p.type === 'Author') },
+        { title: 'Правни', items: pages.filter((p) => p.type === 'Legal') },
+      ].filter((group) => group.items.length > 0);
+
+      return (
+        <div className="my-8 grid gap-8 sm:grid-cols-2">
+          {groups.map((group) => (
+            <section key={group.title}>
+              <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">
+                {group.title}
+              </h3>
+              <ul className="space-y-1.5">
+                {group.items.map((item) => (
+                  <li key={item.slug}>
+                    <Link to={item.slug} className="text-[0.9375rem] text-graphite-700 hover:text-brick-600">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
       );
     }
 

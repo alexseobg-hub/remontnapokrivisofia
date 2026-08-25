@@ -31,7 +31,8 @@ function PhoneLink({ className, onDark = false }: { className?: string; onDark?:
       href={telHref()}
       onClick={() => trackPhoneClick('header')}
       className={cn(
-        'font-display text-base font-extrabold tracking-tight',
+        // Дълъг номер не бива да се пренася на два реда и да разваля лентата.
+        'whitespace-nowrap font-display text-[0.9375rem] font-bold tracking-tight',
         onDark ? 'text-white hover:text-brick-300' : 'text-graphite-900 hover:text-brick-600',
         className,
       )}
@@ -189,7 +190,7 @@ function CtaRow({ onClose }: { onClose: () => void }) {
           {site.phonePrimary}
         </a>
       ) : null}
-      <Link to="/besplaten-ogled" onClick={onClose} className="btn-primary btn-lg">
+      <Link to="/bezplaten-ogled" onClick={onClose} className="btn-primary btn-lg">
         Получи оферта
       </Link>
     </>
@@ -220,7 +221,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <PhoneLink className="hidden sm:block" />
-          <Link to="/besplaten-ogled" className="btn-primary hidden md:inline-flex">
+          <Link to="/bezplaten-ogled" className="btn-primary hidden md:inline-flex">
             Получи оферта
           </Link>
           <button

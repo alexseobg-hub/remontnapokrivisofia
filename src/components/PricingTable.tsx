@@ -104,7 +104,7 @@ export function PriceDisclaimer({ withLinks = true }: { withLinks?: boolean }) {
             Пресметнете ориентировъчна стойност
           </Link>{' '}
           или{' '}
-          <Link to="/besplaten-ogled" className="font-medium text-brick-700 underline underline-offset-4">
+          <Link to="/bezplaten-ogled" className="font-medium text-brick-700 underline underline-offset-4">
             заявете безплатен оглед
           </Link>
           .

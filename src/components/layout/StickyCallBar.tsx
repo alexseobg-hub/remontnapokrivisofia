@@ -10,7 +10,7 @@ export function StickyCallBar() {
   if (!has('phonePrimary')) {
     return (
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-graphite-800 bg-graphite-900 p-3 lg:hidden">
-        <Link to="/besplaten-ogled" className="btn-primary w-full">
+        <Link to="/bezplaten-ogled" className="btn-primary w-full">
           Получи оферта
         </Link>
       </div>
@@ -30,7 +30,7 @@ export function StickyCallBar() {
         Обади се
       </a>
       <Link
-        to="/besplaten-ogled"
+        to="/bezplaten-ogled"
         className="flex items-center justify-center bg-brick-600 px-3 py-4 font-display text-[0.9375rem] font-bold text-white"
       >
         Получи оферта

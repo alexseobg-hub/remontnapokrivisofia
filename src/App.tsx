@@ -11,7 +11,7 @@ import * as schema from '@/lib/schema';
 import { has, site } from '@/config/site';
 
 /** Страниците, на които формата стои горе вдясно, а не само в дъното. */
-const LEAD_PAGES = new Set(['/besplaten-ogled', '/kontakti']);
+const LEAD_PAGES = new Set(['/bezplaten-ogled', '/kontakti']);
 
 function headFor(page: ContentPage): ReturnType<typeof buildHead> {
   // Началната страница няма пътека - тя е коренът ѝ.

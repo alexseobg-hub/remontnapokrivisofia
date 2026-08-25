@@ -181,7 +181,7 @@ function MidPageCta({ placement, text = 'Готови сте за оглед?' }
         </div>
         <div className="flex shrink-0 flex-wrap justify-center gap-3">
           <PhoneCta placement={`${placement}-mid`} onDark />
-          <CtaLink to="/besplaten-ogled" large>
+          <CtaLink to="/bezplaten-ogled" large>
             Получи оферта
           </CtaLink>
         </div>
@@ -704,7 +704,7 @@ export function NotFoundPage() {
         ))}
       </div>
       <div className="mt-10">
-        <CtaLink to="/besplaten-ogled" large>
+        <CtaLink to="/bezplaten-ogled" large>
           Получи оферта
         </CtaLink>
       </div>

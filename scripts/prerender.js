@@ -60,6 +60,41 @@ function robots() {
   return `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
 }
 
+/**
+ * Проверява дали всяка вътрешна връзка в изхода води до съществуваща страница.
+ *
+ * Част от връзките са записани в кода, а не идват от Notion. Смени ли се slug
+ * в Notion, тези връзки остават към стария адрес и водят към 404, без никой да
+ * забележи. Затова билдът го казва на глас.
+ */
+function reportBrokenLinks(routes) {
+  const known = new Set(routes);
+  const skip = /^\/(assets|media|stock)\/|\.(xml|txt|svg|ico|png|jpg|webmanifest)$/;
+  const broken = new Map();
+
+  for (const route of routes) {
+    const file = outputFor(route);
+    if (!fs.existsSync(file)) continue;
+    const html = fs.readFileSync(file, 'utf8');
+    for (const match of html.matchAll(/href="(\/[^"#?]*)"/g)) {
+      const href = match[1];
+      if (skip.test(href)) continue;
+      const target = href.length > 1 && href.endsWith('/') ? href.slice(0, -1) : href;
+      if (known.has(target)) continue;
+      if (!broken.has(target)) broken.set(target, new Set());
+      broken.get(target).add(route);
+    }
+  }
+
+  if (broken.size === 0) return;
+  console.warn(`  ВНИМАНИЕ: ${broken.size} вътрешни връзки водят наникъде:`);
+  for (const [target, from] of broken) {
+    const pages = [...from];
+    const where = pages.length > 3 ? `${pages.slice(0, 3).join(', ')} и още ${pages.length - 3}` : pages.join(', ');
+    console.warn(`    ${target}  ←  ${where}`);
+  }
+}
+
 function llms(settings, hubs) {
   const company = settings.companyName || 'Ремонт на покриви София';
   const lines = [
@@ -111,6 +146,8 @@ async function main() {
   if (!fs.existsSync(path.join(distDir, '404.html'))) {
     console.warn('  ВНИМАНИЕ: липсва 404.html — грешните адреси ще падат на хостинга.');
   }
+
+  reportBrokenLinks(routes);
 
   const indexable = content.pages
     .filter((page) => !page.noindex)
