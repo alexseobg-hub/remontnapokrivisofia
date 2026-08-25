@@ -285,7 +285,7 @@ export function LeadForm({
       </div>
 
       <button type="submit" disabled={status === 'sending'} className="btn-primary btn-lg w-full disabled:opacity-70">
-        {status === 'sending' ? 'Изпращане…' : 'Заявете безплатен оглед'}
+        {status === 'sending' ? 'Изпращане…' : 'Получи оферта'}
       </button>
 
       {status === 'error' ? (

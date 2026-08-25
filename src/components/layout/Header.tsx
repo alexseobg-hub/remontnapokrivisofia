@@ -190,7 +190,7 @@ function CtaRow({ onClose }: { onClose: () => void }) {
         </a>
       ) : null}
       <Link to="/besplaten-ogled" onClick={onClose} className="btn-primary btn-lg">
-        Безплатен оглед
+        Получи оферта
       </Link>
     </>
   );
@@ -221,7 +221,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <PhoneLink className="hidden sm:block" />
           <Link to="/besplaten-ogled" className="btn-primary hidden md:inline-flex">
-            Безплатен оглед
+            Получи оферта
           </Link>
           <button
             type="button"

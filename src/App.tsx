@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import {
   HomePage, ServicePage, DistrictPage, ProjectPage, BlogPost, AuthorPage,
   StandardPage, LegalPage, LeadPage, NotFoundPage,
@@ -120,6 +121,7 @@ function PageView() {
 export default function App() {
   return (
     <Layout>
+      <ScrollToTop />
       <Routes>
         <Route path="*" element={<PageView />} />
       </Routes>
