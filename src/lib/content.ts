@@ -179,9 +179,9 @@ export const priceCategories = () => [...new Set(pricing.map((row) => row.catego
 
 export const pricesInCategory = (category: string) => pricing.filter((row) => row.category === category);
 
-/** „от 45 лв./м²“, „45 – 70 лв./м²“ или „По запитване“. Никога измислено число. */
+/** „от 45 лв./м²“, „45 – 70 лв./м²“ или „По договаряне“. Никога измислено число. */
 export function formatPrice(row: PriceRow): string {
-  if (row.from === null && row.to === null) return 'По запитване';
+  if (row.from === null && row.to === null) return 'По договаряне';
   if (row.from !== null && row.to !== null) return `${row.from} – ${row.to} ${row.unit}`;
   const single = row.from ?? row.to;
   return `от ${single} ${row.unit}`;
