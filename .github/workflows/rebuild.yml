@@ -1,0 +1,27 @@
+name: Обновяване от Notion
+
+# Notion не уведомява сайта, когато нещо се промени. Затова билдът се пуска по
+# график, а при нужда — и на ръка от бутона Run workflow.
+on:
+  schedule:
+    # 04:30 UTC всеки ден: 07:30 през зимата, 06:30 през лятото. Преди работния ден.
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Пускане на билд в Cloudflare Pages
+        env:
+          HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Липсва тайната CF_DEPLOY_HOOK. Виж README, раздел „Обновяване от Notion“."
+            exit 1
+          fi
+          code=$(curl -s -o /tmp/out.txt -w '%{http_code}' -X POST "$HOOK")
+          echo "Отговор: $code"
+          cat /tmp/out.txt
+          # Cloudflare връща 200 при приет билд. Всичко друго е повод да се погледне.
+          [ "$code" = "200" ] || exit 1
