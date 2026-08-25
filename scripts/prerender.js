@@ -79,6 +79,9 @@ function llms(settings, hubs) {
   if (settings.phonePrimary) lines.push(`Телефон: ${settings.phonePrimary}`);
   if (settings.workingHours) lines.push(`Работно време: ${settings.workingHours}`);
   lines.push('Обслужвана територия: София и София област', '');
+  // Кога съдържанието е дърпано от Notion. Единственият начин отвън да се провери
+  // дали билдът наистина е обновил текста, или сървърът връща старото.
+  lines.push(`<!-- Съдържанието е обновено от Notion на ${new Date().toISOString()} -->`, '');
   return lines.join('\n');
 }
 
