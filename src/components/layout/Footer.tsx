@@ -93,10 +93,19 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              {/* Блогът и калкулаторът не са услуги, но ги няма в горното меню
+                  и това е единственото място, откъдето се стига до тях. */}
               {getPage('/kalkulator') ? (
                 <li className="pt-1">
                   <Link to="/kalkulator" className="font-bold text-brick-300 hover:text-brick-200">
                     Калкулатор за цена →
+                  </Link>
+                </li>
+              ) : null}
+              {getPage('/blog') ? (
+                <li>
+                  <Link to="/blog" className="font-bold text-brick-300 hover:text-brick-200">
+                    Блог за покриви →
                   </Link>
                 </li>
               ) : null}

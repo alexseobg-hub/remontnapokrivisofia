@@ -11,7 +11,8 @@ import { Breadcrumbs, type Crumb } from '@/components/Breadcrumbs';
 import { FaqAccordion } from '@/components/FaqAccordion';
 import { BandedBody, PlainBody, nextToneAfter, flipTone } from '@/components/PageBody';
 import { CtaBlock } from '@/components/CtaBlock';
-import { AuthorBox, PageCard, ProjectCard } from '@/components/cards';
+import { AuthorBox, PageCard, PostCard, ProjectCard } from '@/components/cards';
+import { Carousel } from '@/components/Carousel';
 import { CtaLink, ImagePlaceholder, PhoneButton, Picture, Section, SectionHead, type Tone } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { trackPhoneClick } from '@/lib/analytics';
@@ -205,6 +206,38 @@ function TestimonialSection({ tone = 'sand' }: { tone?: Tone }) {
   );
 }
 
+/**
+ * Статиите от блога, плъзгащи се. Докато статиите са малко, каруселът се държи
+ * като обикновен ред карти — управлението се показва само когато има какво да
+ * се превърта.
+ */
+function BlogSection({ tone = 'sand' }: { tone?: Tone }) {
+  const posts = blogPosts();
+  if (posts.length === 0) return null;
+
+  return (
+    <Section tone={tone}>
+      <SectionHead
+        eyebrow="Блог"
+        title="Полезно за покрива"
+        lede="Какво да гледате, преди да викнете майстор, и какво да питате, когато дойде."
+      />
+      <Carousel
+        items={posts}
+        keyOf={(post) => post.slug}
+        renderItem={(post) => <PostCard page={post} />}
+        itemClass="w-[85%] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"
+        labels={{ prev: 'Предишни статии', next: 'Следващи статии', pages: 'Страници със статии' }}
+      />
+      <div className="mt-8">
+        <Link to="/blog" className="font-display font-bold text-brick-700 hover:text-brick-800">
+          Всички статии →
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
 function FaqSection({ page, tone = 'white' }: { page: ContentPage; tone?: Tone }) {
   if (page.faq.length === 0) return null;
   return (
@@ -235,6 +268,7 @@ function RelatedLinks({ title, pages, tone = 'sand' }: { title: string; pages: C
 
 export function HomePage({ page }: { page: ContentPage }) {
   const heroImage = heroFor(page);
+  const toneFaq = nextToneAfter(page, 'white');
 
   return (
     <>
@@ -276,7 +310,8 @@ export function HomePage({ page }: { page: ContentPage }) {
       <Benefits />
       <BandedBody page={page} startTone="white" />
       <MidPageCta placement="home" />
-      <FaqSection page={page} tone={nextToneAfter(page, 'white')} />
+      <FaqSection page={page} tone={toneFaq} />
+      <BlogSection tone={page.faq.length > 0 ? flipTone(toneFaq) : toneFaq} />
       <CtaBlock formName="home" />
     </>
   );
