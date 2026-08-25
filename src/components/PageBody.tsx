@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   serviceHubs, childrenOf, districts, projects, projectsInDistrict, projectsForService,
-  testimonials, pagesOfType, pages, type ContentPage,
+  testimonials, pagesOfType, pages, priceCategories, type ContentPage,
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
@@ -254,10 +254,23 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
     }
 
     case 'ceni': {
-      const keys = arg.includes(',') || (arg && !arg.includes(' ')) ? arg.split(',').map((k) => k.trim()).filter(Boolean) : undefined;
+      /*
+       * Категория или списък от ключове. Преди се решаваше по това дали има
+       * интервал, затова „Ремонт“ и „Улуци“ се търсеха като ключове и таблицата
+       * излизаше празна. Сега първо се пита самият ценоразпис какви категории има.
+       */
+      const parts = arg.split(',').map((part) => part.trim()).filter(Boolean);
+      const category = parts.length === 1 && priceCategories().includes(parts[0]) ? parts[0] : undefined;
+
       return (
         <div className="my-8">
-          {arg && keys ? <PricingTable keys={keys} /> : arg ? <PricingTable category={arg} /> : <PricingTable grouped />}
+          {category ? (
+            <PricingTable category={category} />
+          ) : parts.length > 0 ? (
+            <PricingTable keys={parts} />
+          ) : (
+            <PricingTable grouped />
+          )}
           <PriceDisclaimer />
         </div>
       );
