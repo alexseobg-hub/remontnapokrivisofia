@@ -180,12 +180,19 @@ function fillPlaceholders(html, settings) {
 const escapeHtml = (input) =>
   String(input).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
 
-/** {{TOKEN}} в текста → Key в базата „Настройки“. */
+/**
+ * {{TOKEN}} в текста → Key в базата „Настройки“.
+ *
+ * Фирмените данни в правните страници четат отделни ключове с представка legal.
+ * Така регистрацията стои там, където законът я иска, без името и ЕИК-то да
+ * излизат във футъра, в рекламния текст или в структурираните данни.
+ */
 const SETTING_BY_TOKEN = {
   COMPANY_NAME: 'companyName',
-  LEGAL_NAME: 'legalName',
-  EIK: 'eik',
-  VAT_NUMBER: 'vatNumber',
+  LEGAL_NAME: 'legalEntityName',
+  EIK: 'legalEik',
+  VAT_NUMBER: 'legalVat',
+  LEGAL_ADDRESS: 'legalAddress',
   PHONE_PRIMARY: 'phonePrimary',
   EMAIL: 'email',
   STREET_ADDRESS: 'streetAddress',

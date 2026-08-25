@@ -11,7 +11,15 @@ function basePrice(row: PriceRow): number | null {
   return row.from ?? row.to;
 }
 
-const PER_AREA = new Set(['лв./м²']);
+/**
+ * В сметката влизат само дейностите с цена на квадрат — независимо от валутата.
+ * Проверката беше по точния низ „лв./м²“ и калкулаторът замлъкна в деня, в който
+ * ценоразписът мина в евро.
+ */
+const isPerArea = (unit: string) => unit.includes('м²');
+
+/** Валутата идва от самия ценоразпис, за да не се разминава с таблицата. */
+const currencyOf = (rows: PriceRow[]) => (rows[0]?.unit.startsWith('€') ? '€' : 'лв.');
 
 export function RoofCalculator() {
   const [area, setArea] = useState(100);
@@ -22,7 +30,8 @@ export function RoofCalculator() {
   const [shown, setShown] = useState(false);
 
   // Само дейностите с цена на квадрат влизат в сметката. Останалите се уточняват при огледа.
-  const options = useMemo(() => pricing.filter((row) => PER_AREA.has(row.unit)), []);
+  const options = useMemo(() => pricing.filter((row) => isPerArea(row.unit)), []);
+  const currency = useMemo(() => currencyOf(options), [options]);
 
   const result = useMemo(() => {
     const rows = options.filter((row) => picked.includes(row.key));
@@ -188,7 +197,7 @@ export function RoofCalculator() {
               Ориентировъчна стойност
             </p>
             <p className="mt-1 font-display text-3xl font-extrabold text-graphite-900">
-              {bg(result.low)} – {bg(result.high)} лв.
+              {bg(result.low)} – {bg(result.high)} {currency}
             </p>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-graphite-700">
               Това е груба оценка от ценоразписа, не оферта. Истинската цена зависи от състоянието на конструкцията,
@@ -215,7 +224,7 @@ export function RoofCalculator() {
             access: calculator.access[access].label,
             floors: calculator.floors[floors].label,
             services: options.filter((row) => picked.includes(row.key)).map((row) => row.service).join(', '),
-            estimate: result ? `${result.low}-${result.high} лв.` : '',
+            estimate: result ? `${result.low}-${result.high} ${currency}` : "",
           }}
         />
       </aside>
