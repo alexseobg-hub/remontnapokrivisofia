@@ -43,12 +43,30 @@ export const ALL: Consent = { statistics: true, marketing: true, preferences: tr
 /** Версията се вдига, когато категориите се променят, за да се пита наново. */
 const KEY = 'rps-consent-v2';
 
+/**
+ * Шест месеца. Съгласието не бива да важи вечно — човек забравя какво е избрал
+ * преди две години, а надзорните органи очакват да бъде подновявано. След срока
+ * записът се смята за липсващ и лентата пита наново.
+ */
+const MAX_AGE_DAYS = 180;
+
+interface Stored extends Consent {
+  at?: number;
+}
+
 export function readConsent(): Consent | null {
   if (typeof localStorage === 'undefined') return null;
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<Consent>;
+    const parsed = JSON.parse(raw) as Partial<Stored>;
+
+    const age = Date.now() - (parsed.at ?? 0);
+    if (age > MAX_AGE_DAYS * 24 * 60 * 60 * 1000) {
+      localStorage.removeItem(KEY);
+      return null;
+    }
+
     return {
       statistics: parsed.statistics === true,
       marketing: parsed.marketing === true,
@@ -61,7 +79,7 @@ export function readConsent(): Consent | null {
 
 export function writeConsent(consent: Consent) {
   if (typeof localStorage === 'undefined') return;
-  localStorage.setItem(KEY, JSON.stringify(consent));
+  localStorage.setItem(KEY, JSON.stringify({ ...consent, at: Date.now() } satisfies Stored));
 }
 
 /** Има ли изобщо нещо прието извън задължителните. */
