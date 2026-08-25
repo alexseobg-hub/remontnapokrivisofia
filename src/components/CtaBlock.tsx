@@ -79,7 +79,7 @@ export function CtaBlock({
           <LeadForm onDark compact formName={formName} prefill={prefill} />
           <div className="mt-5 border-t border-graphite-700 pt-5">
             <p className="mb-3 text-center text-[0.8125rem] text-graphite-400">Или се обадете направо</p>
-            <PhoneButton phone={value('phonePrimary')} href={telHref()} onClick={() => trackPhoneClick(formName)} />
+            <PhoneButton phone={value('phonePrimary')} href={telHref()} onDark onClick={() => trackPhoneClick(formName)} />
           </div>
         </div>
       </div>

@@ -69,8 +69,19 @@
   .btn-primary { @apply btn bg-brick-600 text-white hover:bg-brick-500; }
   .btn-ghost   { @apply btn border-graphite-300 bg-transparent text-graphite-900 hover:border-graphite-900 hover:bg-graphite-900 hover:text-white; }
   .btn-on-dark { @apply btn border-graphite-600 bg-transparent text-white hover:border-white hover:bg-white hover:text-graphite-900; }
-  /* Телефонът върви с втори цвят, за да не се бие с оранжевия бутон на формата. */
-  .btn-phone   { @apply btn bg-graphite-900 text-white hover:bg-graphite-800; }
+  /*
+   * Телефонът е втората стъпка, не първата. Очертан в тухлено: същото семейство
+   * като главния бутон, но без плътен фон — двата не се бият, а личи кой води.
+   * Плътният графитен вариант изчезваше върху тъмната карта на формата.
+   */
+  .btn-phone {
+    @apply btn border-2 border-brick-600 bg-transparent text-brick-700
+           hover:bg-brick-50 hover:border-brick-700;
+  }
+  .btn-phone-dark {
+    @apply btn border-2 border-brick-400 bg-transparent text-brick-300
+           hover:bg-brick-900/40 hover:border-brick-300;
+  }
   /* Същият бутон, докато номерът още не е попълнен в Notion. */
   .btn-phone-empty { @apply btn cursor-default border-dashed border-graphite-400 bg-graphite-100 text-graphite-500; }
   .btn-lg      { @apply px-6 py-4 text-base; }

@@ -56,6 +56,7 @@ function PhoneUnderForm({ placement, onDark = false }: { placement: string; onDa
       <PhoneButton
         phone={value('phonePrimary')}
         href={telHref()}
+        onDark={onDark}
         onClick={() => trackPhoneClick(placement)}
       />
     </div>

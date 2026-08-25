@@ -121,12 +121,15 @@ export function PhoneButton({
   phone,
   href,
   large = false,
+  onDark = false,
   className,
   onClick,
 }: {
   phone: string;
   href: string;
   large?: boolean;
+  /** Върху тъмна карта рамката и текстът светват, иначе бутонът се губи. */
+  onDark?: boolean;
   className?: string;
   onClick?: () => void;
 }) {
@@ -143,7 +146,11 @@ export function PhoneButton({
     );
   }
   return (
-    <a href={href} onClick={onClick} className={cn('btn-phone w-full', large && 'btn-lg', className)}>
+    <a
+      href={href}
+      onClick={onClick}
+      className={cn(onDark ? 'btn-phone-dark' : 'btn-phone', 'w-full', large && 'btn-lg', className)}
+    >
       <PhoneIcon />
       {phone}
     </a>
