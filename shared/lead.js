@@ -57,16 +57,21 @@ async function sendEmail(lead, config) {
     lead.message || '(без описание)',
   ].filter(Boolean);
 
-  await fetch('https://api.resend.com/emails', {
+  const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${config.resendKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: config.emailFrom,
       to: config.emailTo.split(',').map((address) => address.trim()),
-      subject: `Ново запитване от ${lead.name}`,
+      // Отговорът отива право при клиента, а не при сайта.
+      ...(lead.email ? { reply_to: lead.email } : {}),
+      // Телефонът е в темата, за да се вижда от списъка, без да се отваря.
+      subject: `Запитване: ${lead.name}, ${lead.phone}`,
       text: lines.join('\n'),
     }),
   });
+
+  if (!response.ok) throw new Error(`Resend ${response.status}: ${await response.text()}`);
 }
 
 /**
