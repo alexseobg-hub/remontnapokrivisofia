@@ -92,6 +92,13 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              {getPage('/kalkulator') ? (
+                <li className="pt-1">
+                  <Link to="/kalkulator" className="font-bold text-brick-300 hover:text-brick-200">
+                    Калкулатор за цена →
+                  </Link>
+                </li>
+              ) : null}
             </ul>
           </nav>
 
