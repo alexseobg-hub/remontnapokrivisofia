@@ -40,21 +40,32 @@ export function loadAnalytics() {
     // eslint-disable-next-line prefer-rest-params
     window.dataLayer?.push(arguments);
   };
-  window.gtag('js', new Date());
+
+  /*
+   * Едно от двете, никога и двете. Контейнерът на Tag Manager почти винаги
+   * съдържа и таг за GA4; заредят ли се заедно, всяко посещение се брои
+   * два пъти и числата стават безполезни.
+   */
+  if (has('gtmId')) {
+    if (has('gaId')) {
+      console.warn('Зададени са и GTM, и GA4. Зарежда се само GTM, за да не се брои двойно.');
+    }
+    // Събитието gtm.js е това, което пуска задействанията в контейнера.
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${site.gtmId}`;
+    document.head.appendChild(script);
+    return;
+  }
 
   if (has('gaId')) {
+    window.gtag('js', new Date());
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${site.gaId}`;
     document.head.appendChild(script);
     window.gtag('config', site.gaId, { anonymize_ip: true });
-  }
-
-  if (has('gtmId')) {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtm.js?id=${site.gtmId}`;
-    document.head.appendChild(script);
   }
 }
 

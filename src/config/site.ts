@@ -57,7 +57,6 @@ const defaults = {
   gaId: '{{GA4_MEASUREMENT_ID}}',
   gtmId: '{{GTM_ID}}',
   gscVerification: '{{GSC_VERIFICATION_TOKEN}}',
-  callTrackingScript: '{{CALL_TRACKING_SCRIPT}}',
 
   // Автор на блога
   authorName: '{{AUTHOR_NAME}}',
