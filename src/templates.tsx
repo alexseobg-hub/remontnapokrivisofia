@@ -71,7 +71,7 @@ function PhoneUnderForm({ placement, onDark = false }: { placement: string; onDa
 function TrustStrip({ onDark = false }: { onDark?: boolean }) {
   const items = [
     has('yearsExperience') ? `${site.yearsExperience} години опит` : '',
-    has('warrantyYears') ? `Гаранция до ${site.warrantyYears} години` : '',
+    has('warrantyYears') ? `Гаранция ${site.warrantyYears} години` : '',
     'Безплатен оглед на място',
     has('responseTime') ? `Отговор ${site.responseTime}` : '',
   ].filter(Boolean);
