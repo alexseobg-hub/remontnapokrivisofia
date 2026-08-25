@@ -39,7 +39,15 @@ export function resolveSiteUrl(mode = process.env.NODE_ENV) {
   return mode === 'production' ? PRODUCTION_URL : 'http://localhost:5173';
 }
 
-/** Индексира се само истинският домейн. Всичко останало е демо и стои с noindex. */
+/**
+ * Индексира се само истинският домейн. Всичко останало е демо и стои с noindex.
+ *
+ * SITE_NOINDEX=1 спира индексирането и на истинския домейн. Ползва се, докато
+ * съдържанието още не е за клиенти — по-добре сайтът да го няма в Google,
+ * отколкото да влезе с празни телефони и примерни отзиви.
+ */
 export function isIndexable(siteUrl) {
+  const off = String(process.env.SITE_NOINDEX ?? '').toLowerCase();
+  if (off === '1' || off === 'true' || off === 'yes') return false;
   return siteUrl === PRODUCTION_URL;
 }

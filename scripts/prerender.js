@@ -117,7 +117,14 @@ async function main() {
     .map((page) => ({ slug: page.slug, updated: page.updated || page.publishDate || '' }))
     .concat(content.projects.map((project) => ({ slug: project.slug, updated: project.date || '' })));
 
-  fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap(indexable), 'utf8');
+  // При забранено индексиране sitemap не се пише. Карта, която сочи 60 адреса,
+  // докато robots.txt ги забранява, е противоречив сигнал.
+  const sitemapPath = path.join(distDir, 'sitemap.xml');
+  if (INDEXABLE) {
+    fs.writeFileSync(sitemapPath, sitemap(indexable), 'utf8');
+  } else if (fs.existsSync(sitemapPath)) {
+    fs.rmSync(sitemapPath);
+  }
   fs.writeFileSync(path.join(distDir, 'robots.txt'), robots(), 'utf8');
   fs.writeFileSync(
     path.join(distDir, 'llms.txt'),
@@ -125,8 +132,11 @@ async function main() {
     'utf8',
   );
 
-  console.log(`Изписани ${written} страници, ${indexable.length} адреса в sitemap.xml`);
-  if (!INDEXABLE) console.log('Билдът е с noindex, защото адресът не е продукционният.');
+  console.log(`Изписани ${written} страници, ${INDEXABLE ? `${indexable.length} адреса в sitemap.xml` : 'без sitemap'}`);
+  if (!INDEXABLE) {
+    const why = process.env.SITE_NOINDEX ? 'зададено е SITE_NOINDEX' : `адресът е ${SITE_URL}, не продукционният`;
+    console.log(`Билдът е с noindex: ${why}.`);
+  }
 }
 
 main().catch((error) => {
