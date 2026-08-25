@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { site, has, telHref, meta } from '@/config/site';
 import { serviceHubs, districts, navPages, getPage } from '@/lib/content';
+import { OPEN_PREFERENCES } from '@/components/CookieBanner';
 import { trackPhoneClick } from '@/lib/analytics';
 
 const LEGAL_SLUGS = ['/politika-za-poveritelnost', '/politika-za-biskvitki', '/obshti-usloviya'];
@@ -200,6 +201,18 @@ export function Footer() {
                 <Link to="/karta-na-sayta" className="underline underline-offset-4 hover:text-white">
                   Карта на сайта
                 </Link>
+              </li>
+            ) : null}
+            {/* Законът иска изборът да може да се промени по всяко време. */}
+            {has('gaId') || has('gtmId') ? (
+              <li>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event(OPEN_PREFERENCES))}
+                  className="underline underline-offset-4 hover:text-white"
+                >
+                  Бисквитки
+                </button>
               </li>
             ) : null}
           </ul>
