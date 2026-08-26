@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { projectRoot, ensureDir } from './notion-api.js';
 
 /*
@@ -35,8 +36,28 @@ const WIDTHS = [640, 1024, 1600];
 const outDir = path.join(projectRoot, 'public', 'stock');
 const manifestPath = path.join(projectRoot, 'src', 'data', 'stock.json');
 
+/*
+ * Отпечатък от съдържанието в самото име.
+ *
+ * `_headers` обещава на тези файлове кеш за цяла година с `immutable` — тоест
+ * че на този адрес завинаги стои същото. Имената обаче бяха постоянни, а
+ * съдържанието се сменяше: подмениш ли снимка, посетителите и Cloudflare
+ * продължават да раздават старата, докато годината изтече.
+ *
+ * С отпечатъка новото съдържание получава нов адрес и стигна веднага.
+ */
+const stamp = (buffer) => crypto.createHash('sha256').update(buffer).digest('hex').slice(0, 8);
+
+async function write(buffer, key, width, format) {
+  const file = `${key}-${width}.${stamp(buffer)}.${format}`;
+  fs.writeFileSync(path.join(outDir, file), buffer);
+  return file;
+}
+
 async function main() {
   const { default: sharp } = await import('sharp');
+  // Старите отпечатъци се трупат при всяко пускане, ако не се чисти.
+  if (fs.existsSync(outDir)) fs.rmSync(outDir, { recursive: true });
   ensureDir(outDir);
   const manifest = {};
 
@@ -56,24 +77,23 @@ async function main() {
     for (const format of ['avif', 'webp']) {
       const parts = [];
       for (const width of targets) {
-        const file = `${item.key}-${width}.${format}`;
         const pipeline = sharp(buffer).resize({ width, withoutEnlargement: true });
         // Тематичните снимки стоят под тъмен градиент на 35-45% плътност или
         // като малки корици. AVIF на 52 тежеше 60 килобайта за 1024 пиксела и
         // забавяше най-голямото изрисуване. На 40 пада на 35, а разликата не
         // се вижда там, където снимките наистина се показват.
-        await (format === 'avif' ? pipeline.avif({ quality: 40 }) : pipeline.webp({ quality: 70 })).toFile(
-          path.join(outDir, file),
-        );
-        parts.push(`/stock/${file} ${width}w`);
+        const out = await (format === 'avif' ? pipeline.avif({ quality: 40 }) : pipeline.webp({ quality: 70 })).toBuffer();
+        parts.push(`/stock/${await write(out, item.key, width, format)} ${width}w`);
       }
       sources.push({ type: `image/${format}`, srcset: parts.join(', ') });
     }
 
     const widest = targets[targets.length - 1];
-    const fallback = `${item.key}-${widest}.jpg`;
-    await sharp(buffer).resize({ width: widest, withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true })
-      .toFile(path.join(outDir, fallback));
+    const fallbackBuffer = await sharp(buffer)
+      .resize({ width: widest, withoutEnlargement: true })
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toBuffer();
+    const fallback = await write(fallbackBuffer, item.key, widest, 'jpg');
 
     manifest[item.key] = {
       src: `/stock/${fallback}`,

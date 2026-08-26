@@ -1,17 +1,17 @@
 {
   "keremidi-pokriv": {
-    "src": "/stock/keremidi-pokriv-1600.jpg",
+    "src": "/stock/keremidi-pokriv-1600.fa734bc1.jpg",
     "width": 1600,
     "height": 1067,
     "alt": "Керемиден покрив на фона на синьо небе",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/keremidi-pokriv-640.avif 640w, /stock/keremidi-pokriv-1024.avif 1024w, /stock/keremidi-pokriv-1600.avif 1600w"
+        "srcset": "/stock/keremidi-pokriv-640.78dcf68d.avif 640w, /stock/keremidi-pokriv-1024.741c7664.avif 1024w, /stock/keremidi-pokriv-1600.503c0456.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/keremidi-pokriv-640.webp 640w, /stock/keremidi-pokriv-1024.webp 1024w, /stock/keremidi-pokriv-1600.webp 1600w"
+        "srcset": "/stock/keremidi-pokriv-640.4464a6de.webp 640w, /stock/keremidi-pokriv-1024.35b9613b.webp 1024w, /stock/keremidi-pokriv-1600.62dfdc97.webp 1600w"
       }
     ],
     "credit": {
@@ -23,18 +23,18 @@
     "use": "Начална страница, основна снимка"
   },
   "narezhdane-keremidi": {
-    "src": "/stock/narezhdane-keremidi-1600.jpg",
+    "src": "/stock/narezhdane-keremidi-1600.3c6f0f4c.jpg",
     "width": 1600,
     "height": 2400,
     "alt": "Нареждане на керамични керемиди по скат",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/narezhdane-keremidi-640.avif 640w, /stock/narezhdane-keremidi-1024.avif 1024w, /stock/narezhdane-keremidi-1600.avif 1600w"
+        "srcset": "/stock/narezhdane-keremidi-640.24dacf7a.avif 640w, /stock/narezhdane-keremidi-1024.a6da946d.avif 1024w, /stock/narezhdane-keremidi-1600.f96143b7.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/narezhdane-keremidi-640.webp 640w, /stock/narezhdane-keremidi-1024.webp 1024w, /stock/narezhdane-keremidi-1600.webp 1600w"
+        "srcset": "/stock/narezhdane-keremidi-640.61325b75.webp 640w, /stock/narezhdane-keremidi-1024.c4734d79.webp 1024w, /stock/narezhdane-keremidi-1600.e1298459.webp 1600w"
       }
     ],
     "credit": {
@@ -46,18 +46,18 @@
     "use": "Ремонт на покриви, пренареждане"
   },
   "bitumni-keremidi": {
-    "src": "/stock/bitumni-keremidi-1600.jpg",
+    "src": "/stock/bitumni-keremidi-1600.b2aa3ae4.jpg",
     "width": 1600,
     "height": 1200,
     "alt": "Покрив от битумни керемиди отблизо",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/bitumni-keremidi-640.avif 640w, /stock/bitumni-keremidi-1024.avif 1024w, /stock/bitumni-keremidi-1600.avif 1600w"
+        "srcset": "/stock/bitumni-keremidi-640.ed429b0d.avif 640w, /stock/bitumni-keremidi-1024.a5c00e33.avif 1024w, /stock/bitumni-keremidi-1600.4dfe504d.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/bitumni-keremidi-640.webp 640w, /stock/bitumni-keremidi-1024.webp 1024w, /stock/bitumni-keremidi-1600.webp 1600w"
+        "srcset": "/stock/bitumni-keremidi-640.2161da62.webp 640w, /stock/bitumni-keremidi-1024.895bf8eb.webp 1024w, /stock/bitumni-keremidi-1600.c45b5c19.webp 1600w"
       }
     ],
     "credit": {
@@ -69,18 +69,18 @@
     "use": "Покривни покрития"
   },
   "nov-pokriv": {
-    "src": "/stock/nov-pokriv-1600.jpg",
+    "src": "/stock/nov-pokriv-1600.1127d3a2.jpg",
     "width": 1600,
     "height": 961,
     "alt": "Новопостроени къщи с готови покриви",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/nov-pokriv-640.avif 640w, /stock/nov-pokriv-1024.avif 1024w, /stock/nov-pokriv-1600.avif 1600w"
+        "srcset": "/stock/nov-pokriv-640.8b9e4ae7.avif 640w, /stock/nov-pokriv-1024.79c91249.avif 1024w, /stock/nov-pokriv-1600.e2f71b88.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/nov-pokriv-640.webp 640w, /stock/nov-pokriv-1024.webp 1024w, /stock/nov-pokriv-1600.webp 1600w"
+        "srcset": "/stock/nov-pokriv-640.982258d6.webp 640w, /stock/nov-pokriv-1024.c0082fc5.webp 1024w, /stock/nov-pokriv-1600.7d887150.webp 1600w"
       }
     ],
     "credit": {
@@ -92,18 +92,18 @@
     "use": "Изграждане на покриви"
   },
   "toploizolaciya": {
-    "src": "/stock/toploizolaciya-1600.jpg",
+    "src": "/stock/toploizolaciya-1600.6c1e1db4.jpg",
     "width": 1600,
     "height": 1068,
     "alt": "Полагане на минерална вата в подпокривно пространство",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/toploizolaciya-640.avif 640w, /stock/toploizolaciya-1024.avif 1024w, /stock/toploizolaciya-1600.avif 1600w"
+        "srcset": "/stock/toploizolaciya-640.940a0f55.avif 640w, /stock/toploizolaciya-1024.52e8c2cb.avif 1024w, /stock/toploizolaciya-1600.32c5b95c.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/toploizolaciya-640.webp 640w, /stock/toploizolaciya-1024.webp 1024w, /stock/toploizolaciya-1600.webp 1600w"
+        "srcset": "/stock/toploizolaciya-640.b379ba15.webp 640w, /stock/toploizolaciya-1024.7468da0e.webp 1024w, /stock/toploizolaciya-1600.fe049ff4.webp 1600w"
       }
     ],
     "credit": {
@@ -115,18 +115,18 @@
     "use": "Топлоизолация"
   },
   "instrumenti": {
-    "src": "/stock/instrumenti-1600.jpg",
+    "src": "/stock/instrumenti-1600.fb4fb79d.jpg",
     "width": 1600,
     "height": 1067,
     "alt": "Ръчни инструменти върху дървена повърхност",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/instrumenti-640.avif 640w, /stock/instrumenti-1024.avif 1024w, /stock/instrumenti-1600.avif 1600w"
+        "srcset": "/stock/instrumenti-640.f8299be6.avif 640w, /stock/instrumenti-1024.ac39622c.avif 1024w, /stock/instrumenti-1600.49430341.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/instrumenti-640.webp 640w, /stock/instrumenti-1024.webp 1024w, /stock/instrumenti-1600.webp 1600w"
+        "srcset": "/stock/instrumenti-640.55ca8727.webp 640w, /stock/instrumenti-1024.e573cc29.webp 1024w, /stock/instrumenti-1600.d273b6d3.webp 1600w"
       }
     ],
     "credit": {
@@ -138,18 +138,18 @@
     "use": "Процес, за нас"
   },
   "kashta-keremidi": {
-    "src": "/stock/kashta-keremidi-1600.jpg",
+    "src": "/stock/kashta-keremidi-1600.f2d0700a.jpg",
     "width": 1600,
     "height": 2130,
     "alt": "Тухлена къща с керемиден покрив",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/kashta-keremidi-640.avif 640w, /stock/kashta-keremidi-1024.avif 1024w, /stock/kashta-keremidi-1600.avif 1600w"
+        "srcset": "/stock/kashta-keremidi-640.4466e84c.avif 640w, /stock/kashta-keremidi-1024.86fac3af.avif 1024w, /stock/kashta-keremidi-1600.5fbfd225.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/kashta-keremidi-640.webp 640w, /stock/kashta-keremidi-1024.webp 1024w, /stock/kashta-keremidi-1600.webp 1600w"
+        "srcset": "/stock/kashta-keremidi-640.a8695cde.webp 640w, /stock/kashta-keremidi-1024.56874775.webp 1024w, /stock/kashta-keremidi-1600.b5137f7d.webp 1600w"
       }
     ],
     "credit": {
@@ -161,18 +161,18 @@
     "use": "Градове и райони"
   },
   "tenekedzhiyski": {
-    "src": "/stock/tenekedzhiyski-1600.jpg",
+    "src": "/stock/tenekedzhiyski-1600.d9a81f42.jpg",
     "width": 1600,
     "height": 1068,
     "alt": "Захващане на метален профил с винтоверт",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/tenekedzhiyski-640.avif 640w, /stock/tenekedzhiyski-1024.avif 1024w, /stock/tenekedzhiyski-1600.avif 1600w"
+        "srcset": "/stock/tenekedzhiyski-640.1631c979.avif 640w, /stock/tenekedzhiyski-1024.c87ff28a.avif 1024w, /stock/tenekedzhiyski-1600.3212205e.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/tenekedzhiyski-640.webp 640w, /stock/tenekedzhiyski-1024.webp 1024w, /stock/tenekedzhiyski-1600.webp 1600w"
+        "srcset": "/stock/tenekedzhiyski-640.addb8ed5.webp 640w, /stock/tenekedzhiyski-1024.1f888162.webp 1024w, /stock/tenekedzhiyski-1600.9c2ad85b.webp 1600w"
       }
     ],
     "credit": {
@@ -184,18 +184,18 @@
     "use": "Тенекеджийски услуги"
   },
   "komini": {
-    "src": "/stock/komini-1600.jpg",
+    "src": "/stock/komini-1600.1d9c1e3e.jpg",
     "width": 1600,
     "height": 2400,
     "alt": "Тухлени комини над покрив",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/komini-640.avif 640w, /stock/komini-1024.avif 1024w, /stock/komini-1600.avif 1600w"
+        "srcset": "/stock/komini-640.4b683f82.avif 640w, /stock/komini-1024.1f7d4218.avif 1024w, /stock/komini-1600.34a64c5b.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/komini-640.webp 640w, /stock/komini-1024.webp 1024w, /stock/komini-1600.webp 1600w"
+        "srcset": "/stock/komini-640.30d0946e.webp 640w, /stock/komini-1024.95326bca.webp 1024w, /stock/komini-1600.a740bccc.webp 1600w"
       }
     ],
     "credit": {
@@ -207,18 +207,18 @@
     "use": "Обшивка на комин"
   },
   "star-pokriv": {
-    "src": "/stock/star-pokriv-1600.jpg",
+    "src": "/stock/star-pokriv-1600.75620aaa.jpg",
     "width": 1600,
     "height": 2844,
     "alt": "Стара сграда с износена фасада и покрив",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/star-pokriv-640.avif 640w, /stock/star-pokriv-1024.avif 1024w, /stock/star-pokriv-1600.avif 1600w"
+        "srcset": "/stock/star-pokriv-640.31160e38.avif 640w, /stock/star-pokriv-1024.8148049b.avif 1024w, /stock/star-pokriv-1600.e402d980.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/star-pokriv-640.webp 640w, /stock/star-pokriv-1024.webp 1024w, /stock/star-pokriv-1600.webp 1600w"
+        "srcset": "/stock/star-pokriv-640.68ef6b00.webp 640w, /stock/star-pokriv-1024.f28681a8.webp 1024w, /stock/star-pokriv-1600.d1476c18.webp 1600w"
       }
     ],
     "credit": {
@@ -230,18 +230,18 @@
     "use": "Признаци за ремонт"
   },
   "shindli": {
-    "src": "/stock/shindli-1600.jpg",
+    "src": "/stock/shindli-1600.e2a7d735.jpg",
     "width": 1600,
     "height": 1983,
     "alt": "Къща с покрив от шиндли",
     "sources": [
       {
         "type": "image/avif",
-        "srcset": "/stock/shindli-640.avif 640w, /stock/shindli-1024.avif 1024w, /stock/shindli-1600.avif 1600w"
+        "srcset": "/stock/shindli-640.3b735382.avif 640w, /stock/shindli-1024.30bcc428.avif 1024w, /stock/shindli-1600.52617471.avif 1600w"
       },
       {
         "type": "image/webp",
-        "srcset": "/stock/shindli-640.webp 640w, /stock/shindli-1024.webp 1024w, /stock/shindli-1600.webp 1600w"
+        "srcset": "/stock/shindli-640.3ffbe12c.webp 640w, /stock/shindli-1024.e1291639.webp 1024w, /stock/shindli-1600.59d9ef4e.webp 1600w"
       }
     ],
     "credit": {
