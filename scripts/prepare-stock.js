@@ -58,7 +58,11 @@ async function main() {
       for (const width of targets) {
         const file = `${item.key}-${width}.${format}`;
         const pipeline = sharp(buffer).resize({ width, withoutEnlargement: true });
-        await (format === 'avif' ? pipeline.avif({ quality: 52 }) : pipeline.webp({ quality: 76 })).toFile(
+        // Тематичните снимки стоят под тъмен градиент на 35-45% плътност или
+        // като малки корици. AVIF на 52 тежеше 60 килобайта за 1024 пиксела и
+        // забавяше най-голямото изрисуване. На 40 пада на 35, а разликата не
+        // се вижда там, където снимките наистина се показват.
+        await (format === 'avif' ? pipeline.avif({ quality: 40 }) : pipeline.webp({ quality: 70 })).toFile(
           path.join(outDir, file),
         );
         parts.push(`/stock/${file} ${width}w`);
