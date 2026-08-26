@@ -119,25 +119,55 @@ function reportBrokenLinks(routes) {
   }
 }
 
-function llms(settings, hubs) {
+/**
+ * Файлът, по който езиковите модели се ориентират в сайта.
+ *
+ * Адресите трябва да са връзки в Markdown — `[име](адрес)`, а не голи адреси
+ * на два колонки. Написани както преди, проверките четат файла като текст без
+ * нито една връзка и моделът няма откъде да тръгне.
+ */
+function llms(settings, content) {
   const company = settings.companyName || 'Ремонт на покриви София';
+  const link = (name, slug, note) => `- [${name}](${SITE_URL}${slug})${note ? `: ${note}` : ''}`;
+  const byType = (type) => content.pages.filter((page) => page.type === type && !page.noindex);
+  const page = (slug) => content.pages.find((item) => item.slug === slug && !item.noindex);
+
   const lines = [
     `# ${company}`,
     '',
-    'Фирма за ремонт и изграждане на покриви в София и София област.',
+    '> Фирма за ремонт и изграждане на покриви в София и София област. Оглед на място, писмена оферта, договор и фактура.',
     '',
     '## Услуги',
-    ...hubs.map((hub) => `- ${hub.name}: ${SITE_URL}${hub.slug}`),
-    '',
-    '## Цени',
-    `- Ценоразпис: ${SITE_URL}/ceni`,
-    `- Калкулатор: ${SITE_URL}/kalkulator`,
-    '',
-    '## Контакт',
+    ...byType('Service hub').map((hub) => link(hub.name, hub.slug, hub.description)),
   ];
-  if (settings.phonePrimary) lines.push(`Телефон: ${settings.phonePrimary}`);
-  if (settings.workingHours) lines.push(`Работно време: ${settings.workingHours}`);
-  lines.push('Обслужвана територия: София и София област', '');
+
+  const pricing = [page('/ceni'), page('/kalkulator')].filter(Boolean);
+  if (pricing.length > 0) {
+    lines.push('', '## Цени', ...pricing.map((item) => link(item.name, item.slug, item.description)));
+  }
+
+  const areas = byType('District');
+  if (areas.length > 0) {
+    lines.push('', '## Райони', ...areas.map((area) => link(area.name, area.slug)));
+  }
+
+  const posts = byType('Blog post');
+  if (posts.length > 0) {
+    lines.push('', '## Статии', ...posts.map((post) => link(post.name, post.slug, post.description)));
+  }
+
+  lines.push('', '## Друго');
+  for (const slug of ['/za-nas', '/mneniya', '/bezplaten-ogled', '/karta-na-sayta']) {
+    const item = page(slug);
+    if (item) lines.push(link(item.name, slug));
+  }
+
+  lines.push('', '## Контакт');
+  if (settings.phonePrimary) lines.push(`- Телефон: ${settings.phonePrimary}`);
+  // Работното време идва от Notion на няколко реда и чупи списъка, ако влезе както е.
+  if (settings.workingHours) lines.push(`- Работно време: ${settings.workingHours.replace(/\s*\n\s*/g, ', ')}`);
+  lines.push('- Обслужвана територия: София и София област', '');
+
   // Кога съдържанието е дърпано от Notion. Единственият начин отвън да се провери
   // дали билдът наистина е обновил текста, или сървърът връща старото.
   lines.push(`<!-- Съдържанието е обновено от Notion на ${new Date().toISOString()} -->`, '');
@@ -189,7 +219,7 @@ async function main() {
   fs.writeFileSync(path.join(distDir, 'robots.txt'), robots(), 'utf8');
   fs.writeFileSync(
     path.join(distDir, 'llms.txt'),
-    llms(content.settings || {}, content.pages.filter((page) => page.type === 'Service hub')),
+    llms(content.settings || {}, content),
     'utf8',
   );
 
