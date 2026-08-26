@@ -10,7 +10,12 @@ const primaryLinks = () => navPages().filter((page) => page.slug !== '/uslugi');
 
 function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-3" aria-label="Начало">
+    /*
+     * Без aria-label. Видимият текст е "Ремонт на покриви София", а етикетът
+     * казваше "Начало" — който управлява с глас и прочете написаното, не
+     * улучва връзката. Сега достъпното име е самият текст.
+     */
+    <Link to="/" className="flex items-center gap-3">
       <svg viewBox="0 0 32 32" className="h-9 w-9 shrink-0" aria-hidden="true">
         <rect width="32" height="32" fill="#14181D" />
         <path d="M4 18 16 8l12 10v2h-3.2L16 12.6 7.2 20H4z" fill="#C74A17" />
