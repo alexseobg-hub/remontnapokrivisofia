@@ -138,6 +138,57 @@ function ServicesMenu() {
   );
 }
 
+/**
+ * Един ред от менюто на телефон: услугата и дейностите под нея.
+ *
+ * Името си остава връзка към самата услуга — натиснеш ли го, отиваш там.
+ * Стрелката е отделен бутон и само разгъва. Иначе едното движение върши две
+ * неща и не се познава кое ще стане.
+ */
+function MobileHub({ hub, onClose }: { hub: ReturnType<typeof serviceHubs>[number]; onClose: () => void }) {
+  const [open, setOpen] = useState(false);
+  const children = childrenOf(hub.slug);
+  const listId = `podusulgi-${hub.slug.replace(/[^a-z0-9]+/gi, '-')}`;
+
+  return (
+    <li className="border-b border-graphite-100">
+      <div className="flex items-center justify-between gap-2">
+        <Link to={hub.slug} onClick={onClose} className="flex-1 py-3 font-display text-lg font-bold text-graphite-900">
+          {hub.name}
+        </Link>
+
+        {children.length > 0 ? (
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-controls={listId}
+            aria-label={`${open ? 'Скрий' : 'Покажи'} дейностите по „${hub.name}“`}
+            onClick={() => setOpen((value) => !value)}
+            /* 44 пиксела: пръст улучва, а стрелката вътре си остава дребна. */
+            className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center text-graphite-500 hover:text-brick-600"
+          >
+            <svg viewBox="0 0 12 8" className={cn('h-2 w-3 transition-transform', open && 'rotate-180')} aria-hidden="true">
+              <path d="M1 1.5L6 6.5l5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+            </svg>
+          </button>
+        ) : null}
+      </div>
+
+      {children.length > 0 && open ? (
+        <ul id={listId} className="mb-3 border-l-2 border-brick-200 pl-4">
+          {children.map((child) => (
+            <li key={child.slug}>
+              <Link to={child.slug} onClick={onClose} className="block py-2 text-[0.9375rem] leading-snug text-graphite-600">
+                {child.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </li>
+  );
+}
+
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const hubs = serviceHubs();
 
@@ -155,25 +206,20 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
     <div className="fixed inset-0 top-[var(--header-h,4.5rem)] z-40 overflow-y-auto bg-white lg:hidden">
       <nav className="shell py-6" aria-label="Основна навигация">
         <p className="eyebrow">Услуги</p>
-        <ul className="mb-6 space-y-3">
+        <ul className="border-t border-graphite-100">
           {hubs.map((hub) => (
-            <li key={hub.slug}>
-              <Link to={hub.slug} onClick={onClose} className="font-display text-lg font-bold text-graphite-900">
-                {hub.name}
-              </Link>
-            </li>
+            <MobileHub key={hub.slug} hub={hub} onClose={onClose} />
           ))}
-          <li>
-            <Link to="/uslugi" onClick={onClose} className="font-display text-base font-bold text-brick-600">
-              Всички услуги →
-            </Link>
-          </li>
         </ul>
-        <hr className="hairline" />
-        <ul className="mt-6 space-y-3">
+        <Link to="/uslugi" onClick={onClose} className="mt-4 inline-block py-2 font-display text-base font-bold text-brick-600">
+          Всички услуги →
+        </Link>
+
+        <hr className="hairline mt-4" />
+        <ul className="mt-2">
           {primaryLinks().map((item) => (
             <li key={item.slug}>
-              <Link to={item.slug} onClick={onClose} className="font-display text-lg font-bold text-graphite-900">
+              <Link to={item.slug} onClick={onClose} className="block py-3 font-display text-lg font-bold text-graphite-900">
                 {item.name}
               </Link>
             </li>
