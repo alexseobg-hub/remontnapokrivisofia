@@ -37,7 +37,7 @@ function Quote({ testimonial }: { testimonial: Testimonial }) {
         <p className="font-display text-[0.9375rem] font-bold text-graphite-900">{testimonial.name}</p>
         {place ? <p className="mt-0.5 text-[0.8125rem] text-graphite-500">{place}</p> : null}
         {testimonial.source ? (
-          <p className="mt-1 text-[0.6875rem] uppercase tracking-[0.12em] text-graphite-400">
+          <p className="mt-1 text-[0.6875rem] uppercase tracking-[0.12em] text-graphite-500">
             {testimonial.link ? (
               <a href={testimonial.link} target="_blank" rel="noopener noreferrer" className="hover:text-brick-600">
                 {testimonial.source}

@@ -19,11 +19,35 @@ function readTemplate() {
   return fs.readFileSync(templatePath, 'utf8');
 }
 
+/**
+ * Шрифтовете, които трябва да тръгнат веднага.
+ *
+ * Браузърът ги открива чак след като изтегли и разчете CSS-а — веригата е
+ * HTML → CSS → шрифт и всяко звено чака предното. На бавна мрежа това добавя
+ * към първото изрисуване колкото трае самият CSS.
+ *
+ * Взимаме само кирилицата: сайтът е на български и това е, което се вижда.
+ * Латиницата носи цифрите в цените и идва след това, без да бави текста.
+ */
+function fontPreloads() {
+  const assets = path.join(distDir, 'assets');
+  if (!fs.existsSync(assets)) return '';
+
+  return fs
+    .readdirSync(assets)
+    .filter((file) => /^(inter|manrope)-cyrillic-wght-normal-.*\.woff2$/.test(file))
+    .map((file) => `<link rel="preload" as="font" type="font/woff2" href="/assets/${file}" crossorigin />`)
+    .join('\n    ');
+}
+
+const FONT_PRELOADS = fontPreloads();
+
 /** Слага заглавието и meta таговете в готовия шаблон на мястото на служебните. */
 function compose(template, rendered) {
+  const head = FONT_PRELOADS ? `${FONT_PRELOADS}\n    ${rendered.head}` : rendered.head;
   return template
     .replace(/<title>[\s\S]*?<\/title>\s*/, '')
-    .replace('</head>', `  ${rendered.head}\n  </head>`)
+    .replace('</head>', `  ${head}\n  </head>`)
     .replace('<div id="root"></div>', `<div id="root">${rendered.html}</div>`);
 }
 

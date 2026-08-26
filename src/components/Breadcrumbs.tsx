@@ -15,7 +15,7 @@ export function Breadcrumbs({ trail, onDark = false }: { trail: Crumb[]; onDark?
       <ol
         className={cn(
           'flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem]',
-          onDark ? 'text-graphite-400' : 'text-graphite-500',
+          onDark ? 'text-graphite-300' : 'text-graphite-500',
         )}
       >
         {trail.slice(0, -1).map((crumb) => (

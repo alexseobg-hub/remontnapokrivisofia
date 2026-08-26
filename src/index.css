@@ -14,6 +14,17 @@
     scroll-behavior: smooth;
     /* Лентата и менюто се лепят горе. Без този отстъп котвите спират под тях. */
     scroll-padding-top: calc(var(--header-h, 7rem) + 1rem);
+    /*
+     * На телефон страницата се хващаше с пръст и се разнасяше настрани.
+     * Никоя страница не прелива по ширина — жестът идваше от каруселите и
+     * таблиците: стигне ли се краят им, превъртането се предава нагоре и
+     * повлича целия екран. Тук веригата се къса.
+     *
+     * `clip` вместо `hidden`: `hidden` прави от корена плъзгач и хедърът
+     * спира да се лепи горе.
+     */
+    overflow-x: clip;
+    overscroll-behavior-x: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -123,7 +134,7 @@
   .prose-roof hr { @apply border-graphite-200; }
 
   /* Таблиците са най-извличаемият формат за AI отговори. Трябва да оцелеят и на телефон. */
-  .table-wrap { @apply -mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0; }
+  .table-wrap { @apply -mx-5 overflow-x-auto overscroll-x-contain px-5 sm:mx-0 sm:px-0; }
   .table-roof { @apply w-full min-w-[34rem] border-collapse text-left text-[0.9375rem]; }
   .table-roof th {
     @apply border-b-2 border-graphite-900 py-3 pr-4 font-display text-xs font-bold uppercase tracking-[0.12em] text-graphite-900;

@@ -206,6 +206,14 @@ export function Header() {
   }, [location.pathname]);
 
   return (
+    /*
+     * Менюто стои извън <header> нарочно. Хедърът е с `backdrop-blur`, а
+     * `backdrop-filter` прави елемента контейнер за наследниците си с
+     * `position: fixed`. Вътре панелът се мереше спрямо хедъра — висок 73px —
+     * вместо спрямо екрана, и излизаше с височина нула: отваряше се и не се
+     * виждаше нищо.
+     */
+    <>
     <header className="border-b border-graphite-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <div className="shell flex h-[4.5rem] items-center justify-between gap-4">
         <Logo />
@@ -242,7 +250,9 @@ export function Header() {
         </div>
       </div>
 
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </header>
+
+    <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
 }

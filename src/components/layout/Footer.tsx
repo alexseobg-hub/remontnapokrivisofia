@@ -194,7 +194,7 @@ export function Footer() {
 
         {/* Правните страници стояха с дребен сив шрифт и не се забелязваха. */}
         <div className="mt-12 flex flex-col gap-4 border-t border-graphite-800 py-6 text-sm text-graphite-400 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-graphite-500">
+          <p className="text-graphite-400">
             © {year} {company}. Всички права запазени.
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">

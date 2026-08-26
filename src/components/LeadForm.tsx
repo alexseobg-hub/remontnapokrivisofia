@@ -257,7 +257,7 @@ export function LeadForm({
             accept="image/*"
             className={cn(fieldClass, 'file:mr-3 file:border-0 file:bg-graphite-900 file:px-3 file:py-1.5 file:font-display file:text-xs file:font-bold file:text-white')}
           />
-          <p className={cn('mt-1.5 text-[0.8125rem]', onDark ? 'text-graphite-400' : 'text-graphite-500')}>
+          <p className={cn('mt-1.5 text-[0.8125rem]', onDark ? 'text-graphite-300' : 'text-graphite-500')}>
             Една снимка спестява едно ходене и прави офертата по-точна.
           </p>
         </div>
@@ -295,7 +295,7 @@ export function LeadForm({
         </p>
       ) : null}
 
-      <p className={cn('text-[0.8125rem] leading-relaxed', onDark ? 'text-graphite-400' : 'text-graphite-500')}>
+      <p className={cn('text-[0.8125rem] leading-relaxed', onDark ? 'text-graphite-300' : 'text-graphite-500')}>
         Огледът е безплатен и не Ви задължава с нищо.
         {has('responseTime') ? ` Отговаряме ${site.responseTime}.` : ''}
       </p>

@@ -89,7 +89,7 @@ export function Carousel<T>({
         ref={track}
         onScroll={measure}
         /* Без scroll-smooth: CSS-ът застива и пречи на движението по-горе. */
-        className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item, index) => (
           <li key={keyOf(item, index)} className={cn('shrink-0 snap-start', itemClass)}>
@@ -100,7 +100,10 @@ export function Carousel<T>({
 
       {pages > 1 ? (
         <div className="mt-6 flex items-center justify-between gap-4">
-          <div className="flex gap-1.5" role="tablist" aria-label={labels.pages}>
+          {/* Чертичката е тънка нарочно, но пръстът не улучва 6 на 12 пиксела.
+              Затова бутонът е 24 на 24 и я носи вътре — видът остава, целта
+              порасва. */}
+          <div className="flex" role="tablist" aria-label={labels.pages}>
             {Array.from({ length: pages }, (_, index) => (
               <button
                 key={index}
@@ -109,11 +112,15 @@ export function Carousel<T>({
                 aria-selected={index === page}
                 aria-label={`Страница ${index + 1}`}
                 onClick={() => goTo(index)}
-                className={cn(
-                  'h-1.5 transition-all',
-                  index === page ? 'w-7 bg-brick-600' : 'w-3 bg-graphite-300 hover:bg-graphite-400',
-                )}
-              />
+                className="group flex h-6 items-center px-1.5"
+              >
+                <span
+                  className={cn(
+                    'block h-1.5 transition-all',
+                    index === page ? 'w-7 bg-brick-600' : 'w-3 bg-graphite-300 group-hover:bg-graphite-400',
+                  )}
+                />
+              </button>
             ))}
           </div>
           <div className="flex gap-2">

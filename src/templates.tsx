@@ -51,7 +51,7 @@ function PhoneCta({ placement, onDark = false }: { placement: string; onDark?: b
 function PhoneUnderForm({ placement, onDark = false }: { placement: string; onDark?: boolean }) {
   return (
     <div className={cn('mt-5 border-t pt-5', onDark ? 'border-graphite-700' : 'border-graphite-200')}>
-      <p className={cn('mb-3 text-center text-[0.8125rem]', onDark ? 'text-graphite-400' : 'text-graphite-500')}>
+      <p className={cn('mb-3 text-center text-[0.8125rem]', onDark ? 'text-graphite-300' : 'text-graphite-500')}>
         Или се обадете направо
       </p>
       <PhoneButton
