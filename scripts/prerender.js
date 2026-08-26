@@ -42,39 +42,13 @@ function fontPreloads() {
 
 const FONT_PRELOADS = fontPreloads();
 
-/**
- * Вкарва стиловете вътре в страницата вместо да ги вика отвън.
- *
- * Отделният файл спираше изрисуването: браузърът чете HTML-а, вижда връзката,
- * праща втора заявка и чака отговора, преди да покаже каквото и да е. Сгъстени
- * стиловете са осем килобайта — по-евтино е да пътуват заедно със страницата.
- *
- * Плаща се при обиколка из сайта: стиловете не се пазят отделно и идват наново
- * с всяка страница. За сайт, на който хората влизат от търсачка, поглеждат
- * едно и си тръгват, размяната е в наша полза.
- */
-function inlineStyles(html) {
-  return html.replace(
-    /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
-    (tag, href) => {
-      const file = path.join(distDir, href.replace(/^\//, ''));
-      if (!fs.existsSync(file)) return tag;
-      // Затварящ таг вътре в стиловете би прекъснал блока по-рано.
-      const css = fs.readFileSync(file, 'utf8').replace(/<\/style/gi, '<\\/style');
-      return `<style>${css}</style>`;
-    },
-  );
-}
-
 /** Слага заглавието и meta таговете в готовия шаблон на мястото на служебните. */
 function compose(template, rendered) {
   const head = FONT_PRELOADS ? `${FONT_PRELOADS}\n    ${rendered.head}` : rendered.head;
-  return inlineStyles(
-    template
-      .replace(/<title>[\s\S]*?<\/title>\s*/, '')
-      .replace('</head>', `  ${head}\n  </head>`)
-      .replace('<div id="root"></div>', `<div id="root">${rendered.html}</div>`),
-  );
+  return template
+    .replace(/<title>[\s\S]*?<\/title>\s*/, '')
+    .replace('</head>', `  ${head}\n  </head>`)
+    .replace('<div id="root"></div>', `<div id="root">${rendered.html}</div>`);
 }
 
 /**
