@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   serviceHubs, childrenOf, districts, projects, projectsInDistrict, projectsForService,
-  testimonials, pagesOfType, pages, priceCategories, type ContentPage,
+  testimonials, pagesOfType, pages, priceCategories, formatDate, type ContentPage,
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
@@ -429,6 +429,20 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
           </p>
           <p className="mt-2 leading-relaxed text-graphite-700">{site.warrantyScope}</p>
         </div>
+      ) : null;
+
+    /*
+     * Кога цените са гледани за последно.
+     *
+     * Датата идва от полето Updated в Notion, а не написана в текста. Записана
+     * на ръка, тя остарява мълчаливо: страницата продължава да твърди, че е
+     * пресни, месеци след като не са. Така се обновява със самата страница.
+     */
+    case 'aktualizirano':
+      return page.updated ? (
+        <p className="my-6 text-sm text-graphite-500">
+          Последна актуализация на цените: <time dateTime={page.updated}>{formatDate(page.updated)}</time>
+        </p>
       ) : null;
 
     default:
