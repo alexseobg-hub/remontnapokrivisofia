@@ -47,7 +47,7 @@ export function Footer() {
               ) : null}
               {has('streetAddress') ? <p className="text-graphite-300">{site.streetAddress}, София</p> : null}
             </dl>
-            {(has('facebook') || has('googleBusinessProfile') || has('instagram') || has('youtube')) && (
+            {(has('facebook') || has('googleBusinessProfile') || has('instagram') || has('youtube') || has('x')) && (
               <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm">
                 {has('googleBusinessProfile') && (
                   <li>
@@ -74,6 +74,13 @@ export function Footer() {
                   <li>
                     <a href={site.youtube} className="underline underline-offset-4 hover:text-white" rel="noopener noreferrer" target="_blank">
                       YouTube
+                    </a>
+                  </li>
+                )}
+                {has('x') && (
+                  <li>
+                    <a href={site.x} className="underline underline-offset-4 hover:text-white" rel="noopener noreferrer" target="_blank">
+                      X
                     </a>
                   </li>
                 )}

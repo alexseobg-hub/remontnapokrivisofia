@@ -28,7 +28,7 @@ function clean<T extends Json>(input: T): T {
 }
 
 const socialProfiles = () =>
-  (['googleBusinessProfile', 'facebook', 'instagram', 'youtube'] as const)
+  (['googleBusinessProfile', 'facebook', 'instagram', 'youtube', 'x'] as const)
     .filter((key) => has(key))
     .map((key) => site[key]);
 

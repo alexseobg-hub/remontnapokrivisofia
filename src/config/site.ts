@@ -47,6 +47,7 @@ const defaults = {
   facebook: '{{FACEBOOK_URL}}',
   instagram: '{{INSTAGRAM_URL}}',
   youtube: '{{YOUTUBE_URL}}',
+  x: '{{X_URL}}',
 
   // Гаранция и оферта
   warrantyYears: '{{WARRANTY_YEARS}}',
