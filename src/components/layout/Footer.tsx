@@ -45,7 +45,13 @@ export function Footer() {
                   <dd className="text-graphite-300">{site.vatNumber}</dd>
                 </div>
               ) : null}
-              {has('streetAddress') ? <p className="text-graphite-300">{site.streetAddress}, София</p> : null}
+              {/* dt/dd, а не <p>: в списък за определения абзац е невалиден. */}
+              {has('streetAddress') ? (
+                <div className="flex gap-2">
+                  <dt>Адрес</dt>
+                  <dd className="text-graphite-300">{site.streetAddress}, София</dd>
+                </div>
+              ) : null}
             </dl>
             {(has('facebook') || has('googleBusinessProfile') || has('instagram') || has('youtube') || has('x')) && (
               <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm">
