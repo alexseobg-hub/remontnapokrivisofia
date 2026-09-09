@@ -100,20 +100,17 @@ export function initAnalytics() {
 }
 
 /*
- * Едно събитие, два пътя — защото двата приемника четат различни записи.
+ * Едно повикване, едно събитие.
  *
  * `gtag()` бута в dataLayer обекта `arguments`, тоест ['event', име, данни].
- * Библиотеката на GA4 разбира този запис, но Tag Manager не: неговият тригер
- * "Custom Event" се хваща за ключа `event` в бутнатия обект, а в списък такъв
- * ключ няма. Затова тригер с име на събитието мълчеше, без да личи защо.
- *
- * Обратното също е вярно: gtag.js подминава обикновените обекти. Тъй че всеки
- * приемник взима своя запис и другия не го брои — двойно отчитане няма.
+ * Изкушаващо е да се добави и обикновен обект с ключ `event`, за да го види
+ * Tag Manager. Не трябва: Google тагът в контейнера сам превежда gtag
+ * повикванията в събития за GTM. Добавиш ли и второто, тригерът съвпада два
+ * пъти и всяко запитване се брои двойно.
  */
 function track(event: string, params: Record<string, unknown> = {}) {
   if (typeof window === 'undefined') return;
   window.gtag?.('event', event, params);
-  window.dataLayer?.push({ event, ...params });
 }
 
 export const trackPhoneClick = (placement: string) => track('phone_click', { placement });
