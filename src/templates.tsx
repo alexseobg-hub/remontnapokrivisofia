@@ -631,7 +631,12 @@ export function AuthorPage({ page }: { page: ContentPage }) {
     <>
       <PageHeader page={page} />
       <Section tone="white">
-        <div className="max-w-3xl">
+        <div className={has('authorPhoto') ? 'grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)]' : 'max-w-3xl'}>
+          {has('authorPhoto') ? (
+            <div className="aspect-square w-full max-w-[14rem] overflow-hidden bg-graphite-800">
+              <img src={site.authorPhoto} alt={page.name} className="h-full w-full object-cover" width={224} height={224} />
+            </div>
+          ) : null}
           <div>
             <PlainBody page={page} />
             {posts.length > 0 ? (

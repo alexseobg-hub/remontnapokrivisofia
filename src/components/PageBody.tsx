@@ -11,7 +11,7 @@ import { ProjectCard, PageCard, PostCard } from './cards';
 import { TestimonialCarousel } from './TestimonialCarousel';
 import { RoofCalculator } from './RoofCalculator';
 import { LeadForm } from './LeadForm';
-import { CtaLink, Picture, type Tone } from './ui';
+import { CtaLink, Picture, PhoneButton, type Tone } from './ui';
 import { stockImage } from '@/lib/stock';
 import { trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
@@ -434,6 +434,34 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
           <LeadForm formName={page.slug} />
         </div>
       );
+
+    case 'obadi-se': {
+      /*
+       * Кратък призив с телефона посред текста. [[obadi-se]] пише общото,
+       * [[obadi-se:Заглавие | Текст]] го сменя за конкретната статия.
+       */
+      if (!has('phonePrimary')) return null;
+      const [title, text] = arg.split('|').map((part) => part.trim());
+      return (
+        <aside className="my-10 flex flex-col gap-5 bg-graphite-900 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <div>
+            <p className="font-display text-lg font-extrabold text-white">
+              {title || 'Не сте сигурни какво е нужно на Вашия покрив?'}
+            </p>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-graphite-300">
+              {text || 'Обадете се. Огледът е безплатен, а офертата е писмена, по позиции.'}
+            </p>
+          </div>
+          <PhoneButton
+            phone={site.phonePrimary}
+            href={telHref()}
+            onDark
+            className="shrink-0 sm:w-auto"
+            onClick={() => trackPhoneClick(`statia:${page.slug}`)}
+          />
+        </aside>
+      );
+    }
 
     case 'kontakti':
       return <ContactFacts />;

@@ -140,7 +140,18 @@ export function AuthorBox() {
   if (!name) return null;
 
   return (
-    <aside className="border border-graphite-200 bg-sand-50 p-6">
+    <aside className="flex gap-5 border border-graphite-200 bg-sand-50 p-6">
+      {/* Без снимка кутията остава само с текст, без сив квадрат на мястото ѝ. */}
+      {has('authorPhoto') ? (
+        <img
+          src={site.authorPhoto}
+          alt={name}
+          width={80}
+          height={80}
+          loading="lazy"
+          className="h-16 w-16 shrink-0 object-cover sm:h-20 sm:w-20"
+        />
+      ) : null}
       <div>
         <p className="font-display text-base font-extrabold text-graphite-900">{name}</p>
         <p className="text-[0.8125rem] text-brick-700">{valueOr('authorRole', 'Автор')}</p>
