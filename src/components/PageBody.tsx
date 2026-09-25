@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   serviceHubs, childrenOf, districts, projects, projectsInDistrict, projectsForService,
-  testimonials, pagesOfType, pages, priceCategories, formatDate, type ContentPage,
+  testimonials, pages, priceCategories, formatDate, blogPosts, blogCategories, postsInCategory,
+  type ContentPage,
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
@@ -10,7 +11,7 @@ import { ProjectCard, PageCard, PostCard } from './cards';
 import { TestimonialCarousel } from './TestimonialCarousel';
 import { RoofCalculator } from './RoofCalculator';
 import { LeadForm } from './LeadForm';
-import { CtaLink, Picture, type Tone } from './ui';
+import { CtaLink, Picture, PhoneButton, type Tone } from './ui';
 import { stockImage } from '@/lib/stock';
 import { trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
@@ -330,10 +331,13 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
       // Карта за хора, не за машини. XML картата остава само за търсачките и
       // никъде в сайта не се сочи към нея.
       const groups: { title: string; items: { slug: string; name: string }[] }[] = [
-        { title: 'Основни', items: pages.filter((p) => ['Home', 'Page', 'Pricing'].includes(p.type) && !p.noindex) },
+        {
+          title: 'Основни',
+          items: pages.filter((p) => ['Home', 'Page', 'Pricing'].includes(p.type) && p.parent !== '/blog' && !p.noindex),
+        },
         { title: 'Услуги', items: pages.filter((p) => p.type === 'Service hub' || p.type === 'Service') },
         { title: 'Райони', items: pages.filter((p) => p.type === 'District') },
-        { title: 'Блог', items: pages.filter((p) => p.type === 'Blog post' || p.type === 'Author') },
+        { title: 'Блог', items: [...blogCategories(), ...pages.filter((p) => p.type === 'Blog post' || p.type === 'Author')] },
         { title: 'Правни', items: pages.filter((p) => p.type === 'Legal') },
       ].filter((group) => group.items.length > 0);
 
@@ -366,14 +370,42 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
     }
 
     case 'blog': {
-      const posts = pagesOfType('Blog post');
-      if (posts.length === 0) return null;
+      // [[blog]] показва всички статии, [[blog:/blog/uluci]] — само тези от темата.
+      const topic = arg ? (arg.startsWith('/') ? arg : `/${arg}`) : '';
+      const posts = topic ? postsInCategory(topic) : blogPosts();
+      if (posts.length === 0) {
+        return topic ? <EmptyNote>Статиите по тази тема се подготвят.</EmptyNote> : null;
+      }
       return (
         <Grid>
           {posts.map((post) => (
             <PostCard key={post.slug} page={post} />
           ))}
         </Grid>
+      );
+    }
+
+    case 'temi': {
+      const items = blogCategories();
+      if (items.length === 0) return null;
+      return (
+        <ul className={cn('my-8 grid', CELL_GRID, cellColumns(items.length, 3))}>
+          {items.map((item) => {
+            const count = postsInCategory(item.slug).length;
+            return (
+              <li key={item.slug} className={CELL}>
+                <Link to={item.slug} className="group block h-full px-5 py-4 hover:bg-sand-100">
+                  <span className="block font-display text-[0.9375rem] font-bold text-graphite-900 group-hover:text-brick-700">
+                    {item.name}
+                  </span>
+                  <span className="mt-1 block text-[0.8125rem] text-graphite-500">
+                    {count === 0 ? 'Скоро' : count === 1 ? '1 статия' : `${count} статии`}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       );
     }
 
@@ -402,6 +434,34 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
           <LeadForm formName={page.slug} />
         </div>
       );
+
+    case 'obadi-se': {
+      /*
+       * Кратък призив с телефона посред текста. [[obadi-se]] пише общото,
+       * [[obadi-se:Заглавие | Текст]] го сменя за конкретната статия.
+       */
+      if (!has('phonePrimary')) return null;
+      const [title, text] = arg.split('|').map((part) => part.trim());
+      return (
+        <aside className="my-10 flex flex-col gap-5 bg-graphite-900 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <div>
+            <p className="font-display text-lg font-extrabold text-white">
+              {title || 'Не сте сигурни какво е нужно на Вашия покрив?'}
+            </p>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-graphite-300">
+              {text || 'Обадете се. Огледът е безплатен, а офертата е писмена, по позиции.'}
+            </p>
+          </div>
+          <PhoneButton
+            phone={site.phonePrimary}
+            href={telHref()}
+            onDark
+            className="shrink-0 sm:w-auto"
+            onClick={() => trackPhoneClick(`statia:${page.slug}`)}
+          />
+        </aside>
+      );
+    }
 
     case 'kontakti':
       return <ContactFacts />;

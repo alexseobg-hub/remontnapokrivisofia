@@ -151,6 +151,19 @@ export const serviceHubs = () => pagesOfType('Service hub').sort((a, b) => a.ord
 export const blogPosts = () =>
   pagesOfType('Blog post').sort((a, b) => (b.publishDate || '').localeCompare(a.publishDate || ''));
 
+/**
+ * Темите на блога. Всяка тема е обикновена страница с Parent „/blog“, а статията
+ * влиза в нея, като сложи адреса на темата в своя Parent.
+ */
+export const blogCategories = () =>
+  pages.filter((page) => page.type === 'Page' && page.parent === '/blog').sort((a, b) => a.order - b.order);
+
+/** Темата на статията или undefined, ако статията стои направо под блога. */
+export const categoryOf = (post: ContentPage) =>
+  blogCategories().find((category) => category.slug === post.parent);
+
+export const postsInCategory = (slug: string) => blogPosts().filter((post) => post.parent === slug);
+
 /** Авторската страница, ако е създадена. Оттам идват адресът и името в подписа. */
 export const authorPage = () => pagesOfType('Author')[0];
 

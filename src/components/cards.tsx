@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Project, Testimonial, ContentPage } from '@/lib/content';
-import { formatDate, authorPage, readingMinutes } from '@/lib/content';
+import { formatDate, authorPage, readingMinutes, categoryOf } from '@/lib/content';
 import { heroFor } from '@/lib/stock';
 import { site, has, valueOr } from '@/config/site';
 import { Picture, ImagePlaceholder } from './ui';
@@ -97,6 +97,7 @@ export function PageCard({ page, topline = false }: { page: ContentPage; topline
 /** Карта за блога: снимка отгоре, заглавие и кратък текст отдолу. */
 export function PostCard({ page }: { page: ContentPage }) {
   const cover = heroFor(page);
+  const category = categoryOf(page);
 
   return (
     <Link
@@ -111,6 +112,9 @@ export function PostCard({ page }: { page: ContentPage }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-6">
+        {category ? (
+          <p className="mb-2 font-display text-xs font-bold uppercase tracking-[0.16em] text-brick-700">{category.name}</p>
+        ) : null}
         <h3 className="font-display text-lg font-extrabold leading-snug text-graphite-900 group-hover:text-brick-700">
           {page.name}
         </h3>
@@ -129,22 +133,26 @@ export function PostCard({ page }: { page: ContentPage }) {
 
 /* ---------- Автор ---------- */
 
-export function AuthorBox({ compact = false }: { compact?: boolean }) {
+export function AuthorBox() {
   const author = authorPage();
   // Името идва от Настройки, а докато е празно — от заглавието на авторската страница.
   const name = valueOr('authorName', author?.name ?? '');
   if (!name) return null;
 
   return (
-    <aside className={cn('border border-graphite-200 bg-sand-50 p-6', compact ? 'flex gap-4' : 'sm:flex sm:gap-6')}>
-      <div className={cn('shrink-0 overflow-hidden bg-graphite-800', compact ? 'h-14 w-14' : 'h-20 w-20')}>
-        {has('authorPhoto') ? (
-          <img src={site.authorPhoto} alt={name} width={80} height={80} className="h-full w-full object-cover" loading="lazy" />
-        ) : (
-          <ImagePlaceholder className="h-full w-full" />
-        )}
-      </div>
-      <div className={compact ? '' : 'mt-4 sm:mt-0'}>
+    <aside className="flex gap-5 border border-graphite-200 bg-sand-50 p-6">
+      {/* Без снимка кутията остава само с текст, без сив квадрат на мястото ѝ. */}
+      {has('authorPhoto') ? (
+        <img
+          src={site.authorPhoto}
+          alt={name}
+          width={80}
+          height={80}
+          loading="lazy"
+          className="h-16 w-16 shrink-0 object-cover sm:h-20 sm:w-20"
+        />
+      ) : null}
+      <div>
         <p className="font-display text-base font-extrabold text-graphite-900">{name}</p>
         <p className="text-[0.8125rem] text-brick-700">{valueOr('authorRole', 'Автор')}</p>
         {has('authorBio') ? (

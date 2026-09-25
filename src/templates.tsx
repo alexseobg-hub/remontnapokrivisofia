@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import {
   type ContentPage, type Project,
   ancestorsOf, siblingServices, neighbourDistricts, projectsInDistrict,
-  childrenOf, blogPosts, authorPage, readingMinutes, formatDate, getPage, testimonials,
+  childrenOf, blogPosts, authorPage, categoryOf, readingMinutes, formatDate, getPage, testimonials,
 } from '@/lib/content';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import { Benefits } from '@/components/Benefits';
@@ -533,12 +533,28 @@ export function BlogPost({ page }: { page: ContentPage }) {
   const author = authorPage();
   const authorName = valueOr('authorName', author?.name ?? '');
   const cover = heroFor(page);
+  const category = categoryOf(page);
 
   return (
     <>
       <header className="border-b border-graphite-200 bg-sand-100 py-10 md:py-14">
         <div className="shell-narrow">
-          <Breadcrumbs trail={[{ name: 'Начало', slug: '/' }, { name: 'Блог', slug: '/blog' }, { name: page.name, slug: page.slug }]} />
+          <Breadcrumbs
+            trail={[
+              { name: 'Начало', slug: '/' },
+              { name: 'Блог', slug: '/blog' },
+              ...(category ? [{ name: category.name, slug: category.slug }] : []),
+              { name: page.name, slug: page.slug },
+            ]}
+          />
+          {category ? (
+            <Link
+              to={category.slug}
+              className="mb-3 inline-block font-display text-xs font-bold uppercase tracking-[0.16em] text-brick-700 hover:text-brick-600"
+            >
+              {category.name}
+            </Link>
+          ) : null}
           <h1 className="text-display-lg">{page.h1}</h1>
           <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.875rem] text-graphite-500">
             {authorName ? (
@@ -615,14 +631,12 @@ export function AuthorPage({ page }: { page: ContentPage }) {
     <>
       <PageHeader page={page} />
       <Section tone="white">
-        <div className="grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)]">
-          <div className="aspect-square w-full max-w-[14rem] overflow-hidden bg-graphite-800">
-            {has('authorPhoto') ? (
+        <div className={has('authorPhoto') ? 'grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)]' : 'max-w-3xl'}>
+          {has('authorPhoto') ? (
+            <div className="aspect-square w-full max-w-[14rem] overflow-hidden bg-graphite-800">
               <img src={site.authorPhoto} alt={page.name} className="h-full w-full object-cover" width={224} height={224} />
-            ) : (
-              <ImagePlaceholder className="h-full w-full" />
-            )}
-          </div>
+            </div>
+          ) : null}
           <div>
             <PlainBody page={page} />
             {posts.length > 0 ? (
