@@ -1,6 +1,6 @@
 import { site, meta, has, valueOr, absoluteUrl } from '@/config/site';
 import type { ContentPage, FaqItem, Project } from './content';
-import { districts, pricing, formatPrice, authorPage } from './content';
+import { districts, pricing, formatPrice, authorPage, categoryOf } from './content';
 
 /*
  * JSON-LD за целия сайт, генериран от базата „Настройки“.
@@ -178,6 +178,7 @@ export function article(page: ContentPage): Json {
     datePublished: page.publishDate || undefined,
     dateModified: page.updated || page.publishDate || undefined,
     inLanguage: 'bg-BG',
+    articleSection: categoryOf(page)?.name,
     author: url && name ? { '@id': `${url}#person` } : undefined,
     publisher: { '@id': ORG_ID },
     mainEntityOfPage: { '@type': 'WebPage', '@id': absoluteUrl(page.slug) },

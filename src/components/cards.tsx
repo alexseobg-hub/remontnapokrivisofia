@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Project, Testimonial, ContentPage } from '@/lib/content';
-import { formatDate, authorPage, readingMinutes } from '@/lib/content';
+import { formatDate, authorPage, readingMinutes, categoryOf } from '@/lib/content';
 import { heroFor } from '@/lib/stock';
 import { site, has, valueOr } from '@/config/site';
 import { Picture, ImagePlaceholder } from './ui';
@@ -97,6 +97,7 @@ export function PageCard({ page, topline = false }: { page: ContentPage; topline
 /** Карта за блога: снимка отгоре, заглавие и кратък текст отдолу. */
 export function PostCard({ page }: { page: ContentPage }) {
   const cover = heroFor(page);
+  const category = categoryOf(page);
 
   return (
     <Link
@@ -111,6 +112,9 @@ export function PostCard({ page }: { page: ContentPage }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-6">
+        {category ? (
+          <p className="mb-2 font-display text-xs font-bold uppercase tracking-[0.16em] text-brick-700">{category.name}</p>
+        ) : null}
         <h3 className="font-display text-lg font-extrabold leading-snug text-graphite-900 group-hover:text-brick-700">
           {page.name}
         </h3>
