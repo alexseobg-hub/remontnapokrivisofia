@@ -129,22 +129,15 @@ export function PostCard({ page }: { page: ContentPage }) {
 
 /* ---------- Автор ---------- */
 
-export function AuthorBox({ compact = false }: { compact?: boolean }) {
+export function AuthorBox() {
   const author = authorPage();
   // Името идва от Настройки, а докато е празно — от заглавието на авторската страница.
   const name = valueOr('authorName', author?.name ?? '');
   if (!name) return null;
 
   return (
-    <aside className={cn('border border-graphite-200 bg-sand-50 p-6', compact ? 'flex gap-4' : 'sm:flex sm:gap-6')}>
-      <div className={cn('shrink-0 overflow-hidden bg-graphite-800', compact ? 'h-14 w-14' : 'h-20 w-20')}>
-        {has('authorPhoto') ? (
-          <img src={site.authorPhoto} alt={name} width={80} height={80} className="h-full w-full object-cover" loading="lazy" />
-        ) : (
-          <ImagePlaceholder className="h-full w-full" />
-        )}
-      </div>
-      <div className={compact ? '' : 'mt-4 sm:mt-0'}>
+    <aside className="border border-graphite-200 bg-sand-50 p-6">
+      <div>
         <p className="font-display text-base font-extrabold text-graphite-900">{name}</p>
         <p className="text-[0.8125rem] text-brick-700">{valueOr('authorRole', 'Автор')}</p>
         {has('authorBio') ? (
