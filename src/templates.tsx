@@ -103,6 +103,13 @@ function TrustStrip({ onDark = false }: { onDark?: boolean }) {
  * под текста. Формата се вижда без скрол на десктоп; на мобилно идва веднага
  * след бутоните, преди останалото съдържание.
  */
+/**
+ * Лентата с ползите стои само на страниците, които продават услуга: начало,
+ * услуги, цени и райони. В блога, правните и служебните страници тя е шум.
+ */
+const SALES_TYPES = new Set(['Home', 'Service', 'Service hub', 'Pricing', 'District']);
+const showsBenefits = (page: ContentPage) => SALES_TYPES.has(page.type);
+
 function PageHeader({ page }: { page: ContentPage }) {
   const image = heroFor(page);
   // Услугите винаги носят заглавна снимка. Докато няма истинска, стои графичният
@@ -140,7 +147,7 @@ function PageHeader({ page }: { page: ContentPage }) {
           </div>
         </div>
         </header>
-        <Benefits />
+        {showsBenefits(page) ? <Benefits /> : null}
       </>
     );
   }
@@ -163,7 +170,7 @@ function PageHeader({ page }: { page: ContentPage }) {
           </div>
         </div>
       </header>
-      <Benefits />
+      {showsBenefits(page) ? <Benefits /> : null}
     </>
   );
 }
@@ -442,7 +449,6 @@ export function ProjectPage({ project }: { project: Project }) {
           <h1 className="text-display-lg">{project.title}</h1>
         </div>
       </header>
-      <Benefits />
 
       <Section tone="white">
         <div className="grid gap-6 lg:grid-cols-2">
@@ -582,7 +588,6 @@ export function BlogPost({ page }: { page: ContentPage }) {
           </figure>
         </div>
       </header>
-      <Benefits />
 
       <div className="band-white band">
         <div className="shell grid gap-12 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -691,7 +696,6 @@ export function LegalPage({ page }: { page: ContentPage }) {
           ) : null}
         </div>
       </header>
-      <Benefits />
       <div className="band-white band">
         <div className="shell-narrow">
           <PlainBody page={page} />
@@ -721,7 +725,6 @@ export function LeadPage({ page }: { page: ContentPage }) {
           </div>
         </div>
       </div>
-      <Benefits />
       <BandedBody page={page} startTone="white" />
       <FaqSection page={page} tone={nextToneAfter(page, 'white')} />
     </>
