@@ -251,5 +251,28 @@
       "license": "Pexels License"
     },
     "use": "Навеси, покривни покрития"
+  },
+  "montazh-keremidi": {
+    "src": "/stock/montazh-keremidi-1600.4455a72f.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Майстори редят керемиди по нов покрив от скеле",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/montazh-keremidi-640.ecac549c.avif 640w, /stock/montazh-keremidi-1024.f9d8a9db.avif 1024w, /stock/montazh-keremidi-1600.74c7e633.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/montazh-keremidi-640.f2b624be.webp 640w, /stock/montazh-keremidi-1024.b8356bfe.webp 1024w, /stock/montazh-keremidi-1600.48c36490.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "montazh-keremidi",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Изграждане на нов покрив"
   }
 }
