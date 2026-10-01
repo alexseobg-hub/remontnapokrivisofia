@@ -30,6 +30,8 @@ const STOCK = [
   { key: 'komini', id: '13543563', alt: 'Тухлени комини над покрив', use: 'Обшивка на комин' },
   { key: 'star-pokriv', id: '17587644', alt: 'Стара сграда с износена фасада и покрив', use: 'Признаци за ремонт' },
   { key: 'shindli', id: '20296321', alt: 'Къща с покрив от шиндли', use: 'Навеси, покривни покрития' },
+  // Снимка, дадена от собственика на сайта. Стои в хранилището, не се тегли от Pexels.
+  { key: 'montazh-keremidi', file: 'scripts/stock-local/montazh-keremidi.jpg', alt: 'Майстори редят керемиди по нов покрив от скеле', use: 'Изграждане на нов покрив' },
 ];
 
 const WIDTHS = [640, 1024, 1600];
@@ -56,19 +58,38 @@ async function write(buffer, key, width, format) {
 
 async function main() {
   const { default: sharp } = await import('sharp');
-  // Старите отпечатъци се трупат при всяко пускане, ако не се чисти.
-  if (fs.existsSync(outDir)) fs.rmSync(outDir, { recursive: true });
-  ensureDir(outDir);
-  const manifest = {};
-
-  for (const item of STOCK) {
-    const url = `https://images.pexels.com/photos/${item.id}/pexels-photo-${item.id}.jpeg?auto=compress&cs=tinysrgb&w=1600`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      console.warn(`  ${item.key}: HTTP ${response.status}, пропуснато`);
-      continue;
+  /*
+   * `node scripts/prepare-stock.js montazh-keremidi` обработва само изброените
+   * ключове и пази останалите файлове и записи. Без аргументи всичко се
+   * прави наново.
+   */
+  const only = process.argv.slice(2);
+  const manifest = only.length > 0 && fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')) : {};
+  if (only.length > 0) {
+    for (const key of only) {
+      for (const file of fs.existsSync(outDir) ? fs.readdirSync(outDir) : []) {
+        if (file.startsWith(`${key}-`)) fs.rmSync(path.join(outDir, file));
+      }
     }
-    const buffer = Buffer.from(await response.arrayBuffer());
+  } else if (fs.existsSync(outDir)) {
+    // Старите отпечатъци се трупат при всяко пускане, ако не се чисти.
+    fs.rmSync(outDir, { recursive: true });
+  }
+  ensureDir(outDir);
+
+  for (const item of STOCK.filter((entry) => only.length === 0 || only.includes(entry.key))) {
+    let buffer;
+    if (item.file) {
+      buffer = fs.readFileSync(path.join(projectRoot, item.file));
+    } else {
+      const url = `https://images.pexels.com/photos/${item.id}/pexels-photo-${item.id}.jpeg?auto=compress&cs=tinysrgb&w=1600`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.warn(`  ${item.key}: HTTP ${response.status}, пропуснато`);
+        continue;
+      }
+      buffer = Buffer.from(await response.arrayBuffer());
+    }
     const meta = await sharp(buffer).metadata();
     const targets = WIDTHS.filter((w) => w <= (meta.width || 1600));
     if (targets.length === 0) targets.push(meta.width || 1600);
@@ -101,7 +122,9 @@ async function main() {
       height: meta.height && meta.width ? Math.round((meta.height / meta.width) * widest) : null,
       alt: item.alt,
       sources,
-      credit: { source: 'Pexels', id: item.id, url: `https://www.pexels.com/photo/${item.id}/`, license: 'Pexels License' },
+      credit: item.file
+        ? { source: 'Собственик на сайта', id: item.key, url: '', license: 'Предоставена от собственика' }
+        : { source: 'Pexels', id: item.id, url: `https://www.pexels.com/photo/${item.id}/`, license: 'Pexels License' },
       use: item.use,
     };
     console.log(`  ${item.key.padEnd(22)} ${widest}px`);
