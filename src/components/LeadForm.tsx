@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { site, has, valueOr, telHref } from '@/config/site';
-import { serviceHubs, districts } from '@/lib/content';
+import { serviceHubs, districts, placeName } from '@/lib/content';
 import { trackFormSubmit, trackLead, trackPhoneClick } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
@@ -206,7 +206,7 @@ export function LeadForm({
             />
             <datalist id={`${id}-districts`}>
               {districts().map((district) => (
-                <option key={district.slug} value={district.district || district.name} />
+                <option key={district.slug} value={placeName(district)} />
               ))}
             </datalist>
           </div>

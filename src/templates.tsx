@@ -3,6 +3,7 @@ import {
   type ContentPage, type Project,
   ancestorsOf, siblingServices, neighbourDistricts, projectsInDistrict,
   childrenOf, blogPosts, authorPage, categoryOf, readingMinutes, formatDate, getPage, testimonials,
+  placeName,
 } from '@/lib/content';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import { Benefits } from '@/components/Benefits';
@@ -354,7 +355,7 @@ export function ServicePage({ page }: { page: ContentPage }) {
 /* ================= Квартал ================= */
 
 export function DistrictPage({ page }: { page: ContentPage }) {
-  const districtName = page.district || page.name;
+  const districtName = placeName(page);
   const nearby = neighbourDistricts(page.slug, 3);
   const built = projectsInDistrict(districtName);
 
@@ -438,7 +439,7 @@ export function ProjectPage({ project }: { project: Project }) {
   ];
   const districtPage = project.district
     ? getPage(`/rayoni/${project.district.toLowerCase()}`) ??
-      neighbourDistricts('/rayoni', 40).find((page) => (page.district || page.name) === project.district)
+      neighbourDistricts('/rayoni', 40).find((page) => placeName(page) === project.district)
     : undefined;
 
   return (

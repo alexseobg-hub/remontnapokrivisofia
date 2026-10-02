@@ -118,6 +118,19 @@ export const generatedAt = content.generatedAt ?? '';
 
 /* ---------- Страници ---------- */
 
+/**
+ * Името на мястото за страница на район: „Перник“, не „Ремонт на покриви в Перник“.
+ *
+ * Полето District в Notion е било попълнено с цялата фраза, а кодът сам добавя
+ * „Ремонт на покриви в“ отпред. Излизаше „Ремонт на покриви в Ремонт на покриви
+ * в Перник“ — във футъра, в лентата на страницата и в схемата. Затова фразата се
+ * маха тук, каквото и да пише в полето.
+ */
+export function placeName(page: Pick<ContentPage, 'district' | 'name'>): string {
+  const raw = (page.district || page.name).trim();
+  return raw.replace(/^ремонт\s+на\s+покрив(?:и|а)?\s+(?:във|в|за)\s+/iu, '').trim() || page.name;
+}
+
 export const getPage = (slug: string) => pages.find((page) => page.slug === slug);
 
 export const pagesOfType = (...types: PageType[]) => pages.filter((page) => types.includes(page.type));

@@ -5,7 +5,7 @@ import {
   HomePage, ServicePage, DistrictPage, ProjectPage, BlogPost, AuthorPage,
   StandardPage, LegalPage, LeadPage, NotFoundPage,
 } from '@/templates';
-import { getPage, getProject, ancestorsOf, type ContentPage } from '@/lib/content';
+import { getPage, getProject, ancestorsOf, placeName, type ContentPage } from '@/lib/content';
 import { buildHead, useHead } from '@/lib/seo';
 import * as schema from '@/lib/schema';
 import { has, site } from '@/config/site';
@@ -33,7 +33,7 @@ function headFor(page: ContentPage): ReturnType<typeof buildHead> {
   if (page.type === 'Service' || page.type === 'Service hub' || page.type === 'Pricing') {
     nodes = [...common, schema.service(page)];
   } else if (page.type === 'District') {
-    nodes = [...common, schema.service(page, `${page.district || page.name}, София`)];
+    nodes = [...common, schema.service(page, placeName(page))];
   } else if (page.type === 'Blog post') {
     nodes = [...common, schema.article(page), schema.person()];
   } else if (page.type === 'Author') {

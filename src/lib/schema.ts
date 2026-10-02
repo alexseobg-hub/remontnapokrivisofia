@@ -1,6 +1,6 @@
 import { site, meta, has, valueOr, absoluteUrl } from '@/config/site';
 import type { ContentPage, FaqItem, Project } from './content';
-import { districts, pricing, formatPrice, authorPage, categoryOf } from './content';
+import { districts, pricing, formatPrice, authorPage, categoryOf, placeName } from './content';
 import { TERMS } from '@/data/rechnik';
 import { GLOSSARY_SLUG, getTerm, termUrlPath } from './glossary';
 
@@ -68,7 +68,7 @@ export function organization(): Json {
       { '@type': 'City', name: 'София' },
       ...districts().map((district) => ({
         '@type': 'Place',
-        name: district.district || district.name,
+        name: placeName(district),
       })),
     ],
     sameAs: socialProfiles(),

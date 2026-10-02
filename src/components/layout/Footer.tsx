@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { site, has, telHref, meta } from '@/config/site';
-import { serviceHubs, districts, navPages, getPage } from '@/lib/content';
+import { serviceHubs, districts, navPages, getPage, placeName } from '@/lib/content';
 import { OPEN_PREFERENCES } from '@/components/CookieBanner';
 import { trackPhoneClick } from '@/lib/analytics';
 
@@ -145,7 +145,7 @@ export function Footer() {
               {areas.map((area) => (
                 <li key={area.slug}>
                   <Link to={area.slug} className="hover:text-white">
-                    Ремонт на покриви в {area.district || area.name}
+                    Ремонт на покриви в {placeName(area)}
                   </Link>
                 </li>
               ))}
