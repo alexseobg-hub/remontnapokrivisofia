@@ -1,4 +1,5 @@
 import raw from '@/data/content.generated.json';
+import { linkGlossaryMentions } from './glossary';
 
 export interface MediaImage {
   src: string;
@@ -100,7 +101,16 @@ interface Content {
 
 const content = raw as unknown as Content;
 
-export const pages = content.pages ?? [];
+/*
+ * В услугите и статиите първото споменаване на термин с отделна страница в
+ * речника става връзка към нея. Прави се тук, а не в Notion, за да важи и за
+ * текст, добавен по-късно, и за да не пипа нищо друго в съдържанието.
+ */
+const LINKS_TO_GLOSSARY = new Set<PageType>(['Service', 'Service hub', 'Blog post']);
+
+export const pages = (content.pages ?? []).map((page) =>
+  LINKS_TO_GLOSSARY.has(page.type) ? { ...page, html: linkGlossaryMentions(page.html) } : page,
+);
 export const pricing = content.pricing ?? [];
 export const projects = content.projects ?? [];
 export const testimonials = content.testimonials ?? [];

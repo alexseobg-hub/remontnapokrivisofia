@@ -6,6 +6,7 @@ import {
   type ContentPage,
 } from '@/lib/content';
 import { site, has, telHref, valueOr } from '@/config/site';
+import { GLOSSARY_SLUG, getTerm, glossaryPages, pagePath } from '@/lib/glossary';
 import { PricingTable, PriceDisclaimer } from './PricingTable';
 import { ProjectCard, PageCard, PostCard } from './cards';
 import { TestimonialCarousel } from './TestimonialCarousel';
@@ -338,6 +339,16 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
         { title: 'Услуги', items: pages.filter((p) => p.type === 'Service hub' || p.type === 'Service') },
         { title: 'Райони', items: pages.filter((p) => p.type === 'District') },
         { title: 'Блог', items: [...blogCategories(), ...pages.filter((p) => p.type === 'Blog post' || p.type === 'Author')] },
+        // Речникът не е в Notion, затова се добавя отделно: хъбът и страниците на термините.
+        {
+          title: 'Речник',
+          items: [
+            { slug: GLOSSARY_SLUG, name: 'Речник на покривните термини' },
+            ...glossaryPages()
+              .map((page) => ({ slug: pagePath(page.slug), name: getTerm(page.slug)?.term ?? page.slug }))
+              .sort((a, b) => a.name.localeCompare(b.name, 'bg')),
+          ],
+        },
         { title: 'Правни', items: pages.filter((p) => p.type === 'Legal') },
       ].filter((group) => group.items.length > 0);
 

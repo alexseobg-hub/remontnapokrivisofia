@@ -1,6 +1,8 @@
 import { site, meta, has, valueOr, absoluteUrl } from '@/config/site';
 import type { ContentPage, FaqItem, Project } from './content';
 import { districts, pricing, formatPrice, authorPage, categoryOf } from './content';
+import { TERMS } from '@/data/rechnik';
+import { GLOSSARY_SLUG, getTerm, termUrlPath } from './glossary';
 
 /*
  * JSON-LD за целия сайт, генериран от базата „Настройки“.
@@ -220,6 +222,47 @@ export function profilePage(): Json | undefined {
 }
 
 /** Опакова всички обекти за страницата в един @graph. */
+/* ---------- Речник ---------- */
+
+/** Описанието в схемата е видимото определение, дума по дума. */
+const GLOSSARY_SET = {
+  name: 'Речник на покривните термини',
+};
+
+export function definedTermSet(description: string): Json {
+  return {
+    '@type': 'DefinedTermSet',
+    '@id': `${absoluteUrl(GLOSSARY_SLUG)}#set`,
+    name: GLOSSARY_SET.name,
+    description,
+    url: absoluteUrl(GLOSSARY_SLUG),
+    inLanguage: 'bg',
+    hasDefinedTerm: TERMS.map((term) =>
+      clean({
+        '@type': 'DefinedTerm',
+        name: term.term,
+        description: term.definition,
+        termCode: term.slug,
+        url: absoluteUrl(termUrlPath(term)),
+      }),
+    ),
+  };
+}
+
+export function definedTerm(slug: string): Json | undefined {
+  const term = getTerm(slug);
+  if (!term) return undefined;
+  return clean({
+    '@type': 'DefinedTerm',
+    name: term.term,
+    alternateName: term.synonyms,
+    description: term.definition,
+    termCode: term.slug,
+    url: absoluteUrl(termUrlPath(term)),
+    inDefinedTermSet: { '@type': 'DefinedTermSet', '@id': `${absoluteUrl(GLOSSARY_SLUG)}#set`, name: GLOSSARY_SET.name, url: absoluteUrl(GLOSSARY_SLUG) },
+  });
+}
+
 export function graph(...nodes: (Json | undefined)[]): string {
   return JSON.stringify({
     '@context': 'https://schema.org',

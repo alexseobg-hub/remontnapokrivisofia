@@ -9,6 +9,9 @@ import { getPage, getProject, ancestorsOf, type ContentPage } from '@/lib/conten
 import { buildHead, useHead } from '@/lib/seo';
 import * as schema from '@/lib/schema';
 import { has, site } from '@/config/site';
+import { GlossaryHub, GlossaryTermPage } from '@/components/Glossary';
+import { GLOSSARY_SLUG, getGlossaryPage } from '@/lib/glossary';
+import { glossaryHubHead, glossaryTermHead } from '@/lib/glossary-head';
 
 /** Страниците, на които формата стои горе вдясно, а не само в дъното. */
 const LEAD_PAGES = new Set(['/bezplaten-ogled', '/kontakti']);
@@ -80,10 +83,19 @@ function PageView() {
   const { pathname } = useLocation();
   const slug = pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 
-  const page = getPage(slug);
-  const project = page ? undefined : getProject(slug);
+  // Речникът не е страница от Notion: хъбът и отделните термини идват от src/data/rechnik.ts.
+  const isGlossaryHub = slug === GLOSSARY_SLUG;
+  const glossarySlug = slug.startsWith(`${GLOSSARY_SLUG}/`) ? slug.slice(GLOSSARY_SLUG.length + 1) : '';
+  const glossaryPage = glossarySlug ? getGlossaryPage(glossarySlug) : undefined;
 
-  const head = page
+  const page = isGlossaryHub || glossaryPage ? undefined : getPage(slug);
+  const project = page || isGlossaryHub || glossaryPage ? undefined : getProject(slug);
+
+  const head = isGlossaryHub
+    ? glossaryHubHead()
+    : glossaryPage
+      ? glossaryTermHead(glossaryPage.slug)!
+    : page
     ? headFor(page)
     : project
       ? buildHead({
@@ -113,6 +125,8 @@ function PageView() {
 
   useHead(head);
 
+  if (isGlossaryHub) return <GlossaryHub />;
+  if (glossaryPage) return <GlossaryTermPage slug={glossaryPage.slug} />;
   if (page) return renderPage(page);
   if (project) return <ProjectPage project={project} />;
   return <NotFoundPage />;
