@@ -31,4 +31,5 @@ export function render(url: string): Rendered {
 }
 
 /** Адресите, които prerender.js трябва да изпише като файлове. */
-export { routes } from './lib/routes';
+export { routes, indexableRoutes } from './lib/routes';
+export { verifyMarkdown } from './lib/glossary';

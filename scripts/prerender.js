@@ -203,10 +203,13 @@ async function main() {
 
   reportBrokenLinks(routes);
 
-  const indexable = content.pages
-    .filter((page) => !page.noindex)
-    .map((page) => ({ slug: page.slug, updated: page.updated || page.publishDate || '' }))
-    .concat(content.projects.map((project) => ({ slug: project.slug, updated: project.date || '' })));
+  // Списъкът идва от сървърния бандъл, за да влизат и страниците, които не са в
+  // Notion — речникът например.
+  const indexable = server.indexableRoutes();
+
+  // Определенията, маркирани с VERIFY, на едно място за изпълнителя. Пише се
+  // наново при всеки билд, за да не се разминава с кода.
+  fs.writeFileSync(path.join(projectRoot, 'rechnik-verify.md'), server.verifyMarkdown(), 'utf8');
 
   // При забранено индексиране sitemap не се пише. Карта, която сочи 60 адреса,
   // докато robots.txt ги забранява, е противоречив сигнал.

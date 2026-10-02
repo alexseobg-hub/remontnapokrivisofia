@@ -122,6 +122,11 @@ export function Footer() {
                   </Link>
                 </li>
               ) : null}
+              <li>
+                <Link to="/rechnik" className="font-bold text-brick-300 hover:text-brick-200">
+                  Речник на термините →
+                </Link>
+              </li>
             </ul>
           </nav>
 
