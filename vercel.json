@@ -25,6 +25,7 @@
   ],
   "redirects": [
     { "source": "/remont-na-pokrivi-sofia", "destination": "/", "permanent": true },
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/uluci/montazh", "destination": "/uluci", "permanent": true }
   ]
 }
