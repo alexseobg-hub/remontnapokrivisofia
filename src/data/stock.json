@@ -274,5 +274,28 @@
       "license": "Предоставена от собственика"
     },
     "use": "Изграждане на нов покрив"
+  },
+  "membrana-ruloni": {
+    "src": "/stock/membrana-ruloni-1024.bb917d97.jpg",
+    "width": 1024,
+    "height": 576,
+    "alt": "Ролки паропропусклива подпокривна мембрана",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/membrana-ruloni-640.188328e5.avif 640w, /stock/membrana-ruloni-1024.935b2d60.avif 1024w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/membrana-ruloni-640.8e686812.webp 640w, /stock/membrana-ruloni-1024.0e52fcef.webp 1024w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "membrana-ruloni",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия за подпокривната мембрана"
   }
 }
