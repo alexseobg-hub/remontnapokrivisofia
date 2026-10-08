@@ -297,5 +297,28 @@
       "license": "Предоставена от собственика"
     },
     "use": "Статия за подпокривната мембрана"
+  },
+  "bitumna-rolka": {
+    "src": "/stock/bitumna-rolka-1024.b2ae0902.jpg",
+    "width": 1024,
+    "height": 683,
+    "alt": "Майстор разстила битумна ролка с горелка",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/bitumna-rolka-640.dffe9e4c.avif 640w, /stock/bitumna-rolka-1024.56bb9e7b.avif 1024w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/bitumna-rolka-640.3548b716.webp 640w, /stock/bitumna-rolka-1024.e057a10c.webp 1024w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "bitumna-rolka",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия за подпокривната мембрана"
   }
 }
