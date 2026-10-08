@@ -33,6 +33,7 @@ const STOCK = [
   // Снимка, дадена от собственика на сайта. Стои в хранилището, не се тегли от Pexels.
   { key: 'montazh-keremidi', file: 'scripts/stock-local/montazh-keremidi.jpg', alt: 'Майстори редят керемиди по нов покрив от скеле', use: 'Изграждане на нов покрив' },
   { key: 'membrana-ruloni', file: 'scripts/stock-local/membrana-ruloni.jpg', alt: 'Ролки паропропусклива подпокривна мембрана', use: 'Статия за подпокривната мембрана' },
+  { key: 'bitumna-rolka', file: 'scripts/stock-local/bitumna-rolka.jpg', alt: 'Майстор разстила битумна ролка с горелка', use: 'Статия за подпокривната мембрана' },
 ];
 
 const WIDTHS = [640, 1024, 1600];
