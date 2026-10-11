@@ -320,5 +320,28 @@
       "license": "Предоставена от собственика"
     },
     "use": "Статия за подпокривната мембрана"
+  },
+  "iznosen-pokriv": {
+    "src": "/stock/iznosen-pokriv-1600.46c510eb.jpg",
+    "width": 1600,
+    "height": 1066,
+    "alt": "Стар керемиден покрив с мъх, размествани керемиди и кръпки",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/iznosen-pokriv-640.bc1df8a8.avif 640w, /stock/iznosen-pokriv-1024.bbd6a2cb.avif 1024w, /stock/iznosen-pokriv-1600.7cc357b8.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/iznosen-pokriv-640.b368ad80.webp 640w, /stock/iznosen-pokriv-1024.ef8b343a.webp 1024w, /stock/iznosen-pokriv-1600.227707e8.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "iznosen-pokriv",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия кога се сменя покрив"
   }
 }
