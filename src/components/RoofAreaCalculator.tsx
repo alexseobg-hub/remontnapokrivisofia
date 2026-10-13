@@ -33,20 +33,25 @@ const fmt = (n: number, digits = 1) =>
  * Затова формата влияе само на дължините на улуците, билото и ската, не на площта.
  */
 export function RoofAreaCalculator() {
-  const [shape, setShape] = useState<Shape>('gable');
-  const [length, setLength] = useState('10');
-  const [width, setWidth] = useState('8');
-  const [overhang, setOverhang] = useState('0,5');
-  const [slope, setSlope] = useState(30);
+  // Нищо не е попълнено предварително: число, което човек не е въвел сам,
+  // изглежда като резултат за неговия покрив и обърква.
+  const [shape, setShape] = useState<Shape | null>(null);
+  const [length, setLength] = useState('');
+  const [width, setWidth] = useState('');
+  const [overhang, setOverhang] = useState('');
+  const [slope, setSlope] = useState<number | null>(null);
 
   const result = useMemo(() => {
     const a = parse(length);
     const b = parse(width);
-    if (!a || !b) return null;
+    if (!shape || !a || !b) return null;
 
     const flat = shape === 'flat';
+    if (!flat && slope === null) return null;
+
+    // Празна стреха значи покрив без стреха.
     const o = flat ? 0 : parse(overhang);
-    const angle = flat ? 0 : slope;
+    const angle = flat ? 0 : (slope ?? 0);
     const cos = Math.cos((angle * Math.PI) / 180);
 
     // По-дългата страна е тази, по която върви билото.
@@ -63,6 +68,13 @@ export function RoofAreaCalculator() {
 
     return { plan, area, withReserve: area * (1 + RESERVE), rafter, ridge, gutters, flat };
   }, [shape, length, width, overhang, slope]);
+
+  const missing = [
+    !shape && 'вид покрив',
+    !parse(length) && 'дължина на сградата',
+    !parse(width) && 'ширина на сградата',
+    shape !== 'flat' && slope === null && 'наклон',
+  ].filter((item): item is string => Boolean(item));
 
   const pricePage = getPage('/kalkulator');
 
@@ -107,6 +119,7 @@ export function RoofAreaCalculator() {
               type="text"
               inputMode="decimal"
               value={length}
+              placeholder="например 10"
               onChange={(event) => setLength(event.target.value)}
               className={fieldClass}
             />
@@ -120,6 +133,7 @@ export function RoofAreaCalculator() {
               type="text"
               inputMode="decimal"
               value={width}
+              placeholder="например 8"
               onChange={(event) => setWidth(event.target.value)}
               className={fieldClass}
             />
@@ -134,10 +148,11 @@ export function RoofAreaCalculator() {
                 type="text"
                 inputMode="decimal"
                 value={overhang}
+                placeholder="например 0,5"
                 onChange={(event) => setOverhang(event.target.value)}
                 className={fieldClass}
               />
-              <p className="mt-1.5 text-[0.8125rem] text-graphite-500">Обикновено между 0,3 и 0,8 м.</p>
+              <p className="mt-1.5 text-[0.8125rem] text-graphite-500">Обикновено между 0,3 и 0,8 м. Без стреха оставете празно.</p>
             </div>
           ) : null}
         </div>
@@ -148,7 +163,7 @@ export function RoofAreaCalculator() {
         {shape !== 'flat' ? (
           <div>
             <label htmlFor="area-slope" className={legendClass}>
-              Наклон на покрива: {slope}°
+              Наклон на покрива: {slope === null ? 'изберете' : `${slope}°`}
             </label>
             <input
               id="area-slope"
@@ -156,9 +171,10 @@ export function RoofAreaCalculator() {
               min={5}
               max={60}
               step={1}
-              value={slope}
+              value={slope ?? 30}
+              aria-valuetext={slope === null ? 'не е избран' : `${slope} градуса`}
               onChange={(event) => setSlope(Number(event.target.value))}
-              className="w-full accent-brick-600"
+              className={`w-full ${slope === null ? 'accent-graphite-300 opacity-60' : 'accent-brick-600'}`}
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {SLOPES.map((value) => (
@@ -177,7 +193,7 @@ export function RoofAreaCalculator() {
               ))}
             </div>
             <p className="mt-1.5 text-[0.8125rem] text-graphite-500">
-              Керемидените покриви у нас най-често са между 30° и 40°. Ако не знаете наклона, оставете 30°.
+              Керемидените покриви у нас най-често са между 30° и 40°. Ако не знаете наклона, изберете 30°.
             </p>
           </div>
         ) : null}
@@ -236,7 +252,21 @@ export function RoofAreaCalculator() {
             ) : null}
           </>
         ) : (
-          <p className="text-[0.9375rem] text-graphite-700">Въведете дължината и ширината на сградата.</p>
+          <>
+            <p className="font-display text-xs font-bold uppercase tracking-[0.16em] text-graphite-500">
+              Площ на покрива
+            </p>
+            <p className="mt-1 font-display text-4xl font-extrabold text-graphite-300">— м²</p>
+            <p className="mt-4 text-[0.9375rem] font-medium text-graphite-800">За да пресметнем, попълнете:</p>
+            <ul className="mt-2 space-y-1.5 text-[0.9375rem] text-graphite-700">
+              {missing.map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span aria-hidden="true" className="text-brick-600">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </aside>
     </div>
