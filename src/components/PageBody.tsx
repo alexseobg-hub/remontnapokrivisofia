@@ -11,6 +11,7 @@ import { PricingTable, PriceDisclaimer } from './PricingTable';
 import { ProjectCard, PageCard, PostCard } from './cards';
 import { TestimonialCarousel } from './TestimonialCarousel';
 import { RoofCalculator } from './RoofCalculator';
+import { RoofAreaCalculator } from './RoofAreaCalculator';
 import { LeadForm } from './LeadForm';
 import { CtaLink, Picture, PhoneButton, type Tone } from './ui';
 import { stockImage } from '@/lib/stock';
@@ -436,6 +437,13 @@ function renderWidget(chunk: Chunk, page: ContentPage): ReactNode {
       return (
         <div className="my-8">
           <RoofCalculator />
+        </div>
+      );
+
+    case 'kvadratura':
+      return (
+        <div className="my-8">
+          <RoofAreaCalculator />
         </div>
       );
 

@@ -118,3 +118,4 @@ export const trackViberClick = (placement: string) => track('viber_click', { pla
 export const trackFormSubmit = (form: string) => track('form_submit', { form });
 export const trackLead = (form: string) => track('generate_lead', { form, currency: 'EUR' });
 export const trackCalculator = (params: Record<string, unknown>) => track('calculator_complete', params);
+export const trackAreaCalculator = (params: Record<string, unknown>) => track('area_calculator_complete', params);
