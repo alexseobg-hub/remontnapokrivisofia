@@ -221,6 +221,27 @@ export function profilePage(): Json | undefined {
   };
 }
 
+/**
+ * Страница с калкулатор е онлайн инструмент. WebApplication казва това на
+ * търсачките. Безплатен е, затова офертата е с цена 0 — това не е цена на услуга.
+ */
+export function webApplication(page: ContentPage): Json {
+  return clean({
+    '@type': 'WebApplication',
+    '@id': `${absoluteUrl(page.slug)}#app`,
+    name: page.h1 || page.name,
+    url: absoluteUrl(page.slug),
+    description: page.metaDescription || page.description,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Всички',
+    browserRequirements: 'Изисква JavaScript',
+    inLanguage: 'bg',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+    provider: { '@id': ORG_ID },
+  });
+}
+
 /** Опакова всички обекти за страницата в един @graph. */
 /* ---------- Речник ---------- */
 
