@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { pricing, formatPrice, type PriceRow } from '@/lib/content';
 import { calculator, type AccessKey, type FloorsKey, type RoofKey } from '@/config/calculator';
 import { trackCalculator } from '@/lib/analytics';
@@ -28,6 +28,13 @@ export function RoofCalculator() {
   const [floors, setFloors] = useState<FloorsKey>('low');
   const [picked, setPicked] = useState<string[]>([]);
   const [shown, setShown] = useState(false);
+
+  // Калкулаторът за квадратура праща площта в адреса (?plosht=120). Чете се след
+  // зареждане, за да съвпадне първото рисуване с готовия HTML.
+  useEffect(() => {
+    const value = Number(new URLSearchParams(window.location.search).get('plosht'));
+    if (Number.isFinite(value) && value > 0) setArea(Math.round(value));
+  }, []);
 
   // Само дейностите с цена на квадрат влизат в сметката. Останалите се уточняват при огледа.
   const options = useMemo(() => pricing.filter((row) => isPerArea(row.unit)), []);

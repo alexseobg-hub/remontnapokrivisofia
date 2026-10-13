@@ -4,6 +4,8 @@ import { serviceHubs, districts, navPages, getPage, placeName } from '@/lib/cont
 import { OPEN_PREFERENCES } from '@/components/CookieBanner';
 import { trackPhoneClick } from '@/lib/analytics';
 
+const AREA_CALCULATOR = '/kalkulator-kvadratura-na-pokriv';
+
 const LEGAL_SLUGS = ['/politika-za-poveritelnost', '/politika-za-biskvitki', '/obshti-usloviya'];
 
 /** Показват се само правните страници, които наистина съществуват. */
@@ -112,6 +114,13 @@ export function Footer() {
                 <li className="pt-1">
                   <Link to="/kalkulator" className="font-bold text-brick-300 hover:text-brick-200">
                     Калкулатор за цена →
+                  </Link>
+                </li>
+              ) : null}
+              {getPage(AREA_CALCULATOR) ? (
+                <li>
+                  <Link to={AREA_CALCULATOR} className="font-bold text-brick-300 hover:text-brick-200">
+                    Калкулатор за квадратура →
                   </Link>
                 </li>
               ) : null}
