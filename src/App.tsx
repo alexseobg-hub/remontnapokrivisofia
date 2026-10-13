@@ -42,6 +42,9 @@ function headFor(page: ContentPage): ReturnType<typeof buildHead> {
     nodes = [...common, schema.contactPage()];
   }
 
+  // Калкулаторите са инструменти, а не само текст. Маркерът в съдържанието го показва.
+  if (/data-widget="(kvadratura|kalkulator)"/.test(page.html)) nodes = [...nodes, schema.webApplication(page)];
+
   return buildHead({
     title: page.metaTitle || page.h1,
     description: page.metaDescription || page.description,
