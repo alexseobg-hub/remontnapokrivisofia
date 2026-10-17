@@ -214,7 +214,7 @@ export function Footer() {
               <li className="text-graphite-400">{meta.areaServed}</li>
             </ul>
             <Link to="/bezplaten-ogled" className="btn-primary mt-6 w-full">
-              Получи оферта
+              Заяви безплатен оглед
             </Link>
           </div>
         </div>

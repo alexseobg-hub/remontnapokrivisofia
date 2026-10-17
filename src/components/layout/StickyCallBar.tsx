@@ -11,7 +11,7 @@ export function StickyCallBar() {
     return (
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-graphite-800 bg-graphite-900 p-3 lg:hidden">
         <Link to="/bezplaten-ogled" className="btn-primary w-full">
-          Получи оферта
+          Заяви безплатен оглед
         </Link>
       </div>
     );
@@ -33,9 +33,9 @@ export function StickyCallBar() {
       </a>
       <Link
         to="/bezplaten-ogled"
-        className="flex items-center justify-center bg-brick-600 px-3 py-4 font-display text-[0.9375rem] font-bold text-white active:bg-brick-700"
+        className="flex items-center justify-center bg-brick-600 px-3 py-4 text-center leading-tight font-display text-[0.9375rem] font-bold text-white active:bg-brick-700"
       >
-        Получи оферта
+        Заяви безплатен оглед
       </Link>
       <span className="sr-only">Телефон: {site.phonePrimary}</span>
     </div>
