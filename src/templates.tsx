@@ -142,7 +142,7 @@ function PageHeader({ page }: { page: ContentPage }) {
             <TrustStrip onDark />
           </div>
           <div className="border border-graphite-700 bg-graphite-800 p-6 sm:p-7 lg:self-start">
-            <h2 className="mb-4 font-display text-lg font-extrabold text-white">Получи оферта</h2>
+            <h2 className="mb-4 font-display text-lg font-extrabold text-white">Заяви безплатен оглед</h2>
             <LeadForm onDark compact formName={page.slug} />
             <PhoneUnderForm placement={page.slug} onDark />
           </div>
@@ -165,7 +165,7 @@ function PageHeader({ page }: { page: ContentPage }) {
             <TrustStrip />
           </div>
           <div className="border border-graphite-200 bg-white p-6 sm:p-7 lg:self-start">
-            <h2 className="mb-4 font-display text-lg font-extrabold text-graphite-900">Получи оферта</h2>
+            <h2 className="mb-4 font-display text-lg font-extrabold text-graphite-900">Заяви безплатен оглед</h2>
             <LeadForm compact formName={page.slug} />
             <PhoneUnderForm placement={page.slug} />
           </div>
@@ -192,7 +192,7 @@ function MidPageCta({ placement, text = 'Готови сте за оглед?' }
         <div className="flex shrink-0 flex-wrap justify-center gap-3">
           <PhoneCta placement={`${placement}-mid`} onDark />
           <CtaLink to="/bezplaten-ogled" large>
-            Получи оферта
+            Заяви безплатен оглед
           </CtaLink>
         </div>
       </div>
@@ -308,7 +308,7 @@ export function HomePage({ page }: { page: ContentPage }) {
           </div>
 
           <div className="border border-graphite-700 bg-graphite-800 p-6 sm:p-7">
-            <h2 className="mb-4 font-display text-lg font-extrabold text-white">Получи оферта</h2>
+            <h2 className="mb-4 font-display text-lg font-extrabold text-white">Заяви безплатен оглед</h2>
             <LeadForm onDark compact formName="home" />
             <PhoneUnderForm placement="hero" onDark />
           </div>
@@ -720,7 +720,7 @@ export function LeadPage({ page }: { page: ContentPage }) {
             <TrustStrip />
           </div>
           <div className="border border-graphite-200 bg-white p-6 sm:p-8">
-            <h2 className="mb-5 font-display text-xl font-extrabold text-graphite-900">Получи оферта</h2>
+            <h2 className="mb-5 font-display text-xl font-extrabold text-graphite-900">Заяви безплатен оглед</h2>
             <LeadForm formName={page.slug} />
             <PhoneUnderForm placement={page.slug} />
           </div>
@@ -759,7 +759,7 @@ export function NotFoundPage() {
       </div>
       <div className="mt-10">
         <CtaLink to="/bezplaten-ogled" large>
-          Получи оферта
+          Заяви безплатен оглед
         </CtaLink>
       </div>
     </Section>
