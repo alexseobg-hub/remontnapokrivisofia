@@ -111,13 +111,22 @@ function TrustStrip({ onDark = false }: { onDark?: boolean }) {
 const SALES_TYPES = new Set(['Home', 'Service', 'Service hub', 'Pricing', 'District']);
 const showsBenefits = (page: ContentPage) => SALES_TYPES.has(page.type);
 
+/*
+ * Страници, на които снимката носи смисъл и трябва да се вижда цялата.
+ * Другаде тематичната снимка е декор: стои като затъмнен фон зад заглавието.
+ * Тук тя показва нещо — калкулатор и размерите на покрива — и като фон
+ * изчезваше под градиента.
+ */
+const SHOWN_HERO = new Set(['/kalkulator-kvadratura-na-pokriv']);
+
 function PageHeader({ page }: { page: ContentPage }) {
   const image = heroFor(page);
   // Услугите винаги носят заглавна снимка. Докато няма истинска, стои графичният
   // блок — същият, който пази началната страница от празно място.
   const wantsHero = page.type === 'Service' || page.type === 'Service hub';
+  const shownImage = image && SHOWN_HERO.has(page.slug) ? image : null;
 
-  if (image || wantsHero) {
+  if ((image || wantsHero) && !shownImage) {
     return (
       <>
       <header className="relative overflow-hidden bg-graphite-900">
@@ -162,6 +171,11 @@ function PageHeader({ page }: { page: ContentPage }) {
             <h1 className="text-display-lg">{page.h1}</h1>
             {page.description ? <p className="lede mt-4">{page.description}</p> : null}
             <ShortAnswer text={page.shortAnswer} />
+            {shownImage ? (
+              <figure className="mt-8 aspect-[16/9] overflow-hidden border border-graphite-200 bg-graphite-100">
+                <Picture image={shownImage} sizes="(min-width: 1024px) 720px, 100vw" eager className="h-full w-full object-cover" />
+              </figure>
+            ) : null}
             <TrustStrip />
           </div>
           <div className="border border-graphite-200 bg-white p-6 sm:p-7 lg:self-start">
