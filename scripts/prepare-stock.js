@@ -35,6 +35,7 @@ const STOCK = [
   { key: 'membrana-ruloni', file: 'scripts/stock-local/membrana-ruloni.jpg', alt: 'Ролки паропропусклива подпокривна мембрана', use: 'Статия за подпокривната мембрана' },
   { key: 'bitumna-rolka', file: 'scripts/stock-local/bitumna-rolka.jpg', alt: 'Майстор разстила битумна ролка с горелка', use: 'Статия за подпокривната мембрана' },
   { key: 'iznosen-pokriv', file: 'scripts/stock-local/iznosen-pokriv.jpg', alt: 'Стар керемиден покрив с мъх, размествани керемиди и кръпки', use: 'Статия кога се сменя покрив' },
+  { key: 'kvadratura-pokriv', file: 'scripts/stock-local/kvadratura-pokriv.jpg', alt: 'Калкулатор върху чертеж пред скатен покрив с означени размери в метри', use: 'Калкулатор за квадратура на покрив' },
 ];
 
 const WIDTHS = [640, 1024, 1600];

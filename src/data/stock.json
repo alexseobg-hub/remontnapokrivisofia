@@ -343,5 +343,28 @@
       "license": "Предоставена от собственика"
     },
     "use": "Статия кога се сменя покрив"
+  },
+  "kvadratura-pokriv": {
+    "src": "/stock/kvadratura-pokriv-1600.0a92efd9.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Калкулатор върху чертеж пред скатен покрив с означени размери в метри",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/kvadratura-pokriv-640.736a2bf0.avif 640w, /stock/kvadratura-pokriv-1024.f6e883ff.avif 1024w, /stock/kvadratura-pokriv-1600.e59cbfd8.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/kvadratura-pokriv-640.a481c635.webp 640w, /stock/kvadratura-pokriv-1024.4cb42cc8.webp 1024w, /stock/kvadratura-pokriv-1600.2491e147.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "kvadratura-pokriv",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Калкулатор за квадратура на покрив"
   }
 }
