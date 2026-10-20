@@ -54,6 +54,7 @@ export function organization(): Json {
     name: has('companyName') ? site.companyName : 'Ремонт на покриви София',
     legalName: has('legalName') ? site.legalName : undefined,
     url: `${meta.url}/`,
+    logo: absoluteUrl('/logo.png'),
     telephone: has('phonePrimary') ? site.phonePrimary : undefined,
     email: has('email') ? site.email : undefined,
     vatID: has('vatNumber') ? site.vatNumber : undefined,
