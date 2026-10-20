@@ -11,20 +11,19 @@ const primaryLinks = () => navPages().filter((page) => page.slug !== '/uslugi');
 function Logo() {
   return (
     /*
-     * Без aria-label. Видимият текст е "Ремонт на покриви София", а етикетът
-     * казваше "Начало" — който управлява с глас и прочете написаното, не
-     * улучва връзката. Сега достъпното име е самият текст.
+     * Логото е изображение, а алт текстът е достъпното име на връзката.
+     * PNG-то е снимка на същото лого в 3x, затова изглежда еднакво и на
+     * екрани с висока плътност. Размерите са зададени, за да не скача хедърът.
      */
-    <Link to="/" className="flex items-center gap-3">
-      <svg viewBox="0 0 32 32" className="h-9 w-9 shrink-0" aria-hidden="true">
-        <rect width="32" height="32" fill="#14181D" />
-        <path d="M4 18 16 8l12 10v2h-3.2L16 12.6 7.2 20H4z" fill="#C74A17" />
-        <path d="M7.2 21.4h17.6V26H7.2z" fill="#F4F1EA" />
-      </svg>
-      <span className="font-display text-[0.9375rem] font-extrabold leading-[1.15] tracking-tight text-graphite-900">
-        Ремонт на покриви
-        <span className="block text-brick-600">София</span>
-      </span>
+    <Link to="/" className="flex shrink-0 items-center">
+      <img
+        src="/logo.png"
+        alt="Лого на Ремонт на покриви София"
+        width={194}
+        height={36}
+        decoding="async"
+        className="h-9 w-auto"
+      />
     </Link>
   );
 }
