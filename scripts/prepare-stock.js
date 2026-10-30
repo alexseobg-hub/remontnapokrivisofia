@@ -33,6 +33,8 @@ const STOCK = [
   // Снимка, дадена от собственика на сайта. Стои в хранилището, не се тегли от Pexels.
   { key: 'montazh-keremidi', file: 'scripts/stock-local/montazh-keremidi.jpg', alt: 'Майстори редят керемиди по нов покрив от скеле', use: 'Изграждане на нов покрив' },
   { key: 'membrana-ruloni', file: 'scripts/stock-local/membrana-ruloni.jpg', alt: 'Ролки паропропусклива подпокривна мембрана', use: 'Статия за подпокривната мембрана' },
+  { key: 'medni-uluci', file: 'scripts/stock-local/medni-uluci.jpg', alt: 'Меден улук и водосточна тръба по ъгъла на бяла къща', use: 'Статия за улуците' },
+  { key: 'uluci-darveta', file: 'scripts/stock-local/uluci-darveta.jpg', alt: 'Улуци и водосточна тръба на къща с дървета зад покрива', use: 'Статия за улуците' },
   { key: 'bitumna-rolka', file: 'scripts/stock-local/bitumna-rolka.jpg', alt: 'Майстор разстила битумна ролка с горелка', use: 'Статия за подпокривната мембрана' },
   { key: 'iznosen-pokriv', file: 'scripts/stock-local/iznosen-pokriv.jpg', alt: 'Стар керемиден покрив с мъх, размествани керемиди и кръпки', use: 'Статия кога се сменя покрив' },
   { key: 'kvadratura-pokriv', file: 'scripts/stock-local/kvadratura-pokriv.jpg', alt: 'Калкулатор върху чертеж пред скатен покрив с означени размери в метри', use: 'Калкулатор за квадратура на покрив' },

@@ -366,5 +366,51 @@
       "license": "Предоставена от собственика"
     },
     "use": "Калкулатор за квадратура на покрив"
+  },
+  "medni-uluci": {
+    "src": "/stock/medni-uluci-640.c9e00ffa.jpg",
+    "width": 640,
+    "height": 360,
+    "alt": "Меден улук и водосточна тръба по ъгъла на бяла къща",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/medni-uluci-640.2a4ea66d.avif 640w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/medni-uluci-640.db4edf7b.webp 640w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "medni-uluci",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия за улуците"
+  },
+  "uluci-darveta": {
+    "src": "/stock/uluci-darveta-1600.2c9a781b.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Улуци и водосточна тръба на къща с дървета зад покрива",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/uluci-darveta-640.1c005c15.avif 640w, /stock/uluci-darveta-1024.93d2a698.avif 1024w, /stock/uluci-darveta-1600.29857d14.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/uluci-darveta-640.4149f3cd.webp 640w, /stock/uluci-darveta-1024.d147bd15.webp 1024w, /stock/uluci-darveta-1600.8157a783.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "uluci-darveta",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия за улуците"
   }
 }
