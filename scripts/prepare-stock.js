@@ -37,6 +37,7 @@ const STOCK = [
   { key: 'uluci-darveta', file: 'scripts/stock-local/uluci-darveta.jpg', alt: 'Улуци и водосточна тръба на къща с дървета зад покрива', use: 'Статия за улуците' },
   { key: 'bitumna-rolka', file: 'scripts/stock-local/bitumna-rolka.jpg', alt: 'Майстор разстила битумна ролка с горелка', use: 'Статия за подпокривната мембрана' },
   { key: 'iznosen-pokriv', file: 'scripts/stock-local/iznosen-pokriv.jpg', alt: 'Стар керемиден покрив с мъх, размествани керемиди и кръпки', use: 'Статия кога се сменя покрив' },
+  { key: 'shapka-komin', file: 'scripts/stock-local/shapka-komin.jpg', alt: 'Тухлен комин с бетонна плоча и четирискатна ламаринена шапка с мрежа', use: 'Статия за шапката за комин' },
   { key: 'kvadratura-pokriv', file: 'scripts/stock-local/kvadratura-pokriv.jpg', alt: 'Калкулатор върху чертеж пред скатен покрив с означени размери в метри', use: 'Калкулатор за квадратура на покрив' },
 ];
 

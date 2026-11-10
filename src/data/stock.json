@@ -367,6 +367,29 @@
     },
     "use": "Калкулатор за квадратура на покрив"
   },
+  "shapka-komin": {
+    "src": "/stock/shapka-komin-1600.5ad89dc6.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "Тухлен комин с бетонна плоча и четирискатна ламаринена шапка с мрежа",
+    "sources": [
+      {
+        "type": "image/avif",
+        "srcset": "/stock/shapka-komin-640.76e5f0ba.avif 640w, /stock/shapka-komin-1024.e100df92.avif 1024w, /stock/shapka-komin-1600.adb3e58d.avif 1600w"
+      },
+      {
+        "type": "image/webp",
+        "srcset": "/stock/shapka-komin-640.42dd8fca.webp 640w, /stock/shapka-komin-1024.e437a260.webp 1024w, /stock/shapka-komin-1600.49624278.webp 1600w"
+      }
+    ],
+    "credit": {
+      "source": "Собственик на сайта",
+      "id": "shapka-komin",
+      "url": "",
+      "license": "Предоставена от собственика"
+    },
+    "use": "Статия за шапката за комин"
+  },
   "medni-uluci": {
     "src": "/stock/medni-uluci-640.c9e00ffa.jpg",
     "width": 640,
